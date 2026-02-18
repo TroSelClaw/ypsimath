@@ -27,7 +27,7 @@
 | TASK-012 | KaTeX + Markdown pipeline | ✅ | 2026-02-18 | 2026-02-18 | 6 tester grønne |
 | TASK-013 | CI/CD: GitHub Actions + Vercel | ✅ | 2026-02-18 | 2026-02-18 | Vercel auto-deploy settes opp når GitHub-repo opprettes |
 | TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
-| TASK-015 | Rate limiting | ⬜ | — | — | |
+| TASK-015 | Rate limiting | 🔧 | 2026-02-18 | — | |
 | TASK-016 | Feilhåndtering + logging | ✅ | 2026-02-18 | 2026-02-18 | Sentry legges til i Phase 6 |
 | TASK-017 | Zod-skjemaer | ⬜ | — | — | |
 | TASK-018 | Phase 0 smoke test | ⬜ | — | — | |
