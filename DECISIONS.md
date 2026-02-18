@@ -271,4 +271,17 @@
 - Nåværende side viser progresjonsprosent + neste tema, men inkluderer ikke avansert statusbanner («i rute/foran/bak») fra TASK-032.
 - Lenker bruker slugging av topic-navn (forventet samsvar med wiki-ruter), med mulighet for å bytte til eksplisitt topic-slugfelt senere.
 
+## 2026-02-18 — TASK-032: Semesterplan elevvisning
+
+### Beslutning: Statusbanner drives av måloppnåelse (kompetansemål), ikke bare øvingsklikk
+- **Valg:** La til `lib/semester/progress.ts` for å beregne `on_track/ahead/behind` ved å sammenligne planlagte tema fram til i dag med tema der alle kompetansemål er i `student_profiles.mastered_competency_goals`.
+- **Begrunnelse:** Tettere kobling til læringsmål enn ren aktivitetsmengde, og matcher kriteriet om status «i rute/foran/bak».
+
+### Beslutning: Read-only elevvisning i samme `/fremgang`-flate
+- **Valg:** Holdt elevsiden uten redigeringskontroller, med tydelig planinformasjon (neste tema + dato + temaetiketter per planet).
+- **Begrunnelse:** Oppfyller kravet om visning uten mutasjonsmulighet og holder UX enkel for elev.
+
+### Erfaring: Krever topic→kompetansemål-oppslag fra publisert innhold
+- **Lærdom:** For statusberegning må vi hente `content_elements.competency_goals` per topic. Dette fungerer nå, men blir enda bedre når topic-slugs/ID-er standardiseres i senere tasks.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

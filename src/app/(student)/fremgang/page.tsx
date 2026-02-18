@@ -2,18 +2,13 @@ import Link from 'next/link'
 
 import { PlanetMap, type JourneyTopic } from '@/components/journey/planet-map'
 import { requireRole } from '@/lib/auth/get-profile'
+import { buildMasteredTopicSet, computeScheduleStatus, type SemesterTopicEntry } from '@/lib/semester/progress'
 import { createClient } from '@/lib/supabase/server'
 
 type PlanEntryRow = {
   topic: string | null
   date: string
   sort_order: number
-}
-
-type TopicExerciseRow = {
-  topic: string
-  exercises_total: number
-  exercises_attempted: number
 }
 
 function toTopicSlug(topic: string) {
@@ -33,11 +28,10 @@ export default async function ProgressPage() {
   const profile = await requireRole(['student'])
   const supabase = await createClient()
 
-  const { data: membershipRows } = await supabase
-    .from('class_memberships')
-    .select('class_id')
-    .eq('student_id', profile.id)
-    .limit(1)
+  const [{ data: membershipRows }, { data: studentProfile }] = await Promise.all([
+    supabase.from('class_memberships').select('class_id').eq('student_id', profile.id).limit(1),
+    supabase.from('student_profiles').select('mastered_competency_goals').eq('id', profile.id).maybeSingle(),
+  ])
 
   const classId = membershipRows?.[0]?.class_id as string | undefined
 
@@ -64,69 +58,68 @@ export default async function ProgressPage() {
     plannedTopics = (planEntries ?? []) as PlanEntryRow[]
   }
 
-  const topicOrder = Array.from(new Set(plannedTopics.map((entry) => entry.topic).filter(Boolean))) as string[]
+  const topicEntries = plannedTopics.filter((entry) => entry.topic) as Array<{ topic: string; date: string }>
+  const topicOrder = Array.from(new Set(topicEntries.map((entry) => entry.topic)))
 
   const fallbackTopics = ['Algebraiske uttrykk', 'Likninger', 'Funksjoner', 'Derivasjon', 'Vektorer']
   const orderedTopics = topicOrder.length > 0 ? topicOrder : fallbackTopics
 
-  const dateByTopic = new Map(
-    plannedTopics
-      .filter((entry) => entry.topic)
-      .map((entry) => [entry.topic as string, formatDateLabel(entry.date)]),
-  )
-
-  const { data: topicExerciseRows } = await supabase
+  const { data: topicGoalRows } = await supabase
     .from('content_elements')
-    .select('topic, id, exercise_attempts!left(id)')
+    .select('topic, competency_goals')
     .eq('status', 'published')
-    .eq('content_type', 'exercise')
-    .eq('exercise_attempts.user_id', profile.id)
+    .in('topic', orderedTopics)
 
-  const progressByTopic = new Map<string, TopicExerciseRow>()
-  for (const row of topicExerciseRows ?? []) {
-    const topic = (row.topic as string | null) ?? null
+  const topicGoals = new Map<string, string[]>()
+  for (const row of topicGoalRows ?? []) {
+    const topic = row.topic as string | null
     if (!topic) continue
 
-    const existing = progressByTopic.get(topic) ?? {
-      topic,
-      exercises_total: 0,
-      exercises_attempted: 0,
-    }
-
-    existing.exercises_total += 1
-    const attempts = (row.exercise_attempts as Array<{ id: string }> | null) ?? []
-    if (attempts.length > 0) {
-      existing.exercises_attempted += 1
-    }
-
-    progressByTopic.set(topic, existing)
+    const existing = topicGoals.get(topic) ?? []
+    const goals = ((row.competency_goals as string[] | null) ?? []).filter(Boolean)
+    topicGoals.set(topic, Array.from(new Set([...existing, ...goals])))
   }
 
-  const completedTopicSet = new Set(
-    orderedTopics.filter((topic) => {
-      const data = progressByTopic.get(topic)
-      return Boolean(data && data.exercises_total > 0 && data.exercises_attempted >= data.exercises_total)
-    }),
-  )
+  const masteredGoals = ((studentProfile?.mastered_competency_goals as string[] | null) ?? []).filter(Boolean)
 
-  const currentIndex = orderedTopics.findIndex((topic) => !completedTopicSet.has(topic))
+  const semesterTopicEntries: SemesterTopicEntry[] = topicEntries.map((entry) => ({
+    topic: entry.topic,
+    date: entry.date,
+  }))
+
+  const masteredTopics = buildMasteredTopicSet({
+    topicEntries: semesterTopicEntries,
+    topicGoals,
+    masteredGoals,
+  })
+
+  const status = computeScheduleStatus({
+    topicEntries: semesterTopicEntries,
+    masteredTopics,
+  })
+
+  const dateByTopic = new Map(topicEntries.map((entry) => [entry.topic, formatDateLabel(entry.date)]))
+  const currentIndex = orderedTopics.findIndex((topic) => !masteredTopics.has(topic))
   const activeIndex = currentIndex === -1 ? orderedTopics.length - 1 : currentIndex
 
   const journeyTopics: JourneyTopic[] = orderedTopics.map((topic, index) => ({
     topic,
     href: `/wiki/r1/${toTopicSlug(topic)}`,
     dateLabel: dateByTopic.get(topic) ?? null,
-    status: completedTopicSet.has(topic)
-      ? 'completed'
-      : index === activeIndex
-        ? 'current'
-        : 'future',
+    status: masteredTopics.has(topic) ? 'completed' : index === activeIndex ? 'current' : 'future',
   }))
 
-  const completedCount = completedTopicSet.size
+  const completedCount = masteredTopics.size
   const totalCount = orderedTopics.length
   const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0
   const nextTopic = journeyTopics.find((topic) => topic.status === 'current')
+
+  const statusBadgeClass =
+    status.kind === 'ahead'
+      ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300'
+      : status.kind === 'behind'
+        ? 'border-amber-400/40 bg-amber-500/10 text-amber-700 dark:text-amber-300'
+        : 'border-sky-400/40 bg-sky-500/10 text-sky-700 dark:text-sky-300'
 
   return (
     <div className="mx-auto w-full max-w-[1100px] space-y-6 px-4 py-6">
@@ -153,6 +146,8 @@ export default async function ProgressPage() {
           <p className="text-base font-medium">{nextTopic?.topic ?? 'Alle tema fullført 🎉'}</p>
         </div>
       </section>
+
+      <section className={`rounded-xl border p-4 text-sm font-medium ${statusBadgeClass}`}>{status.label}</section>
 
       <PlanetMap topics={journeyTopics} />
 
