@@ -16,7 +16,7 @@
 | TASK-001 | Next.js 15 scaffold | ✅ | 2026-02-18 | 2026-02-18 | Next.js 16.1.6, TS 5.9.3, pnpm |
 | TASK-002 | Tailwind + shadcn/ui | ✅ | 2026-02-18 | 2026-02-18 | dark/light/UU, shadcn neutral |
 | TASK-003 | Supabase EU Frankfurt | 🔧 | 2026-02-18 | — | Klientkode klar, venter på Supabase-prosjekt |
-| TASK-004 | DB: user/class tables | ⬜ | — | — | |
+| TASK-004 | DB: user/class tables | 🔧 | 2026-02-18 | — | |
 | TASK-005 | DB: content tables | ⬜ | — | — | |
 | TASK-006 | DB: activity/exam/chat/semester | ⬜ | — | — | |
 | TASK-007 | Auth: registrering + login | ⬜ | — | — | |
