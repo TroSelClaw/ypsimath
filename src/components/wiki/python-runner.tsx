@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import Image from 'next/image'
 
 import { Button } from '@/components/ui/button'
 import { loadPyodideRuntime } from '@/lib/pyodide/loader'
@@ -123,9 +124,12 @@ _plot_base64
       {plotBase64 ? (
         <div className="space-y-2">
           <p className="text-sm font-medium">Plot</p>
-          <img
+          <Image
             src={`data:image/png;base64,${plotBase64}`}
             alt="Generert matplotlib-plot"
+            width={1024}
+            height={768}
+            unoptimized
             className="max-h-96 w-full rounded-md border object-contain"
           />
         </div>

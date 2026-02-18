@@ -70,61 +70,94 @@ const TOPIC_SUGGESTIONS = [
 
 const STORAGE_KEY = 'ypsimath-semester-wizard-v1'
 
+type WizardPersistedState = {
+  step: number
+  classId: string
+  subjectId: string
+  startDate: string
+  endDate: string
+  weekdays: WizardScheduleDay[]
+  holidays: Holiday[]
+  assessments: Assessment[]
+  topics: string[]
+}
+
+function loadInitialState(classes: TeacherClass[]): WizardPersistedState {
+  const fallback: WizardPersistedState = {
+    step: 1,
+    classId: classes[0]?.id ?? '',
+    subjectId: classes[0]?.subject_id ?? 'r1',
+    startDate: '',
+    endDate: '',
+    weekdays: DEFAULT_WEEKDAYS,
+    holidays: NORWEGIAN_HOLIDAYS_2026_2027,
+    assessments: [],
+    topics: TOPIC_SUGGESTIONS,
+  }
+
+  if (typeof window === 'undefined') return fallback
+
+  const raw = window.sessionStorage.getItem(STORAGE_KEY)
+  if (!raw) return fallback
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<WizardPersistedState>
+    return {
+      step: parsed.step ?? fallback.step,
+      classId: parsed.classId ?? fallback.classId,
+      subjectId: parsed.subjectId ?? fallback.subjectId,
+      startDate: parsed.startDate ?? fallback.startDate,
+      endDate: parsed.endDate ?? fallback.endDate,
+      weekdays: parsed.weekdays?.length ? parsed.weekdays : fallback.weekdays,
+      holidays: parsed.holidays?.length ? parsed.holidays : fallback.holidays,
+      assessments: parsed.assessments ?? fallback.assessments,
+      topics: parsed.topics?.length ? parsed.topics : fallback.topics,
+    }
+  } catch {
+    return fallback
+  }
+}
+
+function persistWizardState(payload: WizardPersistedState) {
+  if (typeof window === 'undefined') return
+  window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
+}
+
 export function SemesterPlanWizard({ classes }: { classes: TeacherClass[] }) {
   const [state, action, pending] = useActionState<SemesterPlanActionState, FormData>(createSemesterPlan, {})
-  const [step, setStep] = useState(1)
-  const [classId, setClassId] = useState(classes[0]?.id ?? '')
-  const [subjectId, setSubjectId] = useState(classes[0]?.subject_id ?? 'r1')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [weekdays, setWeekdays] = useState<WizardScheduleDay[]>(DEFAULT_WEEKDAYS)
-  const [holidays, setHolidays] = useState<Holiday[]>(NORWEGIAN_HOLIDAYS_2026_2027)
+
+  const initial = loadInitialState(classes)
+
+  const [step, setStep] = useState(initial.step)
+  const [classId, setClassId] = useState(initial.classId)
+  const [subjectId, setSubjectId] = useState(initial.subjectId)
+  const [startDate, setStartDate] = useState(initial.startDate)
+  const [endDate, setEndDate] = useState(initial.endDate)
+  const [weekdays, setWeekdays] = useState<WizardScheduleDay[]>(initial.weekdays)
+  const [holidays, setHolidays] = useState<Holiday[]>(initial.holidays)
   const [newHolidayDate, setNewHolidayDate] = useState('')
   const [newHolidayName, setNewHolidayName] = useState('')
-  const [assessments, setAssessments] = useState<Assessment[]>([])
+  const [assessments, setAssessments] = useState<Assessment[]>(initial.assessments)
   const [assessmentTitle, setAssessmentTitle] = useState('')
   const [assessmentType, setAssessmentType] = useState<Assessment['type']>('short_quiz')
   const [assessmentWeek, setAssessmentWeek] = useState(40)
-  const [topics, setTopics] = useState(TOPIC_SUGGESTIONS)
-
-  useEffect(() => {
-    const raw = sessionStorage.getItem(STORAGE_KEY)
-    if (!raw) return
-
-    try {
-      const parsed = JSON.parse(raw) as {
-        step?: number
-        classId?: string
-        subjectId?: string
-        startDate?: string
-        endDate?: string
-        weekdays?: WizardScheduleDay[]
-        holidays?: Holiday[]
-        assessments?: Assessment[]
-        topics?: string[]
-      }
-      if (parsed.step) setStep(parsed.step)
-      if (parsed.classId) setClassId(parsed.classId)
-      if (parsed.subjectId) setSubjectId(parsed.subjectId)
-      if (parsed.startDate) setStartDate(parsed.startDate)
-      if (parsed.endDate) setEndDate(parsed.endDate)
-      if (parsed.weekdays?.length) setWeekdays(parsed.weekdays)
-      if (parsed.holidays?.length) setHolidays(parsed.holidays)
-      if (parsed.assessments) setAssessments(parsed.assessments)
-      if (parsed.topics?.length) setTopics(parsed.topics)
-    } catch {
-      // ignore corrupt session data
-    }
-  }, [])
-
-  useEffect(() => {
-    sessionStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ step, classId, subjectId, startDate, endDate, weekdays, holidays, assessments, topics }),
-    )
-  }, [step, classId, subjectId, startDate, endDate, weekdays, holidays, assessments, topics])
+  const [topics, setTopics] = useState(initial.topics)
 
   const activeDays = useMemo(() => weekdays.filter((day) => day.enabled), [weekdays])
+
+  useEffect(() => {
+    persistWizardState({
+      step,
+      classId,
+      subjectId,
+      startDate,
+      endDate,
+      weekdays,
+      holidays,
+      assessments,
+      topics,
+    })
+  }, [step, classId, subjectId, startDate, endDate, weekdays, holidays, assessments, topics])
 
   function updateWeekday(weekday: number, patch: Partial<WizardScheduleDay>) {
     setWeekdays((days) => days.map((d) => (d.weekday === weekday ? { ...d, ...patch } : d)))
