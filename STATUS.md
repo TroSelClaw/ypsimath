@@ -1,0 +1,123 @@
+# YpsiMath — Task Status Tracker
+
+> Oppdateres fortløpende. Én rad per task.
+
+## Statusnøkler
+- ⬜ Ikke startet
+- 🔧 Under arbeid
+- ✅ Ferdig
+- ⏸️ Pauset
+- ❌ Droppet/utsatt
+
+## Phase 0 — Foundation (4–6 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-001 | Next.js 15 scaffold | ⬜ | — | — | |
+| TASK-002 | Tailwind + shadcn/ui | ⬜ | — | — | |
+| TASK-003 | Supabase EU Frankfurt | ⬜ | — | — | Krever Aleksanders konto |
+| TASK-004 | DB: user/class tables | ⬜ | — | — | |
+| TASK-005 | DB: content tables | ⬜ | — | — | |
+| TASK-006 | DB: activity/exam/chat/semester | ⬜ | — | — | |
+| TASK-007 | Auth: registrering + login | ⬜ | — | — | |
+| TASK-008 | Auth: middleware + logout | ⬜ | — | — | |
+| TASK-009 | Rollebasert routing + layouts | ⬜ | — | — | |
+| TASK-010 | Klasse-/elevadmin UI | ⬜ | — | — | |
+| TASK-011 | Typografi + KaTeX fonts | ⬜ | — | — | |
+| TASK-012 | KaTeX + Markdown pipeline | ⬜ | — | — | |
+| TASK-013 | CI/CD: GitHub Actions + Vercel | ⬜ | — | — | |
+| TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
+| TASK-015 | Rate limiting | ⬜ | — | — | |
+| TASK-016 | Feilhåndtering + logging | ⬜ | — | — | |
+| TASK-017 | Zod-skjemaer | ⬜ | — | — | |
+| TASK-018 | Phase 0 smoke test | ⬜ | — | — | |
+
+## Phase 1 — Content Pipeline + Wiki (6–8 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-019 | Source RAG DB | ⬜ | — | — | |
+| TASK-020 | Content generation script | ⬜ | — | — | |
+| TASK-021 | Embedding pipeline | ⬜ | — | — | |
+| TASK-022 | LLM quality flagging | ⬜ | — | — | |
+| TASK-023 | Admin content review dashboard | ⬜ | — | — | |
+| TASK-024 | Wiki renderer: teori/regler/eksempler | ⬜ | — | — | |
+| TASK-025 | Wiki øvelser: selvrapport + autosjekk | ⬜ | — | — | |
+| TASK-026 | Pyodide Python runtime | ⬜ | — | — | P1 |
+| TASK-027 | Mafs interaktive viz | ⬜ | — | — | P1 |
+| TASK-028 | GeoGebra embed | ⬜ | — | — | P2 |
+| TASK-029 | Planet journey (lineær) | ⬜ | — | — | P1 |
+| TASK-030 | Semesterplan: wizard | ⬜ | — | — | P1 |
+| TASK-031 | Semesterplan: kalender + DnD | ⬜ | — | — | P1 |
+| TASK-032 | Semesterplan: elevvisning | ⬜ | — | — | P1 |
+| TASK-033 | Aktivitetslogging | ⬜ | — | — | |
+| TASK-034 | Bildeopplasting øvelser | ⬜ | — | — | P1 |
+| TASK-035 | Wiki-søk | ⬜ | — | — | P2 |
+| TASK-036 | Phase 1 integrasjonstest | ⬜ | — | — | |
+
+## Phase 2 — Chat-tutor + Elevprofil (4–6 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-037 | Hybrid RAG engine | ⬜ | — | — | |
+| TASK-038 | Chat API (streaming + RAG) | ⬜ | — | — | |
+| TASK-039 | Chat UI (streaming + KaTeX) | ⬜ | — | — | |
+| TASK-040 | Chat bildeopplasting | ⬜ | — | — | P1 |
+| TASK-041 | Elevprofil + mål | ⬜ | — | — | P1 |
+| TASK-042 | AI studieanbefalinger | ⬜ | — | — | P2 |
+| TASK-043 | Tverrfaglig differensiering | ⬜ | — | — | P2 |
+| TASK-044 | Samtalehistorikk | ⬜ | — | — | P1 |
+| TASK-045 | Phase 2 integrasjonstest | ⬜ | — | — | |
+
+## Phase 3 — Prøver og vurdering (4–6 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-046 | Prøvegenerering: skjema | ⬜ | — | — | |
+| TASK-047 | Prøvegenerering: AI API | ⬜ | — | — | |
+| TASK-048 | Prøve: preview + redigering | ⬜ | — | — | |
+| TASK-049 | PDF-eksport (Puppeteer) | ⬜ | — | — | |
+| TASK-050 | Skanning: PDF-opplasting | ⬜ | — | — | |
+| TASK-051 | AI-retting + feilanalyse | ⬜ | — | — | |
+| TASK-052 | Resultatvisning | ⬜ | — | — | |
+| TASK-053 | Elevgenererte øvingsprøver | ⬜ | — | — | P2 |
+| TASK-054 | Phase 3 integrasjonstest | ⬜ | — | — | |
+
+## Phase 4 — Lærer-dashboard + rapporter (3–4 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-055 | Klasseoversikt + heatmap | ⬜ | — | — | |
+| TASK-056 | Per-elev detaljvisning | ⬜ | — | — | |
+| TASK-057 | AI vurderingsrapport | ⬜ | — | — | |
+| TASK-058 | Prøveadmin panel | ⬜ | — | — | |
+| TASK-059 | Content review workflow | ⬜ | — | — | |
+| TASK-060 | Semesterplan dashboard-widget | ⬜ | — | — | |
+| TASK-061 | Brukeradmin (admin) | ⬜ | — | — | |
+| TASK-062 | Phase 4 integrasjonstest | ⬜ | — | — | |
+
+## Phase 5 — Flashcards + Video (3–4 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-063 | Flashcard-generering | ⬜ | — | — | P2 |
+| TASK-064 | Flashcard UI + SM-2 | ⬜ | — | — | P2 |
+| TASK-065 | Mobil-flashcard layout | ⬜ | — | — | P2 |
+| TASK-066 | Manim script-generering | ⬜ | — | — | P2 |
+| TASK-067 | Manim rendering + CDN | ⬜ | — | — | P2 |
+| TASK-068 | Video i wiki | ⬜ | — | — | P2 |
+| TASK-069 | Phase 5 integrasjonstest | ⬜ | — | — | P2 |
+
+## Phase 6 — Polish + Launch (2–3 uker)
+
+| Task | Navn | Status | Startet | Ferdig | Notater |
+|------|------|--------|---------|--------|---------|
+| TASK-070 | Lighthouse audit | ⬜ | — | — | |
+| TASK-071 | WCAG 2.1 AA audit | ⬜ | — | — | |
+| TASK-072 | GDPR: DPIA + personvern | ⬜ | — | — | P0 |
+| TASK-073 | Sikkerhetsharding | ⬜ | — | — | |
+| TASK-074 | Feilovervåking + observability | ⬜ | — | — | |
+| TASK-075 | Brukertesting | ⬜ | — | — | |
+| TASK-076 | Produksjonslansering | ⬜ | — | — | P0 |
+| TASK-077 | Dokumentasjon | ⬜ | — | — | P2 |
+| TASK-078 | Regresjonstest | ⬜ | — | — | P0 |
