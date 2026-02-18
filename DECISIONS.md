@@ -284,4 +284,22 @@
 ### Erfaring: Krever topic→kompetansemål-oppslag fra publisert innhold
 - **Lærdom:** For statusberegning må vi hente `content_elements.competency_goals` per topic. Dette fungerer nå, men blir enda bedre når topic-slugs/ID-er standardiseres i senere tasks.
 
+## 2026-02-18 — TASK-034: Bildeopplasting for oppgaver
+
+### Beslutning: Egen API-route for image-check med multipart + rate limit
+- **Valg:** Implementerte `POST /api/exercise/image-check` som mottar `FormData` (metadata + fil), validerer type/størrelse, håndhever `RATE_LIMITS.imageUpload`, og returnerer norsk feilmelding ved 429/valideringsfeil.
+- **Begrunnelse:** Robust filhåndtering og tydelig separasjon mellom UI og backendflyt for bildekontroll.
+
+### Beslutning: Persistér image-attempt som egen `exercise_attempt`
+- **Valg:** Utvidet `recordExerciseAttempt` med `imageUrl` + `imageFeedback`, og lagrer image-check som `check_method='image_check'` i samme tabell som øvrige forsøk.
+- **Begrunnelse:** Holder all oppgavehistorikk konsistent i én datamodell og gjenbruker eksisterende aktivitetslogging.
+
+### Beslutning: Gemini-analyse via lettvekts `fetch`-adapter
+- **Valg:** La til `lib/ai/image-analyzer.ts` som kaller Gemini Flash-endepunkt direkte med inline base64-bilde + norsk lærerprompt.
+- **Begrunnelse:** Får fungerende AI-feedback uten å introdusere ny tung SDK i MVP.
+
+### Avgrensning i denne iterasjonen
+- UI viser opplastingsstatus/feedback inline i `ExerciseBlock`, men uten historikkvisning av tidligere opplastede bilder ennå.
+- Hvis Google API-nøkkel mangler, lagres bilde fortsatt og brukeren får tydelig fallback-melding om at AI-feedback er utilgjengelig.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

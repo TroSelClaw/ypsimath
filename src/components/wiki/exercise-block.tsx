@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { autoCheckExercise } from '@/lib/exercises/auto-check'
 import { HintSystem } from './hint-system'
+import { ImageUpload } from './image-upload'
 import { SelfReport, type SelfReportResult } from './self-report'
 
 type ExerciseFormat = 'freeform' | 'multiple_choice' | 'numeric_input' | 'drag_drop' | 'interactive'
@@ -162,6 +163,16 @@ export function ExerciseBlock({ id, title, content, format, metadata }: Exercise
       ) : (
         <p className="text-sm text-muted-foreground">Vis fasit for å registrere egenvurdering.</p>
       )}
+
+      {showSelfReport ? (
+        <ImageUpload
+          contentElementId={id}
+          exerciseContent={content}
+          solution={metadata?.solution}
+          hintsUsed={hintsUsed}
+          viewedSolution={viewedSolution}
+        />
+      ) : null}
 
       {isPending ? <p className="text-xs text-muted-foreground">Lagrer forsøk…</p> : null}
     </section>

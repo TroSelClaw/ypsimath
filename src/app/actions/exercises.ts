@@ -11,6 +11,8 @@ const recordExerciseAttemptSchema = z.object({
   selfReport: z.enum(['correct', 'partial', 'incorrect']).optional(),
   autoResult: z.boolean().optional(),
   answer: z.string().optional(),
+  imageUrl: z.string().optional(),
+  imageFeedback: z.string().optional(),
   hintsUsed: z.number().int().min(0).default(0),
   viewedSolution: z.boolean().default(false),
   timeSeconds: z.number().int().min(0).optional(),
@@ -39,6 +41,8 @@ export async function recordExerciseAttempt(input: z.input<typeof recordExercise
     self_report: parsed.data.selfReport,
     auto_result: parsed.data.autoResult,
     answer: parsed.data.answer,
+    image_url: parsed.data.imageUrl,
+    image_feedback: parsed.data.imageFeedback,
     hints_used: parsed.data.hintsUsed,
     viewed_solution: parsed.data.viewedSolution,
     time_seconds: parsed.data.timeSeconds,
@@ -62,6 +66,8 @@ export async function recordExerciseAttempt(input: z.input<typeof recordExercise
       auto_result: parsed.data.autoResult,
       viewed_solution: parsed.data.viewedSolution,
       hints_used: parsed.data.hintsUsed,
+      image_url: parsed.data.imageUrl,
+      image_feedback: parsed.data.imageFeedback,
     },
   })
 

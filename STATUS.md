@@ -51,7 +51,7 @@
 | TASK-031 | Semesterplan: kalender + DnD | ✅ | 2026-02-18 | 2026-02-18 | Kalender-/tabellvisning, drag-and-drop mellom datoer, chat-redigering, auto-save (2s) og versjonslagring |
 | TASK-032 | Semesterplan: elevvisning | ✅ | 2026-02-18 | 2026-02-18 | /fremgang viser neste tema+dato, planetetiketter med dato og statusbanner (i rute/foran/bak) basert på mastered_competency_goals |
 | TASK-033 | Aktivitetslogging | ✅ | 2026-02-18 | 2026-02-18 | Ny logActivity action + tracker, wiki view start/end med beacon, oppdatering av studentprofilaggregater |
-| TASK-034 | Bildeopplasting øvelser | ⬜ | — | — | P1 |
+| TASK-034 | Bildeopplasting øvelser | ✅ | 2026-02-18 | 2026-02-18 | /api/exercise/image-check + Supabase upload + Gemini-feedback + UI i ExerciseBlock |
 | TASK-035 | Wiki-søk | ⬜ | — | — | P2 |
 | TASK-036 | Phase 1 integrasjonstest | ⬜ | — | — | |
 
