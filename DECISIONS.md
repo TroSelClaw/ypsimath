@@ -331,4 +331,18 @@
 - **Valg:** Bruker `RATE_LIMITS.imageUpload` i `/api/chat` når `imageUrl` er satt (20/time per bruker).
 - **Begrunnelse:** Matcher PRD-kravet for bildeflyt og beskytter API-kost/ressurser.
 
+## 2026-02-18 — TASK-041: Elevprofil + mål
+
+### Beslutning: Egen profilside med tydelig status + lav friksjon
+- **Valg:** Implementerte `/profil` med tre hovedseksjoner: elevinfo, statistikk-kort og kompetansegrid (R1-01..R1-12).
+- **Begrunnelse:** Samler kjerneinnsikt i én visning og gir tydelig «hvor står jeg nå?» for eleven.
+
+### Beslutning: Mål lagres i `student_profiles.goals` via server action
+- **Valg:** La til `saveStudentGoals` som validerer målkarakter (1–6) og fokusområder, og lagrer som `target_grade` + `focus_areas` i JSONB.
+- **Begrunnelse:** Holder modellen fleksibel for senere utvidelser (f.eks. delmål, tidsfrister) uten ny migrasjon.
+
+### Avgrensning i denne iterasjonen
+- «Streak» vises ikke separat ennå; foreløpig brukes aktivitetsvolum siste 7 dager som ukesindikator.
+- Lærerens read-only profilvisning kommer i senere dashboard-task (ikke del av TASK-041).
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
