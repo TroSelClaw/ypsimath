@@ -5,6 +5,7 @@ import type { NavItem } from './nav-items'
 import { DesktopSidebar } from './desktop-sidebar'
 import { MobileHeader } from './mobile-header'
 import { MobileBottomNav } from './mobile-bottom-nav'
+import { SearchDialog } from '@/components/search/search-dialog'
 
 export interface AppShellProfile {
   id: string
@@ -24,6 +25,9 @@ export function AppShell({ children, profile, navItems }: AppShellProps) {
       <DesktopSidebar profile={profile} navItems={navItems} />
       <div className="flex flex-1 flex-col">
         <MobileHeader profile={profile} />
+        <div className="flex items-center justify-end px-4 pt-3 md:px-6">
+          <SearchDialog />
+        </div>
         <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">{children}</main>
         <MobileBottomNav navItems={navItems} />
       </div>
