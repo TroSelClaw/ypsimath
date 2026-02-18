@@ -108,7 +108,6 @@ export async function POST(request: Request) {
 
       // Insert exam_answers
       const answerRows = result.answers.map((a) => ({
-        exam_id: examId,
         submission_id: submission.id,
         question_id: a.questionId,
         student_answer_text: a.studentAnswerText,

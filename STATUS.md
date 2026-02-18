@@ -78,8 +78,8 @@
 | TASK-048 | Prøve: preview + redigering | ✅ | 2026-02-19 | 2026-02-19 | Inline editor + KaTeX preview + auto-save |
 | TASK-049 | PDF-eksport (Puppeteer) | ✅ | 2026-02-19 | 2026-02-19 | Puppeteer + Supabase Storage + HTML fallback |
 | TASK-050 | Skanning: PDF-opplasting | ✅ | 2026-02-19 | 2026-02-19 | PDF-upload + sideintervaller + start retting |
-| TASK-051 | AI-retting + feilanalyse | ⬜ | — | — | |
-| TASK-052 | Resultatvisning | ⬜ | — | — | |
+| TASK-051 | AI-retting + feilanalyse | ✅ | 2026-02-19 | 2026-02-19 | Gemini OCR + GPT-4o scoring + feilkategorisering |
+| TASK-052 | Resultatvisning | ✅ | 2026-02-19 | 2026-02-19 | Klasseoversikt + detaljvisning + overstyring + CSV + Realtime-refresh |
 | TASK-053 | Elevgenererte øvingsprøver | ⬜ | — | — | P2 |
 | TASK-054 | Phase 3 integrasjonstest | ⬜ | — | — | |
 
