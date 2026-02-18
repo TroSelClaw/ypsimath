@@ -381,3 +381,9 @@
 ### Erfaring: Testbarhet øker ved å isolere beslutningslogikk
 - **Valg:** La til `hybrid-search.test.ts` med tre enhetstester for default/advanced/supportive modus.
 - **Resultat:** `tsc --noEmit` og `vitest run` grønt etter endringene.
+
+### TASK-044: Soft-delete for samtaler
+- **Valg:** Bruker `deleted_at TIMESTAMPTZ` for soft-delete i stedet for fysisk sletting.
+- **Begrunnelse:** GDPR-krav: faktisk sletting skjer ved kontosletting, ikke ved brukerhandling. Gir mulighet for gjenoppretting og audit trail.
+- **Valg:** Klientside søkefiltrering i sidebar (ikke server-side).
+- **Begrunnelse:** Med maks 50 samtaler lastet er klientside-filtrering raskere og enklere enn en ny API-rute.

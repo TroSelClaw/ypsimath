@@ -66,7 +66,7 @@
 | TASK-041 | Elevprofil + mål | ✅ | 2026-02-18 | 2026-02-18 | /profil med elevinfo, kompetansegrid, statistikk + server action for mål (target_grade/focus_areas) |
 | TASK-042 | AI studieanbefalinger | ✅ | 2026-02-18 | 2026-02-18 | Profilside med AI-anbefalinger, 24t cache, tvungen oppdatering (1/time), lenker til wiki-tema |
 | TASK-043 | Tverrfaglig differensiering | ✅ | 2026-02-18 | 2026-02-18 | Kryssfaglig RAG-konfig med R2/1T/1P-boost + promptvern mot nivå-avsløring + Vitest |
-| TASK-044 | Samtalehistorikk | ⬜ | — | — | P1 |
+| TASK-044 | Samtalehistorikk | ✅ | 2026-02-19 | 2026-02-19 | Soft-delete + rename + søk i sidebar |
 | TASK-045 | Phase 2 integrasjonstest | ⬜ | — | — | |
 
 ## Phase 3 — Prøver og vurdering (4–6 uker)
