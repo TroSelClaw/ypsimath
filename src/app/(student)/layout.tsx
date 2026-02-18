@@ -6,6 +6,7 @@ const STUDENT_NAV = [
   { label: 'Chat', href: '/chat', icon: '💬' },
   { label: 'Fremgang', href: '/fremgang', icon: '🪐' },
   { label: 'Flashcards', href: '/flashcards', icon: '🗂️' },
+  { label: 'Øvingsprøve', href: '/oving-prove', icon: '📝' },
 ]
 
 export default async function StudentLayout({ children }: { children: React.ReactNode }) {

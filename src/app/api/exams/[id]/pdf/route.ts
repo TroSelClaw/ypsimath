@@ -25,14 +25,13 @@ export async function GET(request: Request, { params }: Props) {
     return NextResponse.json({ error: 'Ikke autentisert.' }, { status: 401 })
   }
 
-  // Only teachers/admins can export
   const { data: profile } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', user.id)
     .single()
 
-  if (!profile || (profile.role !== 'teacher' && profile.role !== 'admin')) {
+  if (!profile) {
     return NextResponse.json({ error: 'Ingen tilgang.' }, { status: 403 })
   }
 
@@ -41,6 +40,17 @@ export async function GET(request: Request, { params }: Props) {
     .select('*')
     .eq('id', id)
     .single()
+
+  const isOwner = exam?.created_by === user.id
+  const isTeacherOrAdmin = profile.role === 'teacher' || profile.role === 'admin'
+
+  if (!isTeacherOrAdmin && !isOwner) {
+    return NextResponse.json({ error: 'Ingen tilgang.' }, { status: 403 })
+  }
+
+  if (profile.role === 'student' && type === 'solution') {
+    return NextResponse.json({ error: 'Elever kan ikke laste ned løsningsforslag.' }, { status: 403 })
+  }
 
   if (!exam) {
     return NextResponse.json({ error: 'Prøven finnes ikke.' }, { status: 404 })

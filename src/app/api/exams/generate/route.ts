@@ -24,12 +24,25 @@ export async function POST(request: Request) {
     .eq('id', user.id)
     .single()
 
-  if (!profile || (profile.role !== 'teacher' && profile.role !== 'admin')) {
-    return NextResponse.json({ error: 'Kun lærere kan generere prøver.' }, { status: 403 })
+  if (!profile || (profile.role !== 'teacher' && profile.role !== 'admin' && profile.role !== 'student')) {
+    return NextResponse.json({ error: 'Ingen tilgang.' }, { status: 403 })
   }
 
-  // Rate limit: 5 exam generations per hour
-  const rateLimitResult = rateLimit(`exam-gen:${user.id}`, { maxRequests: 5, windowMs: 60 * 60 * 1000 })
+  const body = await request.json().catch(() => null)
+  const isPracticeExam = body?.examType === 'practice'
+
+  if (isPracticeExam && profile.role !== 'student') {
+    return NextResponse.json({ error: 'Kun elever kan opprette øvingsprøver.' }, { status: 403 })
+  }
+
+  if (!isPracticeExam && profile.role === 'student') {
+    return NextResponse.json({ error: 'Elever kan kun opprette øvingsprøver.' }, { status: 403 })
+  }
+
+  // Rate limit: teachers/admin 5/hour, students 5/day for practice exams
+  const rateLimitResult = isPracticeExam
+    ? rateLimit(`practice-exam:${user.id}`, { maxRequests: 5, windowMs: 24 * 60 * 60 * 1000 })
+    : rateLimit(`exam-gen:${user.id}`, { maxRequests: 5, windowMs: 60 * 60 * 1000 })
   if (!rateLimitResult.allowed) {
     return NextResponse.json(
       { error: `For mange forespørsler. Prøv igjen om ${rateLimitResult.retryAfterSeconds} sekunder.` },
@@ -38,7 +51,6 @@ export async function POST(request: Request) {
   }
 
   // Parse and validate input
-  const body = await request.json().catch(() => null)
   const parsed = createExamInputSchema.safeParse(body)
   if (!parsed.success) {
     const msg = parsed.error.issues[0]?.message ?? 'Ugyldig input.'
@@ -165,7 +177,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Kunne ikke lagre oppgavene.' }, { status: 500 })
     }
 
-    return NextResponse.json({ examId: exam.id, totalMaxPoints, questionCount: generatedExam.questions.length })
+    return NextResponse.json({
+      examId: exam.id,
+      totalMaxPoints,
+      questionCount: generatedExam.questions.length,
+      questions: questionRows.map((q, idx) => ({
+        id: `${exam.id}:${idx}`,
+        part: q.part,
+        question_number: q.question_number,
+        content: q.content,
+        max_points: q.max_points,
+        solution: q.solution,
+      })),
+    })
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') {
       return NextResponse.json(

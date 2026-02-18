@@ -423,3 +423,21 @@
 ### Beslutning: Realtime via `router.refresh()` på `exam_submissions`
 - **Valg:** Client-komponenten abonnerer på Supabase Realtime-endringer på `exam_submissions` for eksamen og refresher visningen.
 - **Begrunnelse:** Enkelt og robust for MVP; gir live progresjon uten å innføre ekstra polling/API-lag.
+
+## 2026-02-19 — TASK-053: Elevgenererte øvingsprøver
+
+### Beslutning: Gjenbruk av eksisterende prøvegenerator
+- **Valg:** Elev-UI (`/oving-prove`) bruker samme `POST /api/exams/generate` som lærerflyten, med `examType: 'practice'`.
+- **Begrunnelse:** Minimerer duplisert logikk og holder kvalitet/oppgavestil konsistent mellom lærerprøver og øvingsprøver.
+
+### Beslutning: Rollebasert avgrensing i API
+- **Valg:** Studenter kan kun opprette practice-prøver, lærere/admin kan kun opprette vanlige prøver.
+- **Begrunnelse:** Forhindrer rollelekasje og gjør API-kontrakten eksplisitt.
+
+### Beslutning: Practice rate limit
+- **Valg:** 5 øvingsprøver per dag per elev.
+- **Begrunnelse:** Matcher task-krav og beskytter mot misbruk/kostnadsburst.
+
+### Erfaring: Self-report lagring uten full vurderingspipeline
+- **Valg:** Interaktiv modus lagrer samlet selvrapportert score i `exam_submissions` via ny endpoint `/api/exams/[id]/practice-submit`.
+- **Begrunnelse:** Leverer MVP-kravet for digital gjennomføring uten å blande inn OCR/AI-retting som kun gjelder lærerinnleveringer.
