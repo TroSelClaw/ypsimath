@@ -53,7 +53,7 @@
 | TASK-033 | Aktivitetslogging | ✅ | 2026-02-18 | 2026-02-18 | Ny logActivity action + tracker, wiki view start/end med beacon, oppdatering av studentprofilaggregater |
 | TASK-034 | Bildeopplasting øvelser | ✅ | 2026-02-18 | 2026-02-18 | /api/exercise/image-check + Supabase upload + Gemini-feedback + UI i ExerciseBlock |
 | TASK-035 | Wiki-søk | ✅ | 2026-02-18 | 2026-02-18 | Cmd+K dialog, FTS RPC, grouped results |
-| TASK-036 | Phase 1 integrasjonstest | ⬜ | — | — | |
+| TASK-036 | Phase 1 integrasjonstest | ✅ | 2026-02-18 | 2026-02-18 | Playwright config + wiki/admin E2E specs (env-seeded) |
 
 ## Phase 2 — Chat-tutor + Elevprofil (4–6 uker)
 
@@ -61,7 +61,7 @@
 |------|------|--------|---------|--------|---------|
 | TASK-037 | Hybrid RAG engine | ✅ | 2026-02-18 | 2026-02-18 | RRF k=60, vector+FTS, subject boost |
 | TASK-038 | Chat API (streaming + RAG) | ✅ | 2026-02-18 | 2026-02-18 | Gemini Flash + RAG + rate limit |
-| TASK-039 | Chat UI (streaming + KaTeX) | ⬜ | — | — | |
+| TASK-039 | Chat UI (streaming + KaTeX) | ✅ | 2026-02-18 | 2026-02-18 | AI SDK v6 + MathContent + conversation sidebar |
 | TASK-040 | Chat bildeopplasting | ⬜ | — | — | P1 |
 | TASK-041 | Elevprofil + mål | ⬜ | — | — | P1 |
 | TASK-042 | AI studieanbefalinger | ⬜ | — | — | P2 |
