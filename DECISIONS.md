@@ -130,4 +130,15 @@
 - **Begrunnelse:** Tydelig kvalitetsgate før admin-review reduserer støy i dashboardet.
 - **Lærdom:** Egen parser (`parseQualityResponse`) gjør responshåndtering testbar uten API-kall.
 
+## 2026-02-18 — TASK-023: Admin content review dashboard
+
+### Beslutning: Leverte MVP-dashboard med server actions først
+- **Valg:** Implementerte `/admin/innhold` med filtrering, status-badges, inline redigering og bulk-publisering av `reviewed`.
+- **Begrunnelse:** Dekker den viktigste arbeidsflyten raskt (triage → edit → publish), uten å blokkere videre tasks.
+- **Teknisk:** Egen `app/actions/content.ts` for statusbytte, versjonering (`content_versions`) før overskriving, og publiseringsknapp.
+
+### Avgrensning i denne iterasjonen
+- Side-by-side visning mot source-RAG-kontekst er ikke fullført i denne committen.
+- Pagination er implementert via `range` + page-parameter, men uten dedikert sidekontroll-komponent.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
