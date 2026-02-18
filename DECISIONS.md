@@ -152,4 +152,17 @@
 - **Begrunnelse:** Lav kobling og enkel videreutvikling når exercises/exploration kommer i neste tasks.
 - **Merk:** Eksempler bruker `<details>` for progressiv avsløring i denne iterasjonen.
 
+## 2026-02-18 — TASK-025: Wiki øvelser (selvrapport + autosjekk)
+
+### Beslutning: Klientdrevet oppgaveblokk med server actions for logging
+- **Valg:** La `ExerciseBlock` håndtere interaksjonene i klienten (hint, autosjekk, fasit, selvrapport), og persistere forsøk via `recordExerciseAttempt` server action.
+- **Begrunnelse:** Gir rask respons i UI samtidig som vi får robuste writes til `exercise_attempts` + `activity_log`.
+
+### Beslutning: MVP-avgrensning på drag_drop/interaktive oppgaver
+- **Valg:** `drag_drop` og `interactive` støttes i samme blokk, men valideres foreløpig via fasit + selvrapport (ikke full autosjekk i denne tasken).
+- **Begrunnelse:** Holder scope riktig for TASK-025 uten å blokkere videre fasearbeid.
+
+### Erfaring: Norsk tallformat i autosjekk
+- **Lærdom:** Numeric autosjekk må normalisere både komma og punktum (`2,5` og `2.5`) for å unngå falske feil.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

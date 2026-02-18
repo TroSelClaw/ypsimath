@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { ExampleBlock } from '@/components/wiki/example-block'
+import { ExerciseBlock } from '@/components/wiki/exercise-block'
 import { RuleBlock } from '@/components/wiki/rule-block'
 import { TheoryBlock } from '@/components/wiki/theory-block'
 import { createClient } from '@/lib/supabase/server'
@@ -18,7 +19,15 @@ interface ContentRow {
   topic: string
   sort_order: number
   content_type: 'theory' | 'rule' | 'example' | 'exercise' | 'exploration' | 'flashcard'
+  exercise_format: 'freeform' | 'multiple_choice' | 'numeric_input' | 'drag_drop' | 'interactive' | null
   content: string
+  content_metadata: {
+    hints?: string[]
+    answer?: string | number
+    tolerance?: number
+    choices?: string[]
+    solution?: string
+  } | null
 }
 
 export default async function WikiTopicPage({ params }: { params: Promise<Params> }) {
@@ -27,7 +36,7 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
 
   const { data: rows, error } = await supabase
     .from('content_elements')
-    .select('id,title,chapter,topic,sort_order,content_type,content')
+    .select('id,title,chapter,topic,sort_order,content_type,exercise_format,content,content_metadata')
     .eq('subject_id', subject)
     .eq('topic', topic)
     .eq('status', 'published')
@@ -82,6 +91,19 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
 
           if (item.content_type === 'example') {
             return <ExampleBlock key={item.id} title={item.title} content={item.content} />
+          }
+
+          if (item.content_type === 'exercise') {
+            return (
+              <ExerciseBlock
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                content={item.content}
+                format={item.exercise_format ?? 'freeform'}
+                metadata={item.content_metadata}
+              />
+            )
           }
 
           return null
