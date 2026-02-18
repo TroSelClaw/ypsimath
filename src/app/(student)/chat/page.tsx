@@ -17,6 +17,7 @@ export default async function ChatPage() {
       .from('conversations')
       .select('id, title, updated_at')
       .eq('student_id', user.id)
+      .is('deleted_at', null)
       .order('updated_at', { ascending: false })
       .limit(50)
     conversations = data ?? []

@@ -24,6 +24,7 @@ export default async function ChatConversationPage({ params }: Props) {
     .select('id')
     .eq('id', id)
     .eq('student_id', user.id)
+    .is('deleted_at', null)
     .single()
 
   if (!conversation) return notFound()
@@ -39,6 +40,7 @@ export default async function ChatConversationPage({ params }: Props) {
     .from('conversations')
     .select('id, title, updated_at')
     .eq('student_id', user.id)
+    .is('deleted_at', null)
     .order('updated_at', { ascending: false })
     .limit(50)
 
