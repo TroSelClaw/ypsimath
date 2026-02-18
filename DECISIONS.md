@@ -97,4 +97,37 @@
 
 ---
 
+## 2026-02-18 — TASK-019: Source RAG DB
+
+### Beslutning: Egen `src_chunks`-tabell med streng RLS
+- **Valg:** Opprettet `src_chunks` (internal source-RAG) med `UNIQUE (source_file, chunk_index)` for idempotent ingest.
+- **Begrunnelse:** Sikrer at script kan kjøres flere ganger uten duplikater, og at tabellen aldri eksponeres for vanlige JWT-er.
+- **Teknisk:** HNSW cosine-index på `embedding VECTOR(1536)`, ingen read-policies (kun service role via RLS-bypass).
+
+### Beslutning: Enkel, robust chunking først
+- **Valg:** Implementerte paragraf-bevisst overlap-chunker (500/100 tokens approx) med ord-baserte heuristikker.
+- **Begrunnelse:** God nok kvalitet i MVP, lav kompleksitet, enkel å teste.
+- **Lærdom:** Overlap-tester må sjekke glidende delmengder, ikke faste siste/første 10 ord.
+
+## 2026-02-18 — TASK-020: Content generation script
+
+### Beslutning: Strukturert prompt-pipeline med R1-mål innebygd
+- **Valg:** Egen `prompts.ts` + `content-generator.ts` med JSON-outputkrav og KaTeX-regelsjekk.
+- **Begrunnelse:** Forutsigbar output gjør lagring i `content_elements` enklere og reduserer manuell opprydding.
+- **Teknisk:** `--dry-run` støttes for sikker verifisering før DB-innsetting.
+
+## 2026-02-18 — TASK-021: Embedding pipeline
+
+### Beslutning: Batch + retry + idempotens
+- **Valg:** `embed-content.ts` prosesserer kun `embedding IS NULL` for `reviewed/published`, med batch-size default 50 og 3 retries.
+- **Begrunnelse:** Stabil drift ved midlertidige API-feil, minimal risiko for dobbeltarbeid.
+- **Merk:** Atomic oppdatering av `embedding + fts` krever DB-side trigger/RPC senere; nå oppdateres embedding i script-lag.
+
+## 2026-02-18 — TASK-022: LLM quality flagging
+
+### Beslutning: Separat quality-pass før publisering
+- **Valg:** `flag-content.ts` + `quality-checker.ts` (Sonnet) som flytter `draft -> reviewed/flagged` og lagrer `flag_reason` + `flag_confidence` i metadata.
+- **Begrunnelse:** Tydelig kvalitetsgate før admin-review reduserer støy i dashboardet.
+- **Lærdom:** Egen parser (`parseQualityResponse`) gjør responshåndtering testbar uten API-kall.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
