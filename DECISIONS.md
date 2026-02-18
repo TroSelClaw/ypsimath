@@ -253,4 +253,22 @@
 - Ingen full tidsakkumulering fra alle aktivitetstyper ennå (kun eksplisitt økningslogikk ved exercise_attempt i tracker).
 - Chat/video/flashcard kobles på samme tracker i senere tasks.
 
+## 2026-02-18 — TASK-029: Planet journey (lineær)
+
+### Beslutning: Lettvekts planetkart med SVG-trasé + klikkbare noder
+- **Valg:** Implementerte `PlanetMap` + `PlanetNode` i `components/journey/` med horisontal desktop-trasé (SVG stiplet linje) og mobilvennlig scroll-layout.
+- **Begrunnelse:** Oppfyller kravene om lineær progresjonsvisualisering uten tung 3D-stack, samtidig som UX holder seg rask og responsiv.
+
+### Beslutning: Progresjon basert på fullførte øvinger per tema
+- **Valg:** `fremgang`-siden beregner tema-status som `completed/current/future` ved å sammenligne publiserte øvinger mot elevens `exercise_attempts`.
+- **Begrunnelse:** Matcher task-kravet («fullført når alle øvelser er forsøkt») og gir tydelig neste tema uten ekstra backend-kompleksitet.
+
+### Beslutning: Semesterplan styrer rekkefølge, med trygg fallback
+- **Valg:** Henter siste `semester_plan_entries` for elevens klasse og bruker topic-rekkefølgen derfra; fallback til en kort standardliste når plan mangler.
+- **Begrunnelse:** Sikrer at siden fungerer både med og uten aktiv semesterplan i databasen.
+
+### Avgrensning i denne iterasjonen
+- Nåværende side viser progresjonsprosent + neste tema, men inkluderer ikke avansert statusbanner («i rute/foran/bak») fra TASK-032.
+- Lenker bruker slugging av topic-navn (forventet samsvar med wiki-ruter), med mulighet for å bytte til eksplisitt topic-slugfelt senere.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

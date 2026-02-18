@@ -46,7 +46,7 @@
 | TASK-026 | Pyodide Python runtime | ✅ | 2026-02-18 | 2026-02-18 | Pyodide lazy-load + PythonRunner + matplotlib plot-støtte |
 | TASK-027 | Mafs interaktive viz | ✅ | 2026-02-18 | 2026-02-18 | FunctionPlot + TangentExplorer + AreaUnderCurve + VectorPlot + ParametricPlot |
 | TASK-028 | GeoGebra embed | ✅ | 2026-02-18 | 2026-02-18 | Sandboxed iframe + lazy-load med IntersectionObserver + fallback-lenke |
-| TASK-029 | Planet journey (lineær) | ⬜ | — | — | P1 |
+| TASK-029 | Planet journey (lineær) | ✅ | 2026-02-18 | 2026-02-18 | PlanetMap + PlanetNode på /fremgang med progresjonsstatus, planlagt dato og navigering til wiki-tema |
 | TASK-030 | Semesterplan: wizard | ✅ | 2026-02-18 | 2026-02-18 | P1 |
 | TASK-031 | Semesterplan: kalender + DnD | ✅ | 2026-02-18 | 2026-02-18 | Kalender-/tabellvisning, drag-and-drop mellom datoer, chat-redigering, auto-save (2s) og versjonslagring |
 | TASK-032 | Semesterplan: elevvisning | ⬜ | — | — | P1 |
