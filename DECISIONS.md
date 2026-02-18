@@ -70,4 +70,31 @@
 
 ---
 
+## 2026-02-18 — TASK-014: Responsiv app-shell + navigasjon
+
+### Beslutning: Arkitektur for app-shell
+- **Valg:** Desktop sidebar (sticky, 240px) + mobile header med Sheet-meny + bottom tab-nav
+- **Begrunnelse:** Standard mønster for responsiv dashboard-app. Bottom-nav gir tommelvenlig navigasjon på mobil. Sheet-meny gir tilgang til alle nav-items inkl. innstillinger.
+- **Alternativ vurdert:** shadcn Sidebar-komponentens innebygde collapsible → for kompleks for nåværende behov, bruker enklere tilnærming.
+
+### Beslutning: Tema-syklus (light → dark → UU)
+- **Valg:** Én knapp som syklerer gjennom tre moduser
+- **Begrunnelse:** Enklere UX enn dropdown. UU-modus (høy kontrast) var allerede definert i TASK-002.
+
+### Erfaring: React 19 lint-regler
+- `useEffect(() => setState(true), [])` gir lint-feil i React 19 (`react-hooks/set-state-in-effect`). Løst med `requestAnimationFrame` wrapper.
+- shadcn sidebar skeleton bruker `Math.random()` i render — gir `react-hooks/purity`-feil. Erstattet med fast bredde.
+
+---
+
+## 2026-02-18 — TASK-018: Phase 0 smoke test
+
+### Resultat: Alt grønt
+- Lint: 0 errors, 0 warnings
+- Tests: 12/12 pass (markdown pipeline 6, schemas 4, rate-limit 2)
+- Build: Kompilerer og genererer statiske sider uten feil
+- **Konklusjon:** Phase 0 foundation er stabil for videre arbeid.
+
+---
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

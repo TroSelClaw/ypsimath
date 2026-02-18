@@ -26,11 +26,11 @@
 | TASK-011 | Typografi + KaTeX fonts | ✅ | 2026-02-18 | 2026-02-18 | Inter + KaTeX + nb-NO formatters |
 | TASK-012 | KaTeX + Markdown pipeline | ✅ | 2026-02-18 | 2026-02-18 | 6 tester grønne |
 | TASK-013 | CI/CD: GitHub Actions + Vercel | ✅ | 2026-02-18 | 2026-02-18 | Vercel auto-deploy settes opp når GitHub-repo opprettes |
-| TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
+| TASK-014 | Responsiv app-shell + nav | ✅ | 2026-02-18 | 2026-02-18 | Desktop sidebar + mobile bottom-nav + theme toggle |
 | TASK-015 | Rate limiting | ✅ | 2026-02-18 | 2026-02-18 | In-memory sliding window, 2 tester |
 | TASK-016 | Feilhåndtering + logging | ✅ | 2026-02-18 | 2026-02-18 | Sentry legges til i Phase 6 |
 | TASK-017 | Zod-skjemaer | ✅ | 2026-02-18 | 2026-02-18 | Zod v4, 4 tester, alle modeller |
-| TASK-018 | Phase 0 smoke test | ⬜ | — | — | |
+| TASK-018 | Phase 0 smoke test | ✅ | 2026-02-18 | 2026-02-18 | Lint 0 errors, 12 tests pass, build OK |
 
 ## Phase 1 — Content Pipeline + Wiki (6–8 uker)
 
