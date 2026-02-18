@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { ExampleBlock } from '@/components/wiki/example-block'
 import { ExerciseBlock } from '@/components/wiki/exercise-block'
+import { PythonRunner } from '@/components/wiki/python-runner'
 import { RuleBlock } from '@/components/wiki/rule-block'
 import { TheoryBlock } from '@/components/wiki/theory-block'
 import { createClient } from '@/lib/supabase/server'
@@ -27,6 +28,7 @@ interface ContentRow {
     tolerance?: number
     choices?: string[]
     solution?: string
+    pythonCode?: string
   } | null
 }
 
@@ -104,6 +106,12 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
                 metadata={item.content_metadata}
               />
             )
+          }
+
+          if (item.content_type === 'exploration') {
+            const initialCode = item.content_metadata?.pythonCode ?? item.content
+
+            return <PythonRunner key={item.id} code={initialCode} />
           }
 
           return null

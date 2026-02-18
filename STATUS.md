@@ -43,7 +43,7 @@
 | TASK-023 | Admin content review dashboard | ✅ | 2026-02-18 | 2026-02-18 | Filters + approve/edit/publish + bulk publish reviewed |
 | TASK-024 | Wiki renderer: teori/regler/eksempler | ✅ | 2026-02-18 | 2026-02-18 | SSR route + blokker + breadcrumbs + neste/forrige |
 | TASK-025 | Wiki øvelser: selvrapport + autosjekk | ✅ | 2026-02-18 | 2026-02-18 | ExerciseBlock + hints/fasit/selvrapport + server action + auto-check tester |
-| TASK-026 | Pyodide Python runtime | ⬜ | — | — | P1 |
+| TASK-026 | Pyodide Python runtime | ✅ | 2026-02-18 | 2026-02-18 | Pyodide lazy-load + PythonRunner + matplotlib plot-støtte |
 | TASK-027 | Mafs interaktive viz | ⬜ | — | — | P1 |
 | TASK-028 | GeoGebra embed | ⬜ | — | — | P2 |
 | TASK-029 | Planet journey (lineær) | ⬜ | — | — | P1 |

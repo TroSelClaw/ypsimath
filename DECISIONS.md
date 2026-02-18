@@ -165,4 +165,18 @@
 ### Erfaring: Norsk tallformat i autosjekk
 - **Lærdom:** Numeric autosjekk må normalisere både komma og punktum (`2,5` og `2.5`) for å unngå falske feil.
 
+## 2026-02-18 — TASK-026: Pyodide Python runtime
+
+### Beslutning: CDN-basert lazy-load av Pyodide
+- **Valg:** Lastet Pyodide dynamisk fra jsDelivr ved første kjøring via `loadPyodideRuntime()`.
+- **Begrunnelse:** Unngår å legge ~10MB runtime i initial bundle, holder wiki-sider raske når exploration-blokker ikke brukes.
+
+### Beslutning: Enkel editor + stdout/stderr + matplotlib i MVP
+- **Valg:** `PythonRunner` med textarea-editor, "Kjør kode"-knapp, stdout/stderr-visning og automatisk rendering av siste matplotlib-figur.
+- **Begrunnelse:** Oppfyller kjernebehovet for interaktive utforskninger uten å dra inn tung editor-avhengighet i denne tasken.
+
+### Sikkerhetsavgrensning i runtime
+- **Valg:** Blokkerte `window.fetch` under kjøring av bruker-kode for å hindre nettverkskall fra Python-sandkassen.
+- **Begrunnelse:** Reduserer risiko i klientkjøring og matcher kravet om isolert kjøring i nettleseren.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
