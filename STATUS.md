@@ -25,10 +25,10 @@
 | TASK-010 | Klasse-/elevadmin UI | ⬜ | — | — | |
 | TASK-011 | Typografi + KaTeX fonts | ⬜ | — | — | |
 | TASK-012 | KaTeX + Markdown pipeline | ⬜ | — | — | |
-| TASK-013 | CI/CD: GitHub Actions + Vercel | 🔧 | 2026-02-18 | — | |
+| TASK-013 | CI/CD: GitHub Actions + Vercel | ✅ | 2026-02-18 | 2026-02-18 | Vercel auto-deploy settes opp når GitHub-repo opprettes |
 | TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
 | TASK-015 | Rate limiting | ⬜ | — | — | |
-| TASK-016 | Feilhåndtering + logging | ⬜ | — | — | |
+| TASK-016 | Feilhåndtering + logging | 🔧 | 2026-02-18 | — | |
 | TASK-017 | Zod-skjemaer | ⬜ | — | — | |
 | TASK-018 | Phase 0 smoke test | ⬜ | — | — | |
 
