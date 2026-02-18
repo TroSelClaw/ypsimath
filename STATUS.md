@@ -36,7 +36,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-019 | Source RAG DB | ⬜ | — | — | |
+| TASK-019 | Source RAG DB | ✅ | 2026-02-18 | 2026-02-18 | Migration + chunker + embedder + script |
 | TASK-020 | Content generation script | ⬜ | — | — | |
 | TASK-021 | Embedding pipeline | ⬜ | — | — | |
 | TASK-022 | LLM quality flagging | ⬜ | — | — | |
