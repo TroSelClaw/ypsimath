@@ -52,7 +52,7 @@
 | TASK-032 | Semesterplan: elevvisning | ✅ | 2026-02-18 | 2026-02-18 | /fremgang viser neste tema+dato, planetetiketter med dato og statusbanner (i rute/foran/bak) basert på mastered_competency_goals |
 | TASK-033 | Aktivitetslogging | ✅ | 2026-02-18 | 2026-02-18 | Ny logActivity action + tracker, wiki view start/end med beacon, oppdatering av studentprofilaggregater |
 | TASK-034 | Bildeopplasting øvelser | ✅ | 2026-02-18 | 2026-02-18 | /api/exercise/image-check + Supabase upload + Gemini-feedback + UI i ExerciseBlock |
-| TASK-035 | Wiki-søk | ⬜ | — | — | P2 |
+| TASK-035 | Wiki-søk | ✅ | 2026-02-18 | 2026-02-18 | Cmd+K dialog, FTS RPC, grouped results |
 | TASK-036 | Phase 1 integrasjonstest | ⬜ | — | — | |
 
 ## Phase 2 — Chat-tutor + Elevprofil (4–6 uker)

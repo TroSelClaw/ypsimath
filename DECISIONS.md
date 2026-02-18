@@ -302,4 +302,10 @@
 - UI viser opplastingsstatus/feedback inline i `ExerciseBlock`, men uten historikkvisning av tidligere opplastede bilder ennå.
 - Hvis Google API-nøkkel mangler, lagres bilde fortsatt og brukeren får tydelig fallback-melding om at AI-feedback er utilgjengelig.
 
+### Beslutning: Wiki-søk med Supabase RPC + FTS
+- **Valg:** Implementerte søk som en Supabase `search_content` RPC-funksjon med `plainto_tsquery('norwegian', ...)` over `content_elements.fts`.
+- **Begrunnelse:** FTS er allerede indeksert (GIN) og gir sub-100ms søk. RPC holder logikken i DB og unngår komplekse klient-queries. `plainto_tsquery` er trygg mot SQL-injeksjon og håndterer vilkårlig brukerinput.
+- **UI:** Cmd/Ctrl+K dialog med tastaturnavigasjon, debounced input (250ms), resultater gruppert etter content_type.
+- **Alternativ vurdert:** Klient-side search med Fuse.js → droppet fordi FTS allerede finnes og skalerer bedre.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
