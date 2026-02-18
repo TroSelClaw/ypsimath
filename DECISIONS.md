@@ -30,4 +30,21 @@
 
 ---
 
+## 2026-02-18 — TASK-001: Next.js scaffold
+
+### Erfaring: create-next-app i ikke-tom mappe
+- Scaffoldet til `/tmp/` og kopierte tilbake — `create-next-app` nekter å kjøre i mapper med eksisterende filer.
+- Første forsøk mistet dotfiles pga `sh` (ikke bash) — `mv *` inkluderer ikke dotfiles. Løst med `find -exec cp`.
+- **Lærdom:** Alltid scaffold til tmp og bruk `find . -maxdepth 1 -not -name '.' -not -name '.git' -exec cp -r {} dest/ \;` for å flytte inkl. dotfiles.
+
+### Beslutning: Next.js 16.1.6 (ikke 15)
+- `create-next-app@latest` ga Next.js 16.1.6 (ikke 15 som i PRD). PRD sier "Next.js 15" men dette er nyere og bakoverkompatibelt. Beholder 16.x.
+- TypeScript 5.9.3, React 19.2.3, Tailwind 4.1.18.
+
+### Beslutning: Prettier config
+- Semi: false, singleQuote: true, trailingComma: all — standard for moderne Next.js-prosjekter.
+- Lagt til `prettier-plugin-tailwindcss` for automatisk sortering av klasser.
+
+---
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

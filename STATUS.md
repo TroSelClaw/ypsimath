@@ -13,7 +13,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-001 | Next.js 15 scaffold | 🔧 | 2026-02-18 | — | |
+| TASK-001 | Next.js 15 scaffold | ✅ | 2026-02-18 | 2026-02-18 | Next.js 16.1.6, TS 5.9.3, pnpm |
 | TASK-002 | Tailwind + shadcn/ui | ⬜ | — | — | |
 | TASK-003 | Supabase EU Frankfurt | ⬜ | — | — | Krever Aleksanders konto |
 | TASK-004 | DB: user/class tables | ⬜ | — | — | |
