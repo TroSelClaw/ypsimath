@@ -1,5 +1,6 @@
 import { saveStudentGoals } from '@/app/actions/profile'
 import { CompetencyGrid } from '@/components/profile/competency-grid'
+import { ProfileRecommendations } from '@/components/profile/recommendations'
 import { StatsCards } from '@/components/profile/stats-cards'
 import { requireRole } from '@/lib/auth/get-profile'
 import { createClient } from '@/lib/supabase/server'
@@ -84,6 +85,8 @@ export default async function ProfilePage() {
       />
 
       <CompetencyGrid masteredGoals={masteredGoals} strugglingGoals={strugglingGoals} />
+
+      <ProfileRecommendations />
 
       <section className="rounded-2xl border bg-card p-4 md:p-5">
         <h2 className="text-lg font-semibold">Mål</h2>

@@ -345,4 +345,21 @@
 - «Streak» vises ikke separat ennå; foreløpig brukes aktivitetsvolum siste 7 dager som ukesindikator.
 - Lærerens read-only profilvisning kommer i senere dashboard-task (ikke del av TASK-041).
 
+## 2026-02-18 — TASK-042: AI studieanbefalinger
+
+### Beslutning: Aggregert anbefalingsmotor med server-cache
+- **Valg:** Implementerte `lib/ai/recommendations.ts` som bygger anbefalinger fra aggregerte elevdata (mål, feilrate per kompetansemål, aktivitetsnivå), med 24t in-memory cache per elev + profilhash.
+- **Begrunnelse:** Oppfyller krav om personvernvennlig prompt (ingen rå persondata) og reduserer unødige LLM-kall ved uendret profil.
+
+### Beslutning: Profil-UI med tvungen oppdatering og rate limit
+- **Valg:** La til `ProfileRecommendations` på `/profil`, med skeleton ved lasting, fallback-tekst ved tom historikk, og knapp for «Oppdater anbefalinger» som går via API.
+- **Begrunnelse:** Gir tydelig, elevvennlig flyt og oppfyller kravet om manuell refresh ved behov.
+
+### Beslutning: Egen API-route for anbefalinger
+- **Valg:** Implementerte `GET /api/profile/recommendations` med `force=1`, knyttet til `RATE_LIMITS.recommendations` (1/time) og `Retry-After` ved 429.
+- **Begrunnelse:** Holder policy (unngå spam/overforbruk), og gir forutsigbar backend-kontrakt mellom UI og anbefalingsmotor.
+
+### Avgrensning i denne iterasjonen
+- LLM-kallet bruker eksisterende Gemini-modell i prosjektet for å unngå ny SDK/konfig i denne tasken; fallback-regler genererer fortsatt 2–3 konkrete anbefalinger om LLM-feiler.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
