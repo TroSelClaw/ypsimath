@@ -308,4 +308,9 @@
 - **UI:** Cmd/Ctrl+K dialog med tastaturnavigasjon, debounced input (250ms), resultater gruppert etter content_type.
 - **Alternativ vurdert:** Klient-side search med Fuse.js → droppet fordi FTS allerede finnes og skalerer bedre.
 
+### Beslutning: TASK-036 med miljøstyrte E2E-tester (Playwright)
+- **Valg:** Implementerte `playwright.config.ts` + to E2E-specs (`e2e/wiki.spec.ts`, `e2e/content-admin.spec.ts`) med `test.skip(...)` når test-credentials mangler.
+- **Begrunnelse:** Integrasjonstestene krever seedet Supabase-data og testbrukere. Ved å gate med env-variabler kan testene kjøre i CI/staging uten å gi falske røde bygg lokalt.
+- **Tradeoff:** Testene verifiserer realistiske brukerflyter, men krever eksplisitt miljøoppsett (`E2E_ADMIN_*`, `E2E_STUDENT_*`, ev. `PLAYWRIGHT_BASE_URL`).
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
