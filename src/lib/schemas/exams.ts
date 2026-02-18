@@ -58,3 +58,26 @@ export const createExamInputSchema = z.object({
     }),
 })
 export type CreateExamInput = z.infer<typeof createExamInputSchema>
+
+export const errorAnalysisSchema = z.object({
+  fortegnsfeil: z.boolean(),
+  konseptfeil: z.boolean(),
+  regnefeil: z.boolean(),
+  manglende_steg: z.boolean(),
+  details: z.string(),
+})
+export type ErrorAnalysis = z.infer<typeof errorAnalysisSchema>
+
+export const examAnswerSchema = z.object({
+  id: z.string().uuid(),
+  exam_id: z.string().uuid(),
+  submission_id: z.string().uuid(),
+  question_id: z.string().uuid(),
+  student_answer_text: z.string(),
+  score_percent: z.number().min(0).max(100),
+  confidence_score: z.number().min(0).max(100),
+  error_analysis: errorAnalysisSchema,
+  llm_feedback: z.string(),
+  teacher_override: z.boolean().default(false),
+})
+export type ExamAnswer = z.infer<typeof examAnswerSchema>
