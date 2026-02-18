@@ -441,3 +441,13 @@
 ### Erfaring: Self-report lagring uten full vurderingspipeline
 - **Valg:** Interaktiv modus lagrer samlet selvrapportert score i `exam_submissions` via ny endpoint `/api/exams/[id]/practice-submit`.
 - **Begrunnelse:** Leverer MVP-kravet for digital gjennomføring uten å blande inn OCR/AI-retting som kun gjelder lærerinnleveringer.
+
+## 2026-02-19 — TASK-054: Phase 3 integrasjonstest
+
+### Beslutning: Lettvekts E2E med miljø-gating
+- **Valg:** La til `e2e/exams.spec.ts` med skip-gating på E2E-credentials i miljøvariabler.
+- **Begrunnelse:** Holder CI stabil når testkontoer/seed mangler, men gir komplett flyt når miljø er satt opp.
+
+### Beslutning: Dekning på minimumskrav først
+- **Valg:** Testene verifiserer tre kritiske flyter: lærer genererer prøve + PDF, lærer åpner retteside, elev genererer øvingsprøve + PDF-valg.
+- **Begrunnelse:** Rask regressjonsdekning for Phase 3 uten å introdusere skjør avhengighet til OCR/retting i CI.

@@ -81,7 +81,7 @@
 | TASK-051 | AI-retting + feilanalyse | ✅ | 2026-02-19 | 2026-02-19 | Gemini OCR + GPT-4o scoring + feilkategorisering |
 | TASK-052 | Resultatvisning | ✅ | 2026-02-19 | 2026-02-19 | Klasseoversikt + detaljvisning + overstyring + CSV + Realtime-refresh |
 | TASK-053 | Elevgenererte øvingsprøver | ✅ | 2026-02-19 | 2026-02-19 | Student-side /oving-prove + practice mode + PDF/self-report lagring |
-| TASK-054 | Phase 3 integrasjonstest | ⬜ | — | — | |
+| TASK-054 | Phase 3 integrasjonstest | ✅ | 2026-02-19 | 2026-02-19 | e2e/exams.spec.ts lagt til (teacher create/pdf, retteside, student øvingsprøve) |
 
 ## Phase 4 — Lærer-dashboard + rapporter (3–4 uker)
 
