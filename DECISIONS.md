@@ -179,4 +179,18 @@
 - **Valg:** Blokkerte `window.fetch` under kjøring av bruker-kode for å hindre nettverkskall fra Python-sandkassen.
 - **Begrunnelse:** Reduserer risiko i klientkjøring og matcher kravet om isolert kjøring i nettleseren.
 
+## 2026-02-18 — TASK-027: Mafs interaktive visualiseringer
+
+### Beslutning: Egen visualiseringspakke med fire MVP-komponenter + parametrisk plot
+- **Valg:** La til `components/visualizations/` med `FunctionPlot`, `TangentExplorer`, `AreaUnderCurve`, `VectorPlot` og `ParametricPlot` (eksportert via `index.ts`).
+- **Begrunnelse:** Oppfyller PRD-kravene for R1-utforskning med gjenbrukbare byggesteiner som kan brukes direkte i kommende wiki-`exploration`-elementer.
+
+### Beslutning: Numerisk arealberegning med trapezmetoden
+- **Valg:** `AreaUnderCurve` bruker justerbare grenser og trapezintegrasjon for å vise estimert areal i sanntid.
+- **Begrunnelse:** Robust og lettforklarlig MVP-løsning uten tunge symbolbiblioteker.
+
+### Avgrensning i denne iterasjonen
+- Pilhoder på vektorer er ikke lagt inn ennå (linjesegmenter + parallellogram brukes i MVP-visningen).
+- Lazy-loading på komponentnivå er ikke koblet inn i wiki-renderer enda; komponentene er klargjort for dette i neste task som integrerer exploration-rendering.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
