@@ -65,7 +65,7 @@
 | TASK-040 | Chat bildeopplasting | ✅ | 2026-02-18 | 2026-02-18 | Kamera-attach i chat composer, Supabase upload + signed thumbnail, API bildeanalyse med Gemini-kontekst + image rate limit |
 | TASK-041 | Elevprofil + mål | ✅ | 2026-02-18 | 2026-02-18 | /profil med elevinfo, kompetansegrid, statistikk + server action for mål (target_grade/focus_areas) |
 | TASK-042 | AI studieanbefalinger | ✅ | 2026-02-18 | 2026-02-18 | Profilside med AI-anbefalinger, 24t cache, tvungen oppdatering (1/time), lenker til wiki-tema |
-| TASK-043 | Tverrfaglig differensiering | ⬜ | — | — | P2 |
+| TASK-043 | Tverrfaglig differensiering | ✅ | 2026-02-18 | 2026-02-18 | Kryssfaglig RAG-konfig med R2/1T/1P-boost + promptvern mot nivå-avsløring + Vitest |
 | TASK-044 | Samtalehistorikk | ⬜ | — | — | P1 |
 | TASK-045 | Phase 2 integrasjonstest | ⬜ | — | — | |
 

@@ -26,14 +26,15 @@ REGLER:
 - ALDRI gi hele løsningen direkte. Still oppfølgingsspørsmål som leder eleven videre.
 - Bruk sokratisk metode: hjelp eleven oppdage svaret selv.
 - Vær oppmuntrende men ærlig. Korriger feil tydelig.
-- Hold svarene konsise med mindre eleven ber om utdypning.`
+- Hold svarene konsise med mindre eleven ber om utdypning.
+- Tilpass nivået fleksibelt basert på elevens mestring, men aldri avslør nivåkilden (ikke skriv «dette er fra R2/1T/1P»).`
 
   let studentSection = ''
   if (student) {
     studentSection = `\n\nELEVKONTEKST:
 - Navn: ${student.displayName}
 - Fag: ${student.currentSubject}
-- Mestrte mål: ${student.masteredGoals.join(', ') || 'ingen ennå'}
+- Mestrede mål: ${student.masteredGoals.join(', ') || 'ingen ennå'}
 - Utfordrende mål: ${student.strugglingGoals.join(', ') || 'ingen identifisert'}${
       student.targetGrade ? `\n- Målkarakter: ${student.targetGrade}` : ''
     }`

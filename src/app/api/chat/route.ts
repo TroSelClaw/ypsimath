@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { streamText } from 'ai'
 import { google } from '@ai-sdk/google'
 import { createClient } from '@/lib/supabase/server'
-import { hybridSearch } from '@/lib/rag/hybrid-search'
+import { buildCrossSubjectSearchConfig, hybridSearch } from '@/lib/rag/hybrid-search'
 import { buildSystemPrompt } from '@/lib/ai/system-prompt'
 import { RATE_LIMITS, rateLimit } from '@/lib/rate-limit'
 import { analyzeChatImage } from '@/lib/ai/image-analyzer'
@@ -153,10 +153,21 @@ export async function POST(request: NextRequest) {
 
   const searchQuery = imageContext ? `${content}\n${imageContext}` : content
 
+  const crossSubjectConfig = buildCrossSubjectSearchConfig(
+    profile
+      ? {
+          currentSubject: profile.current_subject,
+          masteredGoals: profile.mastered_competency_goals,
+          strugglingGoals: profile.struggling_competency_goals,
+        }
+      : null,
+  )
+
   const ragResults = await hybridSearch(supabase, searchQuery, {
-    subjectIds: profile?.current_subject ? [profile.current_subject] : ['r1'],
+    subjectIds: crossSubjectConfig.subjectIds,
     limit: 5,
-    studentSubjectId: profile?.current_subject ?? 'r1',
+    studentSubjectId: crossSubjectConfig.studentSubjectId,
+    subjectBoosts: crossSubjectConfig.subjectBoosts,
   })
 
   const systemPrompt = buildSystemPrompt(

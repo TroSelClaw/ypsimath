@@ -363,3 +363,21 @@
 - LLM-kallet bruker eksisterende Gemini-modell i prosjektet for å unngå ny SDK/konfig i denne tasken; fallback-regler genererer fortsatt 2–3 konkrete anbefalinger om LLM-feiler.
 
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
+
+## 2026-02-18 — TASK-043: Tverrfaglig differensiering i chat
+
+### Beslutning: Egen policy-funksjon for kryssfaglig RAG
+- **Valg:** Innførte `buildCrossSubjectSearchConfig()` i `lib/rag/hybrid-search.ts` som beregner søkemodus fra elevprofil.
+- **Regler:**
+  - `mastered > 8` → kryssfaglig søk aktivert + R2-boost.
+  - `struggling > 4` → kryssfaglig søk aktivert + 1T/1P-boost.
+  - ellers → søk begrenses til elevens nåværende fag.
+- **Begrunnelse:** Holder tersklene eksplisitte, testbare og gjenbrukbare i API-laget.
+
+### Beslutning: Nivådifferensiering uten å avsløre kildefag
+- **Valg:** Oppdaterte systemprompt med eksplisitt regel om aldri å skrive at forklaring kommer fra R2/1T/1P.
+- **Begrunnelse:** Oppfyller produktkravet om skjult differensiering og unngår at elever opplever «nivåmerking» i dialogen.
+
+### Erfaring: Testbarhet øker ved å isolere beslutningslogikk
+- **Valg:** La til `hybrid-search.test.ts` med tre enhetstester for default/advanced/supportive modus.
+- **Resultat:** `tsc --noEmit` og `vitest run` grønt etter endringene.
