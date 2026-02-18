@@ -18,4 +18,16 @@
 
 ---
 
+### Beslutning: Git beste praksiser
+- **Valg:** Følger disse reglene gjennom hele prosjektet:
+  - **Conventional Commits**: `type(scope): beskrivelse` — imperative mood, lowercase, ingen punktum
+  - **Scope = TASK-ID** når relevant: `feat(TASK-001): scaffold next.js 15 project`
+  - **Én logisk endring per commit** — ikke samle urelaterte endringer
+  - **Feature branches**: `feat/TASK-XXX-kort-beskrivelse` for hver task, merges til `main`
+  - **Ikke commit secrets** — `.env` i `.gitignore` fra dag 1
+  - **Meningsfulle meldinger**: body forklarer *hvorfor*, ikke *hva*
+- **Begrunnelse:** Gir lesbar historikk, muliggjør automatisk changelog, og holder `main` stabil.
+
+---
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
