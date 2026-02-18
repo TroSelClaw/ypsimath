@@ -387,3 +387,11 @@
 - **Begrunnelse:** GDPR-krav: faktisk sletting skjer ved kontosletting, ikke ved brukerhandling. Gir mulighet for gjenoppretting og audit trail.
 - **Valg:** Klientside søkefiltrering i sidebar (ikke server-side).
 - **Begrunnelse:** Med maks 50 samtaler lastet er klientside-filtrering raskere og enklere enn en ny API-rute.
+
+### TASK-050: Sideintervaller lagres per innlevering
+- **Valg:** La til `start_page` og `end_page` direkte på `exam_submissions` i stedet for separat mapping-tabell.
+- **Begrunnelse:** Forenkler grading-pipelinen (én rad per elev-innlevering med alt nødvendig kontekst) og reduserer join-kompleksitet i neste task.
+
+### TASK-050: Validering av sideintervaller i klient før oppstart
+- **Valg:** Blokkerer «Start retting» ved overlapp eller ufullstendige intervaller.
+- **Begrunnelse:** Fanger de vanligste operatørfeilene tidlig og hindrer feil i batch-retting.

@@ -1,0 +1,3 @@
+ALTER TABLE exam_submissions
+  ADD COLUMN IF NOT EXISTS start_page INTEGER,
+  ADD COLUMN IF NOT EXISTS end_page INTEGER;
