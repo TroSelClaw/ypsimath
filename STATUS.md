@@ -20,8 +20,8 @@
 | TASK-005 | DB: content tables | ✅ | 2026-02-18 | 2026-02-18 | pgvector HNSW + FTS GIN + R1 seed |
 | TASK-006 | DB: activity/exam/chat/semester | ✅ | 2026-02-18 | 2026-02-18 | 13 tabeller + RLS |
 | TASK-007 | Auth: registrering + login | ✅ | 2026-02-18 | 2026-02-18 | Server actions + Zod + norske feilmeldinger |
-| TASK-008 | Auth: middleware + logout | 🔧 | 2026-02-18 | — | |
-| TASK-009 | Rollebasert routing + layouts | ⬜ | — | — | |
+| TASK-008 | Auth: middleware + logout | ✅ | 2026-02-18 | 2026-02-18 | Middleware + route protection + ?next param |
+| TASK-009 | Rollebasert routing + layouts | 🔧 | 2026-02-18 | — | |
 | TASK-010 | Klasse-/elevadmin UI | ⬜ | — | — | |
 | TASK-011 | Typografi + KaTeX fonts | ✅ | 2026-02-18 | 2026-02-18 | Inter + KaTeX + nb-NO formatters |
 | TASK-012 | KaTeX + Markdown pipeline | ✅ | 2026-02-18 | 2026-02-18 | 6 tester grønne |

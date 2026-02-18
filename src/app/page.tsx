@@ -1,10 +1,14 @@
-export default function Home() {
-  return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-      <p className="text-muted-foreground">
-        Velkommen til YpsiMath. Velg et emne fra menyen for å komme i gang.
-      </p>
-    </div>
-  )
+import { redirect } from 'next/navigation'
+import { getProfile } from '@/lib/auth/get-profile'
+
+export default async function Home() {
+  const profile = await getProfile()
+
+  const homeMap: Record<string, string> = {
+    student: '/wiki',
+    teacher: '/laerer',
+    admin: '/admin/innhold',
+  }
+
+  redirect(homeMap[profile.role] ?? '/wiki')
 }

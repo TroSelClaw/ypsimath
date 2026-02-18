@@ -1,18 +1,31 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import type { NavItem } from './nav-items'
 import { DesktopSidebar } from './desktop-sidebar'
 import { MobileHeader } from './mobile-header'
 import { MobileBottomNav } from './mobile-bottom-nav'
 
-export function AppShell({ children }: { children: ReactNode }) {
+export interface AppShellProfile {
+  id: string
+  display_name: string
+  role: string
+}
+
+interface AppShellProps {
+  children: ReactNode
+  profile: AppShellProfile
+  navItems: NavItem[]
+}
+
+export function AppShell({ children, profile, navItems }: AppShellProps) {
   return (
     <div className="flex min-h-screen">
-      <DesktopSidebar />
+      <DesktopSidebar profile={profile} navItems={navItems} />
       <div className="flex flex-1 flex-col">
-        <MobileHeader />
+        <MobileHeader profile={profile} />
         <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">{children}</main>
-        <MobileBottomNav />
+        <MobileBottomNav navItems={navItems} />
       </div>
     </div>
   )

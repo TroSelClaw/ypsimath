@@ -3,11 +3,19 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { NAV_ITEMS } from './nav-items'
+import type { NavItem } from './nav-items'
+import type { AppShellProfile } from './app-shell'
 import { ThemeToggle } from './theme-toggle'
 import { Separator } from '@/components/ui/separator'
+import { signOut } from '@/app/actions/auth'
+import { Button } from '@/components/ui/button'
 
-export function DesktopSidebar() {
+interface Props {
+  profile: AppShellProfile
+  navItems: NavItem[]
+}
+
+export function DesktopSidebar({ profile, navItems }: Props) {
   const pathname = usePathname()
 
   return (
@@ -21,8 +29,8 @@ export function DesktopSidebar() {
 
       {/* Nav links */}
       <nav className="flex-1 space-y-1 px-2 py-3" aria-label="Hovednavigasjon">
-        {NAV_ITEMS.map((item) => {
-          const active = pathname === item.href
+        {navItems.map((item) => {
+          const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
           return (
             <Link
               key={item.href}
@@ -35,17 +43,27 @@ export function DesktopSidebar() {
               )}
               aria-current={active ? 'page' : undefined}
             >
-              <item.icon className="h-4 w-4 shrink-0" />
+              <span className="text-base shrink-0">{item.icon}</span>
               {item.label}
             </Link>
           )
         })}
       </nav>
 
-      {/* Bottom: theme toggle */}
-      <div className="border-t border-border p-3 flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">Tema</span>
-        <ThemeToggle />
+      {/* Bottom: user info + theme + logout */}
+      <div className="border-t border-border p-3 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="min-w-0">
+            <p className="text-sm font-medium truncate">{profile.display_name}</p>
+            <p className="text-xs text-muted-foreground capitalize">{profile.role}</p>
+          </div>
+          <ThemeToggle />
+        </div>
+        <form action={signOut}>
+          <Button variant="ghost" size="sm" className="w-full justify-start text-muted-foreground" type="submit">
+            Logg ut
+          </Button>
+        </form>
       </div>
     </aside>
   )
