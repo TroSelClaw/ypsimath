@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
+import { AppShell } from '@/components/app-shell'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import 'katex/dist/katex.min.css'
 import './globals.css'
 
@@ -22,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="no" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <TooltipProvider>
+            <AppShell>{children}</AppShell>
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
