@@ -313,4 +313,22 @@
 - **Begrunnelse:** Integrasjonstestene krever seedet Supabase-data og testbrukere. Ved å gate med env-variabler kan testene kjøre i CI/staging uten å gi falske røde bygg lokalt.
 - **Tradeoff:** Testene verifiserer realistiske brukerflyter, men krever eksplisitt miljøoppsett (`E2E_ADMIN_*`, `E2E_STUDENT_*`, ev. `PLAYWRIGHT_BASE_URL`).
 
+## 2026-02-18 — TASK-040: Chat bildeopplasting
+
+### Beslutning: Klientside opplasting til Supabase med privat sti per bruker
+- **Valg:** La til `ImageAttach` i chat composer, med validering (JPEG/PNG/WEBP, maks 10MB), preview før sending, og opplasting til `user-uploads/{userId}/chat/{messageId}.ext`.
+- **Begrunnelse:** Gir enkel flyt for mobilkamera/filvelger uten å blokkere chat-UI, og følger krav om lagringsstruktur for chatbilder.
+
+### Beslutning: API-bildeanalyse som ekstra kontekst i chat-respons
+- **Valg:** Oppdaterte `POST /api/chat` til å hente bildet fra Supabase, kjøre Gemini-bildeanalyse og injisere en kort bildebeskrivelse i siste user-melding før LLM-kall.
+- **Begrunnelse:** Oppfyller krav om at bildeinnhold brukes i tutor-svaret uten å endre resten av chatarkitekturen.
+
+### Beslutning: Thumbnail-støtte med signed URLs for private bucket
+- **Valg:** User-meldinger med `image_url` får signed URL (1 time) i server-rendered historikk, og nye meldinger får preview via metadata i klient.
+- **Begrunnelse:** Bucket er privat; signed URLs gir visning i UI uten å eksponere objektene offentlig.
+
+### Beslutning: Egen rate limit for chat-bilder
+- **Valg:** Bruker `RATE_LIMITS.imageUpload` i `/api/chat` når `imageUrl` er satt (20/time per bruker).
+- **Begrunnelse:** Matcher PRD-kravet for bildeflyt og beskytter API-kost/ressurser.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

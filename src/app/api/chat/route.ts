@@ -4,10 +4,21 @@ import { google } from '@ai-sdk/google'
 import { createClient } from '@/lib/supabase/server'
 import { hybridSearch } from '@/lib/rag/hybrid-search'
 import { buildSystemPrompt } from '@/lib/ai/system-prompt'
-import { rateLimit } from '@/lib/rate-limit'
+import { RATE_LIMITS, rateLimit } from '@/lib/rate-limit'
+import { analyzeChatImage } from '@/lib/ai/image-analyzer'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
+
+const ALLOWED_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp'])
+
+function mimeTypeFromPath(path: string) {
+  const ext = path.split('.').pop()?.toLowerCase()
+  if (!ext || !ALLOWED_EXTENSIONS.has(ext)) return null
+  if (ext === 'png') return 'image/png'
+  if (ext === 'webp') return 'image/webp'
+  return 'image/jpeg'
+}
 
 /**
  * POST /api/chat
@@ -18,28 +29,23 @@ export const maxDuration = 60
 export async function POST(request: NextRequest) {
   const supabase = await createClient()
 
-  // Auth check
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
   if (!user) {
-    return new Response(JSON.stringify({ error: 'Ikke innlogget' }), {
-      status: 401,
-    })
+    return new Response(JSON.stringify({ error: 'Ikke innlogget' }), { status: 401 })
   }
 
-  // Rate limit: 30 messages/hour
-  const rateLimitResult = rateLimit(`chat:${user.id}`, { maxRequests: 30, windowMs: 3600_000 })
-  if (!rateLimitResult.allowed) {
+  const messageRate = rateLimit(`chat:${user.id}`, RATE_LIMITS.chat)
+  if (!messageRate.allowed) {
     return new Response(
       JSON.stringify({
-        error: `For mange meldinger. Prøv igjen om ${rateLimitResult.retryAfterSeconds} sekunder.`,
+        error: `For mange meldinger. Prøv igjen om ${messageRate.retryAfterSeconds} sekunder.`,
       }),
       {
         status: 429,
-        headers: {
-          'Retry-After': String(rateLimitResult.retryAfterSeconds),
-        },
+        headers: { 'Retry-After': String(messageRate.retryAfterSeconds) },
       },
     )
   }
@@ -52,12 +58,24 @@ export async function POST(request: NextRequest) {
   }
 
   if (!content?.trim()) {
-    return new Response(JSON.stringify({ error: 'Tom melding' }), {
-      status: 400,
-    })
+    return new Response(JSON.stringify({ error: 'Tom melding' }), { status: 400 })
   }
 
-  // Load or create conversation
+  if (imageUrl) {
+    const imageRate = rateLimit(`chat-image:${user.id}`, RATE_LIMITS.imageUpload)
+    if (!imageRate.allowed) {
+      return new Response(
+        JSON.stringify({
+          error: `For mange bildeopplastinger. Prøv igjen om ${imageRate.retryAfterSeconds} sekunder.`,
+        }),
+        {
+          status: 429,
+          headers: { 'Retry-After': String(imageRate.retryAfterSeconds) },
+        },
+      )
+    }
+  }
+
   let convId = conversationId
   if (!convId) {
     const { data: conv, error: convError } = await supabase
@@ -69,16 +87,44 @@ export async function POST(request: NextRequest) {
       })
       .select('id')
       .single()
+
     if (convError || !conv) {
-      return new Response(
-        JSON.stringify({ error: 'Kunne ikke opprette samtale' }),
-        { status: 500 },
-      )
+      return new Response(JSON.stringify({ error: 'Kunne ikke opprette samtale' }), {
+        status: 500,
+      })
     }
     convId = conv.id
   }
 
-  // Save user message
+  let imageContext = ''
+
+  if (imageUrl) {
+    const ownedPathPrefix = `${user.id}/chat/`
+    if (!imageUrl.startsWith(ownedPathPrefix)) {
+      return new Response(JSON.stringify({ error: 'Ugyldig bildebane.' }), { status: 400 })
+    }
+
+    const mimeType = mimeTypeFromPath(imageUrl)
+    if (!mimeType) {
+      return new Response(JSON.stringify({ error: 'Kun JPEG, PNG og WEBP støttes.' }), {
+        status: 400,
+      })
+    }
+
+    const { data: imageData, error: downloadError } = await supabase.storage
+      .from('user-uploads')
+      .download(imageUrl)
+
+    if (downloadError || !imageData) {
+      return new Response(JSON.stringify({ error: 'Kunne ikke hente bildet.' }), { status: 500 })
+    }
+
+    const imageBuffer = Buffer.from(await imageData.arrayBuffer())
+    const imageBase64 = imageBuffer.toString('base64')
+    const analysis = await analyzeChatImage({ imageBase64, mimeType })
+    imageContext = analysis.description
+  }
+
   await supabase.from('messages').insert({
     conversation_id: convId,
     role: 'user',
@@ -86,7 +132,6 @@ export async function POST(request: NextRequest) {
     image_url: imageUrl ?? null,
   })
 
-  // Load last 10 messages for context
   const { data: history } = await supabase
     .from('messages')
     .select('role, content')
@@ -94,12 +139,9 @@ export async function POST(request: NextRequest) {
     .order('created_at', { ascending: true })
     .limit(10)
 
-  // Load student profile
   const { data: profile } = await supabase
     .from('student_profiles')
-    .select(
-      'mastered_competency_goals, struggling_competency_goals, goals, current_subject',
-    )
+    .select('mastered_competency_goals, struggling_competency_goals, goals, current_subject')
     .eq('id', user.id)
     .single()
 
@@ -109,14 +151,14 @@ export async function POST(request: NextRequest) {
     .eq('id', user.id)
     .single()
 
-  // RAG search
-  const ragResults = await hybridSearch(supabase, content, {
+  const searchQuery = imageContext ? `${content}\n${imageContext}` : content
+
+  const ragResults = await hybridSearch(supabase, searchQuery, {
     subjectIds: profile?.current_subject ? [profile.current_subject] : ['r1'],
     limit: 5,
     studentSubjectId: profile?.current_subject ?? 'r1',
   })
 
-  // Build system prompt
   const systemPrompt = buildSystemPrompt(
     profile
       ? {
@@ -130,23 +172,26 @@ export async function POST(request: NextRequest) {
     ragResults,
   )
 
-  // Build messages array
   const messages = (history ?? []).map((m) => ({
     role: m.role as 'user' | 'assistant',
     content: m.content,
   }))
 
-  // Stream response
+  if (imageContext) {
+    messages[messages.length - 1] = {
+      role: 'user',
+      content: `${content}\n\n[Bildebeskrivelse]\n${imageContext}`,
+    }
+  }
+
   const result = streamText({
     model: google('gemini-2.0-flash'),
     system: systemPrompt,
     messages,
   })
 
-  // Save assistant message after stream completes (fire-and-forget)
   const response = result.toTextStreamResponse()
 
-  // Use a separate promise to save the response
   result.text.then(async (text) => {
     const sources = ragResults.map((r) => ({
       id: r.item.id,

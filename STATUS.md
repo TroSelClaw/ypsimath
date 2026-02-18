@@ -62,7 +62,7 @@
 | TASK-037 | Hybrid RAG engine | ✅ | 2026-02-18 | 2026-02-18 | RRF k=60, vector+FTS, subject boost |
 | TASK-038 | Chat API (streaming + RAG) | ✅ | 2026-02-18 | 2026-02-18 | Gemini Flash + RAG + rate limit |
 | TASK-039 | Chat UI (streaming + KaTeX) | ✅ | 2026-02-18 | 2026-02-18 | AI SDK v6 + MathContent + conversation sidebar |
-| TASK-040 | Chat bildeopplasting | ⬜ | — | — | P1 |
+| TASK-040 | Chat bildeopplasting | ✅ | 2026-02-18 | 2026-02-18 | Kamera-attach i chat composer, Supabase upload + signed thumbnail, API bildeanalyse med Gemini-kontekst + image rate limit |
 | TASK-041 | Elevprofil + mål | ⬜ | — | — | P1 |
 | TASK-042 | AI studieanbefalinger | ⬜ | — | — | P2 |
 | TASK-043 | Tverrfaglig differensiering | ⬜ | — | — | P2 |

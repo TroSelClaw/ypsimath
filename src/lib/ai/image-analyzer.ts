@@ -9,11 +9,24 @@ interface AnalyzeExerciseImageResult {
   feedback: string
 }
 
+interface AnalyzeChatImageInput {
+  imageBase64: string
+  mimeType: string
+}
+
+interface AnalyzeChatImageResult {
+  description: string
+}
+
 const GEMINI_ENDPOINT =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
 
+function getApiKey() {
+  return process.env.GOOGLE_GENERATIVE_AI_API_KEY
+}
+
 export async function analyzeExerciseImage(input: AnalyzeExerciseImageInput): Promise<AnalyzeExerciseImageResult> {
-  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY
+  const apiKey = getApiKey()
 
   if (!apiKey) {
     return {
@@ -74,4 +87,67 @@ export async function analyzeExerciseImage(input: AnalyzeExerciseImageInput): Pr
   }
 
   return { feedback }
+}
+
+export async function analyzeChatImage(input: AnalyzeChatImageInput): Promise<AnalyzeChatImageResult> {
+  const apiKey = getApiKey()
+
+  if (!apiKey) {
+    return {
+      description:
+        'Bildeanalyse er midlertidig utilgjengelig fordi GOOGLE_GENERATIVE_AI_API_KEY mangler.',
+    }
+  }
+
+  const prompt = [
+    'Beskriv matematisk relevant innhold i bildet for en norsk matte-tutor.',
+    'Svar kort og strukturert med:',
+    '1) Hva oppgaven/bildet viser',
+    '2) Tall/symboler/uttrykk du kan lese',
+    '3) Eventuelle usikkerheter.',
+    'Hold deg under 120 ord.',
+  ].join('\n')
+
+  const response = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: prompt },
+            {
+              inlineData: {
+                mimeType: input.mimeType,
+                data: input.imageBase64,
+              },
+            },
+          ],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 300,
+      },
+    }),
+  })
+
+  if (!response.ok) {
+    throw new Error(`Gemini-feil (${response.status})`)
+  }
+
+  const json = (await response.json()) as {
+    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+  }
+
+  const description = json.candidates?.[0]?.content?.parts?.map((part) => part.text ?? '').join('\n').trim()
+
+  if (!description) {
+    throw new Error('Tomt svar fra Gemini')
+  }
+
+  return { description }
 }
