@@ -395,3 +395,31 @@
 ### TASK-050: Validering av sideintervaller i klient før oppstart
 - **Valg:** Blokkerer «Start retting» ved overlapp eller ufullstendige intervaller.
 - **Begrunnelse:** Fanger de vanligste operatørfeilene tidlig og hindrer feil i batch-retting.
+
+## 2026-02-19 — TASK-051: AI-retting + feilanalyse
+
+### Beslutning: OCR + scoring som separerte moduler
+- **Valg:** Delte pipelinen i `lib/ai/ocr.ts` (Gemini Flash OCR) og `lib/ai/exam-grader.ts` (scoring + aggregasjon).
+- **Begrunnelse:** Gjør feilsøking og videre modellbytte enklere (OCR og scoring kan optimaliseres uavhengig).
+
+### Beslutning: PDF-sideuttrekk per elev med `pdf-lib`
+- **Valg:** Ekstraherer elevens sideintervall til enkelt-sider før OCR.
+- **Begrunnelse:** Sikrer at OCR-kontekst matcher riktig elev og reduserer risiko for krysskontaminering mellom besvarelser.
+
+### Beslutning: Standardiserte feilkategorier i `error_analysis`
+- **Valg:** Tvangsstruktur for `fortegnsfeil`, `konseptfeil`, `regnefeil`, `manglende_steg` + `details`.
+- **Begrunnelse:** Gir direkte kobling til lærerens review-behov og muliggjør senere statistikk/rapportering per feiltype.
+
+## 2026-02-19 — TASK-052: Resultatvisning
+
+### Beslutning: Server-side aggregasjon + client-side detaljflyt
+- **Valg:** Bygde `/laerer/prover/[id]/resultater` som server-side dataload med aggregert klasseoversikt og per-elev detaljer, sendt til client-view for interaksjon.
+- **Begrunnelse:** Rask first-render og enkel state-håndtering for detaljpanel + overstyring.
+
+### Beslutning: Overstyring lagres som sann kilde i DB
+- **Valg:** `overrideExamAnswerScore` oppdaterer `exam_answers.score_percent`, setter `teacher_override = true`, og rekalkulerer `exam_submissions.total_score_percent` vektet mot `max_points`.
+- **Begrunnelse:** Hindrer mismatch mellom spørsmålsscore og totalscore, og gjør lærerens manuelle vurdering autoritativ.
+
+### Beslutning: Realtime via `router.refresh()` på `exam_submissions`
+- **Valg:** Client-komponenten abonnerer på Supabase Realtime-endringer på `exam_submissions` for eksamen og refresher visningen.
+- **Begrunnelse:** Enkelt og robust for MVP; gir live progresjon uten å innføre ekstra polling/API-lag.
