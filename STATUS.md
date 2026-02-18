@@ -74,7 +74,7 @@
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
 | TASK-046 | Prøvegenerering: skjema | ✅ | 2026-02-19 | 2026-02-19 | Form + Zod-validering |
-| TASK-047 | Prøvegenerering: AI API | ⬜ | — | — | |
+| TASK-047 | Prøvegenerering: AI API | ✅ | 2026-02-19 | 2026-02-19 | GPT-4o + RAG + Zod-validering |
 | TASK-048 | Prøve: preview + redigering | ⬜ | — | — | |
 | TASK-049 | PDF-eksport (Puppeteer) | ⬜ | — | — | |
 | TASK-050 | Skanning: PDF-opplasting | ⬜ | — | — | |
