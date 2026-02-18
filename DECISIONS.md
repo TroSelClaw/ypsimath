@@ -193,4 +193,14 @@
 - Pilhoder på vektorer er ikke lagt inn ennå (linjesegmenter + parallellogram brukes i MVP-visningen).
 - Lazy-loading på komponentnivå er ikke koblet inn i wiki-renderer enda; komponentene er klargjort for dette i neste task som integrerer exploration-rendering.
 
+## 2026-02-18 — TASK-028: GeoGebra embed
+
+### Beslutning: Sandboxed iframe + viewport-basert lazy-load
+- **Valg:** Implementerte `GeoGebraEmbed` med `IntersectionObserver` (rootMargin 200px) slik at iframe først lastes når komponenten nærmer seg viewport.
+- **Begrunnelse:** Reduserer unødvendig nettverks- og renderkost i wiki-sider med mange elementer.
+
+### Beslutning: Robust fallback-strategi
+- **Valg:** Støtter både `materialId` og direkte `url`, viser skeleton mens iframe laster, og alltid en «Åpne i GeoGebra»-lenke som fallback.
+- **Begrunnelse:** Gir stabil UX også ved treg lasting eller blokkering i embed.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
