@@ -14,7 +14,7 @@
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
 | TASK-001 | Next.js 15 scaffold | ✅ | 2026-02-18 | 2026-02-18 | Next.js 16.1.6, TS 5.9.3, pnpm |
-| TASK-002 | Tailwind + shadcn/ui | 🔧 | 2026-02-18 | — | |
+| TASK-002 | Tailwind + shadcn/ui | ✅ | 2026-02-18 | 2026-02-18 | dark/light/UU, shadcn neutral |
 | TASK-003 | Supabase EU Frankfurt | ⬜ | — | — | Krever Aleksanders konto |
 | TASK-004 | DB: user/class tables | ⬜ | — | — | |
 | TASK-005 | DB: content tables | ⬜ | — | — | |
@@ -25,7 +25,7 @@
 | TASK-010 | Klasse-/elevadmin UI | ⬜ | — | — | |
 | TASK-011 | Typografi + KaTeX fonts | ⬜ | — | — | |
 | TASK-012 | KaTeX + Markdown pipeline | ⬜ | — | — | |
-| TASK-013 | CI/CD: GitHub Actions + Vercel | ⬜ | — | — | |
+| TASK-013 | CI/CD: GitHub Actions + Vercel | 🔧 | 2026-02-18 | — | |
 | TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
 | TASK-015 | Rate limiting | ⬜ | — | — | |
 | TASK-016 | Feilhåndtering + logging | ⬜ | — | — | |
