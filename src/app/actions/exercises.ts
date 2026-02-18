@@ -3,6 +3,7 @@
 import { z } from 'zod/v4'
 import { getProfile } from '@/lib/auth/get-profile'
 import { createClient } from '@/lib/supabase/server'
+import { logActivity } from '@/lib/progress/tracker'
 
 const recordExerciseAttemptSchema = z.object({
   contentElementId: z.string().uuid(),
@@ -47,12 +48,13 @@ export async function recordExerciseAttempt(input: z.input<typeof recordExercise
     return { ok: false as const, error: 'Kunne ikke lagre oppgaveforsøket.' }
   }
 
-  await supabase.from('activity_log').insert({
-    user_id: profile.id,
-    activity_type: 'exercise_attempt',
-    subject_id: content?.subject_id ?? null,
+  await logActivity({
+    userId: profile.id,
+    type: 'exercise_attempt',
+    subjectId: content?.subject_id ?? null,
     topic: content?.topic ?? null,
-    competency_goals: Array.isArray(content?.competency_goals) ? content.competency_goals : [],
+    competencyGoals: Array.isArray(content?.competency_goals) ? content.competency_goals : [],
+    durationSeconds: parsed.data.timeSeconds,
     metadata: {
       content_element_id: parsed.data.contentElementId,
       check_method: parsed.data.checkMethod,
@@ -61,7 +63,6 @@ export async function recordExerciseAttempt(input: z.input<typeof recordExercise
       viewed_solution: parsed.data.viewedSolution,
       hints_used: parsed.data.hintsUsed,
     },
-    duration_seconds: parsed.data.timeSeconds,
   })
 
   return { ok: true as const }

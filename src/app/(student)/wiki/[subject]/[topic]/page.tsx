@@ -6,6 +6,7 @@ import { ExerciseBlock } from '@/components/wiki/exercise-block'
 import { PythonRunner } from '@/components/wiki/python-runner'
 import { RuleBlock } from '@/components/wiki/rule-block'
 import { TheoryBlock } from '@/components/wiki/theory-block'
+import { WikiViewLogger } from '@/components/wiki/wiki-view-logger'
 import { createClient } from '@/lib/supabase/server'
 
 interface Params {
@@ -75,6 +76,8 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
         <span>{chapter}</span> {' / '}
         <span className="font-medium text-foreground">{topic}</span>
       </nav>
+
+      <WikiViewLogger subjectId={subject} topic={topic} />
 
       <header>
         <h1 className="text-3xl font-semibold">{topic}</h1>

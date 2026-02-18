@@ -235,4 +235,22 @@
 - Kalenderen er dag-bucket-basert (ikke full måned-grid enda), men inkluderer flytting mellom datoer og tabell-toggle.
 - Chat-editor støtter foreløpig én robust kommandoform; flere mønstre kan utvides i senere task.
 
+## 2026-02-18 — TASK-033: Aktivitetslogging
+
+### Beslutning: Sentral tracker for aktivitet + progresjonsaggregater
+- **Valg:** La til `lib/progress/tracker.ts` med `logActivity()` som standard inngang for aktivitetslogging og oppdatering av `student_profiles` ved oppgaveforsøk.
+- **Begrunnelse:** Reduserer duplisering på tvers av features (øvelser, wiki, chat/video senere) og gir ett sted for progresjonsregler.
+
+### Beslutning: Wiki visningstid via beacon
+- **Valg:** La til `WikiViewLogger` som sender `view_start` ved mount og `view_end` + `durationSeconds` via `navigator.sendBeacon` ved pagehide/unmount.
+- **Begrunnelse:** Oppfyller kravet om ikke-blokkerende logging av lesetid uten å påvirke UI-flyt.
+
+### Beslutning: Gradvis mestring/strev-beregning fra nyere forsøk
+- **Valg:** Re-kalkulerer `mastered_competency_goals` (`>=3` suksesser) og `struggling_competency_goals` (`>=3` feil uten mestring) basert på siste forsøk.
+- **Begrunnelse:** Enkel, forståelig heuristikk som kan justeres senere når vi har mer data.
+
+### Avgrensning i denne iterasjonen
+- Ingen full tidsakkumulering fra alle aktivitetstyper ennå (kun eksplisitt økningslogikk ved exercise_attempt i tracker).
+- Chat/video/flashcard kobles på samme tracker i senere tasks.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
