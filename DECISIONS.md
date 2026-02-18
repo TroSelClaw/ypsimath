@@ -203,4 +203,18 @@
 - **Valg:** Støtter både `materialId` og direkte `url`, viser skeleton mens iframe laster, og alltid en «Åpne i GeoGebra»-lenke som fallback.
 - **Begrunnelse:** Gir stabil UX også ved treg lasting eller blokkering i embed.
 
+## 2026-02-18 — TASK-030: Semesterplan wizard
+
+### Beslutning: Levert 5-stegs veiviser med sessionStorage-persistens
+- **Valg:** Implementerte klientveiviser på `/laerer/semesterplan/ny` med steg for dato, ukerytme, fridager, vurderinger og tema-rekkefølge.
+- **Begrunnelse:** Dekker kjernen i TASK-030 og tåler refresh uten datatap via `sessionStorage`.
+
+### Beslutning: Ren generator-funksjon for planutregning
+- **Valg:** La all planlogikk i `lib/semester/generator.ts` med egne Vitest-enhetstester.
+- **Begrunnelse:** Gir testbar og gjenbrukbar kjerne som senere kan brukes av kalender/DnD-taskene.
+
+### Avgrensning i denne iterasjonen
+- DnD i steg 5 er løst som rask rekkefølgekontroll med opp/ned-knapper (ikke full drag-and-drop-bibliotek ennå).
+- Norske fridager er seedet for 2026–2027 som startpakke; listen må oppdateres ved nytt skoleår.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

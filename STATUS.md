@@ -47,7 +47,7 @@
 | TASK-027 | Mafs interaktive viz | ✅ | 2026-02-18 | 2026-02-18 | FunctionPlot + TangentExplorer + AreaUnderCurve + VectorPlot + ParametricPlot |
 | TASK-028 | GeoGebra embed | ✅ | 2026-02-18 | 2026-02-18 | Sandboxed iframe + lazy-load med IntersectionObserver + fallback-lenke |
 | TASK-029 | Planet journey (lineær) | ⬜ | — | — | P1 |
-| TASK-030 | Semesterplan: wizard | ⬜ | — | — | P1 |
+| TASK-030 | Semesterplan: wizard | ✅ | 2026-02-18 | 2026-02-18 | P1 |
 | TASK-031 | Semesterplan: kalender + DnD | ⬜ | — | — | P1 |
 | TASK-032 | Semesterplan: elevvisning | ⬜ | — | — | P1 |
 | TASK-033 | Aktivitetslogging | ⬜ | — | — | |
