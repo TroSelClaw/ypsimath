@@ -47,4 +47,27 @@
 
 ---
 
+## 2026-02-18 — TASK-002 til TASK-017: Fase 0 kjernearbeid
+
+### Beslutning: shadcn/ui v4 init
+- shadcn@latest endret CLI — `--style` flagget er fjernet. Brukte interaktiv modus med Neutral base.
+- UU-modus implementert som egen CSS-klasse `.uu` med 18px base font og max kontrast.
+
+### Beslutning: Zod v4
+- `pnpm add zod` ga Zod 4.3.6. Import endret til `zod/v4`.
+- `z.record()` krever nå to argumenter (key, value). Fikset i alle skjemaer.
+
+### Beslutning: Next.js 16 (ikke 15)
+- `create-next-app@latest` installerte Next.js 16.1.6 (nyeste). PRD sier 15, men 16 er bakoverkompatibelt og nyere. Beholder.
+
+### Erfaring: rehype-katex type-feil
+- `rehype-katex` aksepterer ikke `output: 'html'` i sin TypeScript-type. Løst med type assertion.
+
+### Blokkering: Supabase-prosjekt
+- TASK-003 klientkode er klar, men trenger Aleksanders Supabase-konto for å opprette prosjektet i EU Frankfurt.
+- TASK-004/005/006 (DB-migrasjoner) er blokkert av dette.
+- TASK-007/008/009 (auth + routing) er blokkert av DB.
+
+---
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->

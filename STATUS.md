@@ -29,7 +29,7 @@
 | TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
 | TASK-015 | Rate limiting | ✅ | 2026-02-18 | 2026-02-18 | In-memory sliding window, 2 tester |
 | TASK-016 | Feilhåndtering + logging | ✅ | 2026-02-18 | 2026-02-18 | Sentry legges til i Phase 6 |
-| TASK-017 | Zod-skjemaer | 🔧 | 2026-02-18 | — | |
+| TASK-017 | Zod-skjemaer | ✅ | 2026-02-18 | 2026-02-18 | Zod v4, 4 tester, alle modeller |
 | TASK-018 | Phase 0 smoke test | ⬜ | — | — | |
 
 ## Phase 1 — Content Pipeline + Wiki (6–8 uker)
