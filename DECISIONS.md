@@ -217,4 +217,22 @@
 - DnD i steg 5 er løst som rask rekkefølgekontroll med opp/ned-knapper (ikke full drag-and-drop-bibliotek ennå).
 - Norske fridager er seedet for 2026–2027 som startpakke; listen må oppdateres ved nytt skoleår.
 
+## 2026-02-18 — TASK-031: Semesterplan kalender + DnD-redigering
+
+### Beslutning: Lettvekts kalendereditor med server actions
+- **Valg:** Implementerte `/laerer/semesterplan/[id]` med `SemesterPlanEditor` som støtter kalendervisning + tabellvisning, drag-and-drop mellom datoer, og autosave via server action (`updateSemesterPlanEntries`).
+- **Begrunnelse:** Gir rask redigerbar MVP uten ekstra DnD-bibliotek, med robust persistering direkte mot `semester_plan_entries`.
+
+### Beslutning: Chat-redigering i avgrenset, trygg kommandomodell
+- **Valg:** La til `applySemesterPlanChatEdit` med støttet format `Flytt <tema> til etter <tema>`.
+- **Begrunnelse:** Oppfyller krav om naturlig språk-editing, men med kontrollert parser for å unngå uforutsigbare planendringer i MVP.
+
+### Beslutning: Versjonering som eksplisitt brukerhandling
+- **Valg:** La til `saveSemesterPlanVersion` som tar snapshot av entries og øker `semester_plans.version`.
+- **Begrunnelse:** Gir trygg rollback-historikk uten å versjonere hver autosave-operasjon.
+
+### Avgrensning i denne iterasjonen
+- Kalenderen er dag-bucket-basert (ikke full måned-grid enda), men inkluderer flytting mellom datoer og tabell-toggle.
+- Chat-editor støtter foreløpig én robust kommandoform; flere mønstre kan utvides i senere task.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
