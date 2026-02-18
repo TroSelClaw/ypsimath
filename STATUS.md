@@ -23,8 +23,8 @@
 | TASK-008 | Auth: middleware + logout | ⬜ | — | — | |
 | TASK-009 | Rollebasert routing + layouts | ⬜ | — | — | |
 | TASK-010 | Klasse-/elevadmin UI | ⬜ | — | — | |
-| TASK-011 | Typografi + KaTeX fonts | 🔧 | 2026-02-18 | — | |
-| TASK-012 | KaTeX + Markdown pipeline | ⬜ | — | — | |
+| TASK-011 | Typografi + KaTeX fonts | ✅ | 2026-02-18 | 2026-02-18 | Inter + KaTeX + nb-NO formatters |
+| TASK-012 | KaTeX + Markdown pipeline | 🔧 | 2026-02-18 | — | |
 | TASK-013 | CI/CD: GitHub Actions + Vercel | ✅ | 2026-02-18 | 2026-02-18 | Vercel auto-deploy settes opp når GitHub-repo opprettes |
 | TASK-014 | Responsiv app-shell + nav | ⬜ | — | — | |
 | TASK-015 | Rate limiting | ⬜ | — | — | |
