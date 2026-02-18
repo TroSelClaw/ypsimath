@@ -21,7 +21,7 @@ export async function renderMarkdown(content: string): Promise<string> {
     .use(remarkParse)
     .use(remarkMath)
     .use(remarkRehype)
-    .use(rehypeKatex, { throwOnError: false, output: 'html' })
+    .use(rehypeKatex, { throwOnError: false } as Parameters<typeof rehypeKatex>[0])
     .use(rehypeHighlight, { detect: true })
     .use(rehypeStringify)
     .process(content)
