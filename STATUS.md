@@ -41,7 +41,7 @@
 | TASK-021 | Embedding pipeline | ✅ | 2026-02-18 | 2026-02-18 | Batch + retry + idempotent |
 | TASK-022 | LLM quality flagging | ✅ | 2026-02-18 | 2026-02-18 | Sonnet quality pass + metadata flag_reason/confidence |
 | TASK-023 | Admin content review dashboard | ✅ | 2026-02-18 | 2026-02-18 | Filters + approve/edit/publish + bulk publish reviewed |
-| TASK-024 | Wiki renderer: teori/regler/eksempler | ⬜ | — | — | |
+| TASK-024 | Wiki renderer: teori/regler/eksempler | ✅ | 2026-02-18 | 2026-02-18 | SSR route + blokker + breadcrumbs + neste/forrige |
 | TASK-025 | Wiki øvelser: selvrapport + autosjekk | ⬜ | — | — | |
 | TASK-026 | Pyodide Python runtime | ⬜ | — | — | P1 |
 | TASK-027 | Mafs interaktive viz | ⬜ | — | — | P1 |

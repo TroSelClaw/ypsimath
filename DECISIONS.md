@@ -141,4 +141,15 @@
 - Side-by-side visning mot source-RAG-kontekst er ikke fullført i denne committen.
 - Pagination er implementert via `range` + page-parameter, men uten dedikert sidekontroll-komponent.
 
+## 2026-02-18 — TASK-024: Wiki renderer (theory/rule/example)
+
+### Beslutning: SSR-først for wiki-temaside
+- **Valg:** Implementerte `/wiki/[subject]/[topic]` som Server Component med sortering på `sort_order` og `status='published'`.
+- **Begrunnelse:** Gir stabil rendering av matteinnhold server-side og matcher krav om SSR i PRD.
+
+### Beslutning: Enkle, tydelige blokkkomponenter
+- **Valg:** Delte rendering i `TheoryBlock`, `RuleBlock`, `ExampleBlock`.
+- **Begrunnelse:** Lav kobling og enkel videreutvikling når exercises/exploration kommer i neste tasks.
+- **Merk:** Eksempler bruker `<details>` for progressiv avsløring i denne iterasjonen.
+
 <!-- NYE ENTRIES LEGGES TIL UNDER HER -->
