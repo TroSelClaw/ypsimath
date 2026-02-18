@@ -59,7 +59,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-037 | Hybrid RAG engine | ⬜ | — | — | |
+| TASK-037 | Hybrid RAG engine | ✅ | 2026-02-18 | 2026-02-18 | RRF k=60, vector+FTS, subject boost |
 | TASK-038 | Chat API (streaming + RAG) | ⬜ | — | — | |
 | TASK-039 | Chat UI (streaming + KaTeX) | ⬜ | — | — | |
 | TASK-040 | Chat bildeopplasting | ⬜ | — | — | P1 |
