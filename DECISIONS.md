@@ -645,3 +645,28 @@
 - `manim-script-generator.ts` med `generateManimScript()` og `validateManimScript()`.
 - CLI-script `scripts/generate-manim-scripts.ts` med `--dry-run`, `--limit`, `--element`, retry (3x).
 - 5 Vitest-tester for valideringsfunksjonen.
+
+## 2026-02-19 — TASK-067: Manim rendering + CDN
+
+### Beslutning: Rendering i GitHub Actions (nattlig)
+- **Valg:** Egen workflow `manim-render.yml` som kjører nattlig kl 02:00 UTC og kan trigges manuelt.
+- **Begrunnelse:** Isolerer tung rendering fra app-runtime, gir stabil batch-kjøring og enkel feilsøking via artifacts.
+
+### Beslutning: Enkel Python-runner uten tunge SDK-avhengigheter
+- **Valg:** `render-manim.py` bruker Supabase REST/Storage via HTTP i stedet for større klientstack.
+- **Begrunnelse:** Færre avhengigheter i CI, enklere miljø og mindre vedlikehold.
+
+## 2026-02-19 — TASK-068: Video i wiki
+
+### Beslutning: Lazy-load + signed URL ved visning
+- **Valg:** `VideoPlayer` henter signed URL fra `/api/video/[id]/url` først når komponenten er nær viewport (IntersectionObserver).
+- **Begrunnelse:** Reduserer initial last, beskytter filtilgang og matcher krav om lazy loading.
+
+### Beslutning: Aktivitet logging på video-slutt
+- **Valg:** Ved `ended` sendes fire-and-forget beacon til `/api/activity` med `type=video_watched`.
+- **Begrunnelse:** Ikke-blokkerende logging som ikke påvirker avspilling/UX.
+
+### Leveranse i taskene
+- `VideoPlayer` komponent med native kontroller + poster + duration badge.
+- API route for signed video-URL (24t).
+- Wiki eksempel-blokk viser video når `videos.status='ready'` finnes.

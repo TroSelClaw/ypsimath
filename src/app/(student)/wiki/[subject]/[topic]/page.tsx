@@ -56,6 +56,31 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
   const contentRows = rows as ContentRow[]
   const chapter = contentRows[0].chapter
 
+  const exampleIds = contentRows.filter((row) => row.content_type === 'example').map((row) => row.id)
+
+  const videosByContentId = new Map<
+    string,
+    { id: string; thumbnail_url: string | null; duration_seconds: number | null }
+  >()
+
+  if (exampleIds.length > 0) {
+    const { data: videos } = await supabase
+      .from('videos')
+      .select('id, content_element_id, thumbnail_url, duration_seconds, status')
+      .in('content_element_id', exampleIds)
+      .eq('status', 'ready')
+
+    for (const video of videos ?? []) {
+      if (!videosByContentId.has(video.content_element_id as string)) {
+        videosByContentId.set(video.content_element_id as string, {
+          id: video.id as string,
+          thumbnail_url: (video.thumbnail_url as string | null) ?? null,
+          duration_seconds: (video.duration_seconds as number | null) ?? null,
+        })
+      }
+    }
+  }
+
   const { data: topicRows } = await supabase
     .from('content_elements')
     .select('topic')
@@ -95,7 +120,14 @@ export default async function WikiTopicPage({ params }: { params: Promise<Params
           }
 
           if (item.content_type === 'example') {
-            return <ExampleBlock key={item.id} title={item.title} content={item.content} />
+            return (
+              <ExampleBlock
+                key={item.id}
+                title={item.title}
+                content={item.content}
+                video={videosByContentId.get(item.id) ?? null}
+              />
+            )
           }
 
           if (item.content_type === 'exercise') {
