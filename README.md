@@ -1,6 +1,6 @@
 # YpsiMath
 
-**YpsiMath** er en AI-støttet læringsplattform for matematikk i norsk videregående skole.
+**YpsiMath** er en prototype på en AI-støttet læringsplattform for matematikk i norsk videregående skole.
 
 Repoet er publisert som et **teknisk case** som dokumenterer helhetlig leveranseevne: produktforståelse, programvareutvikling, AI-integrasjon, sikkerhet, test og drift.
 
@@ -72,6 +72,7 @@ Prosjektet demonstrerer arbeidsmåter som er overførbare til miljøer med høye
 - **Sporbarhet:** dokumenterte flyter, testoppsett og operasjonell logging
 - **Kontrollert AI-bruk:** AI som beslutningsstøtte, ikke uverifisert autonom beslutningstaker
 - **Robusthet:** validering, feilhåndtering og testbarhet som standard
+- **Prompt-sikkerhet:** modellinteraksjoner designes med validering og begrenset tilgang for å redusere risiko for manipulert input (prompt injection)
 
 ---
 
@@ -155,6 +156,13 @@ docs/
 - Videre fagdekning (R2/1T/1P/2P)
 - Videreutviklet kost-/modellrouting i AI-laget
 - Utvidet måling av læringseffekt
+
+---
+
+## Authorship
+
+Developed and maintained by Aleksander Trovum Seland.
+Built using OpenClaw as development environment and workflow orchestration tool.
 
 ---
 

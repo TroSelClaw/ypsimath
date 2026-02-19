@@ -124,6 +124,14 @@ Følgende prinsipper ligger til grunn i løsningen:
 
 ---
 
+## Threat considerations (LLM)
+
+The system assumes that model outputs are untrusted by default.
+Sensitive actions require explicit user confirmation or server-side validation.
+External integrations are scoped with minimal privileges.
+
+---
+
 ## 9) Viktige trade-offs
 
 1. **Modulær monolitt fremfor mikrotjenester**
