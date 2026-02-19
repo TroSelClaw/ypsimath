@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { requireRole } from '@/lib/auth/get-profile'
 import { getTeacherDashboardData } from '@/lib/dashboard/aggregates'
 import { createClient } from '@/lib/supabase/server'
+import { SemesterWidget } from '@/components/dashboard/semester-widget'
 
 export const revalidate = 300
 
@@ -43,6 +44,10 @@ export default async function TeacherDashboardPage() {
       </div>
     )
   }
+
+  const averageBehindTopics = dashboard.students.length
+    ? dashboard.students.reduce((sum, student) => sum + student.behindByTopics, 0) / dashboard.students.length
+    : 0
 
   return (
     <div className="mx-auto w-full max-w-[1200px] space-y-6 px-4 py-6">
@@ -83,6 +88,10 @@ export default async function TeacherDashboardPage() {
           </div>
         </div>
       </section>
+
+      {dashboard.classId ? (
+        <SemesterWidget classId={dashboard.classId} averageBehindTopics={averageBehindTopics} />
+      ) : null}
 
       <ClassHeatmap goals={dashboard.goals} students={dashboard.students} />
     </div>

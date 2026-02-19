@@ -528,3 +528,17 @@
 ### Beslutning: Dashboard-badge for flagget innhold
 - **Valg:** La til innholdsreview-kort på `/laerer` med flagget teller og rolleavhengig snarvei (`/admin/innhold/flagget` for admin, `/laerer/innhold` for lærer).
 - **Begrunnelse:** Gjør flagget innhold synlig på dashboard home slik tasken krever.
+
+## 2026-02-19 — TASK-060: Semesterplan-widget i lærerdashboard
+
+### Beslutning: Egen serverkomponent for ukesvisning
+- **Valg:** La til `components/dashboard/semester-widget.tsx` som henter siste semesterplan for klassen og viser neste 5 `semester_plan_entries` fra dagens dato.
+- **Begrunnelse:** Holder dashboard-siden ryddig og gjør widgeten gjenbrukbar/testbar separat.
+
+### Beslutning: Varsel ved gjennomsnittlig avvik > 2 tema
+- **Valg:** Beregner `averageBehindTopics` fra eksisterende dashboard-data (`behindByTopics`) og viser varsel i widgeten når snittet er over 2.
+- **Begrunnelse:** Matcher acceptance-kriteriet uten ny datamodell.
+
+### Beslutning: Direkte snarvei til planredigering
+- **Valg:** Widgeten lenker til `/laerer/semesterplan/[id]` for siste plan, eller `/laerer/semesterplan/ny` hvis plan mangler.
+- **Begrunnelse:** Gir tydelig neste handling direkte fra dashboardet.

@@ -92,7 +92,7 @@
 | TASK-057 | AI vurderingsrapport | ✅ | 2026-02-19 | 2026-02-19 | Generering via ny /api/teacher/assessment-report + redigerbar lagring som teacher_notes(note_type='ai_report') |
 | TASK-058 | Prøveadmin panel | ✅ | 2026-02-19 | 2026-02-19 | Ny side `/laerer/prover` med statusbadges, sortering, snittscore, vurdert-teller og handlinger (rediger/PDF/resultater) + tomtilstand og «Ny prøve»-CTA |
 | TASK-059 | Content review workflow | ✅ | 2026-02-19 | 2026-02-19 | Flagget-kø + hurtig review + lærer read-only/flagg-flyt |
-| TASK-060 | Semesterplan dashboard-widget | ⬜ | — | — | |
+| TASK-060 | Semesterplan dashboard-widget | ✅ | 2026-02-19 | 2026-02-19 | Widget for neste 5 planpunkter + off-track varsel + edit-lenke |
 | TASK-061 | Brukeradmin (admin) | ⬜ | — | — | |
 | TASK-062 | Phase 4 integrasjonstest | ⬜ | — | — | |
 
