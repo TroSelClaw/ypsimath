@@ -731,3 +731,21 @@
 ### Beslutning: Lettvekts sikkerhetsaudit som kode
 - **Valg:** Opprettet `docs/security-checklist.md`, SQL-audit i `supabase/tests/security_rls_audit.sql`, og vitest-kontraktstest for auth-guard på alle API-ruter.
 - **Begrunnelse:** Gjør sikkerhetsgjennomgangen repeterbar før launch i stedet for engangssjekk.
+
+## 2026-02-19 — TASK-074: Feilovervåking + observability
+
+### Beslutning: Full Sentry-integrasjon via Next.js instrumentation
+- **Valg:** La til `@sentry/nextjs` med `sentry.server.config.ts`, `sentry.client.config.ts`, `sentry.edge.config.ts`, `instrumentation.ts` og `instrumentation-client.ts`.
+- **Begrunnelse:** Dekker server, klient og edge i samme oppsett, og gir source map + release-sporing på deploy.
+
+### Beslutning: Streng PII-filtrering i telemetry
+- **Valg:** `beforeSend` beholder kun `user.id` og fjerner sensitive request-headere (`cookie`, `authorization`).
+- **Begrunnelse:** Oppfyller kravet om ingen PII i Sentry-events (ingen navn/e-post), men beholder nok signal for feilsøking.
+
+### Beslutning: Enkel, robust helse-side i admin
+- **Valg:** Ny side `/admin/helse` med fire KPI-er: DB-status, API-responstid, feilrate siste 24t, aktive brukere siste 24t.
+- **Begrunnelse:** Rask operativ oversikt uten ekstra infrastruktur. Bruker eksisterende Supabase-data og representative backend-spørringer.
+
+### Beslutning: Dokumenterte alert-regler i repo
+- **Valg:** La inn `docs/observability.md` med konkrete Sentry-alerts (nye feil, 500-spike, P95 > 3s) og release-praksis.
+- **Begrunnelse:** Alert-regler er konfig i Sentry UI, så dokumentasjon i repo gjør oppsett reproducerbart og revisjonsvennlig.

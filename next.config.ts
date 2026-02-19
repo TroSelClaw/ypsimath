@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import bundleAnalyzer from '@next/bundle-analyzer'
+import { withSentryConfig } from '@sentry/nextjs'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -23,6 +24,7 @@ const cspHeader = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   async headers() {
     const allowedOrigin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://ypsimath.no'
 
@@ -50,4 +52,21 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withBundleAnalyzer(nextConfig)
+const configWithPlugins = withBundleAnalyzer(nextConfig)
+
+export default withSentryConfig(configWithPlugins, {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: true,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  sourcemaps: {
+    disable: false,
+    deleteSourcemapsAfterUpload: true,
+  },
+  release: {
+    name: process.env.SENTRY_RELEASE ?? process.env.VERCEL_GIT_COMMIT_SHA,
+    create: true,
+    finalize: true,
+  },
+  disableLogger: true,
+})

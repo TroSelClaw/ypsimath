@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import { CookieBanner } from '@/components/cookie-banner'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -34,6 +35,7 @@ export default function RootLayout({
           <TooltipProvider>
             <main id="main-content">{children}</main>
             <CookieBanner />
+            <Analytics />
           </TooltipProvider>
         </ThemeProvider>
       </body>
