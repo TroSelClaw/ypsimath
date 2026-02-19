@@ -764,6 +764,13 @@
 - **Valg:** Opprettet `docs/testing-guide.md` med konkrete elev-/læreroppgaver, målepunkter, bug-severity (P0/P1/P2) og tydelige launch-kriterier.
 - **Begrunnelse:** Sikrer konsistent gjennomføring av testøkter og et objektivt grunnlag for go/no-go før lansering.
 
+## 2026-02-19 — Autonom kjøring (06:43 Europe/Berlin)
+
+### Beslutning: Ingen ny implementering når taskkø er tom
+- **Valg:** Verifiserte `TASKS.md` og `STATUS.md` i prioritert rekkefølge og stoppet kjøringen uten kodeendringer.
+- **Begrunnelse:** Alle tasks i gjeldende plan (TASK-001 … TASK-078) er allerede ferdigstilt. Å implementere noe ekstra uten definert task ville bryte planstyringen.
+- **Konsekvens:** Oppdatert status-/beslutningslogg for sporbarhet; ingen `tsc`/`vitest`/feature-commit i denne runden.
+
 ## 2026-02-19 — TASK-076: Produksjonslansering (checklist-klargjøring)
 
 ### Beslutning: Dokumentere launch som kjørbar sjekkliste i repo
