@@ -94,7 +94,7 @@
 | TASK-059 | Content review workflow | ✅ | 2026-02-19 | 2026-02-19 | Flagget-kø + hurtig review + lærer read-only/flagg-flyt |
 | TASK-060 | Semesterplan dashboard-widget | ✅ | 2026-02-19 | 2026-02-19 | Widget for neste 5 planpunkter + off-track varsel + edit-lenke |
 | TASK-061 | Brukeradmin (admin) | ✅ | 2026-02-19 | 2026-02-19 | /admin/brukere med søk, paging, rollebytte, deaktiver/slett, CSV-invite + audit log |
-| TASK-062 | Phase 4 integrasjonstest | ⬜ | — | — | |
+| TASK-062 | Phase 4 integrasjonstest | ✅ | 2026-02-19 | 2026-02-19 | e2e/teacher-dashboard.spec.ts (heatmap→elev, notater, AI-rapport, admin rollebytte) |
 
 ## Phase 5 — Flashcards + Video (3–4 uker)
 

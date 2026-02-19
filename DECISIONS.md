@@ -560,3 +560,13 @@
 ### Beslutning: Deaktiverte kontoer stoppes ved innlogging
 - **Valg:** Oppdaterte `login`-action til å sjekke `profiles.deactivated_at` etter vellykket auth og signere ut direkte ved deaktivert konto.
 - **Begrunnelse:** Oppfyller kravet om at deaktiverte brukere ikke skal få aktiv sesjon.
+
+## 2026-02-19 — TASK-062: Phase 4 integrasjonstest
+
+### Beslutning: Egen Playwright-spec for lærer/admin-flyt
+- **Valg:** La til `e2e/teacher-dashboard.spec.ts` med fire kjerneflyter: heatmap→elevdetalj, notatpersistens, AI-rapportgenerering/redigering, og admin rolleendring i brukeradmin.
+- **Begrunnelse:** Samler hele phase-4-verifikasjonen i én testfil og matcher acceptance-kriteriene direkte.
+
+### Beslutning: Miljø-gating på credentials
+- **Valg:** Testene skipper automatisk når E2E-credentials mangler (`E2E_TEACHER_*`, `E2E_ADMIN_*`, `E2E_STUDENT_EMAIL`).
+- **Begrunnelse:** Holder lokal/CI-kjøring robust uten falske røde bygg i miljøer uten seedede testkontoer.
