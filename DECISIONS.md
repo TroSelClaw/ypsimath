@@ -469,3 +469,17 @@
 ### Beslutning: «Bak plan» via planlagte temaer vs unike fullførte temaer
 - **Valg:** Beregner avvik som `planlagte topic-entries til dags dato - unike topics i elevens exercise_attempt-aktivitet`.
 - **Begrunnelse:** Bruker eksisterende data uten nye migrasjoner, og leverer direkte indikator for >2 tema bak plan.
+
+## 2026-02-19 — TASK-056: Per-elev detaljvisning
+
+### Beslutning: Egen detaljside på `/laerer/elev/[studentId]` med sammensatt datavisning
+- **Valg:** Implementerte lærervisning som henter elevprofil (`student_profiles`), aktivitet siste 30 dager (`activity_log`), prøveresultater (`exam_submissions` + `exams`) og chat-oppsummering (antall samtaler + meldinger siste uke uten innhold).
+- **Begrunnelse:** Oppfyller krav om helhetlig elevbilde i én side, samtidig som vi holder personvern ved å vise aggregater i stedet for chat-innhold.
+
+### Beslutning: Lærernotater auto-saves via server action på blur
+- **Valg:** La til `saveTeacherNote` (`app/actions/teacher-notes.ts`) og klientkomponent `TeacherNotes` som lagrer automatisk når tekstfelt mister fokus.
+- **Begrunnelse:** Reduserer risiko for datatap i lærerarbeidsflyt og oppfyller acceptance-krav om auto-save uten ekstra lagre-knapp.
+
+### Beslutning: Tilgangskontroll verifiseres både via rolle og klassemedlemskap
+- **Valg:** På detaljsiden sjekkes `requireRole(['teacher','admin'])`, og for lærerrollen verifiseres at eleven finnes i en klasse der læreren er eier før data vises/saves.
+- **Begrunnelse:** Gir eksplisitt håndheving av «teacher can only see students in their classes» i tillegg til RLS som backend-sikkerhet.
