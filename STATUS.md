@@ -87,7 +87,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-055 | Klasseoversikt + heatmap | ⬜ | — | — | |
+| TASK-055 | Klasseoversikt + heatmap | ✅ | 2026-02-19 | 2026-02-19 | /laerer dashboard med heatmap, varselkort, summary-stats og 5-min ISR polling |
 | TASK-056 | Per-elev detaljvisning | ⬜ | — | — | |
 | TASK-057 | AI vurderingsrapport | ⬜ | — | — | |
 | TASK-058 | Prøveadmin panel | ⬜ | — | — | |

@@ -451,3 +451,21 @@
 ### Beslutning: Dekning på minimumskrav først
 - **Valg:** Testene verifiserer tre kritiske flyter: lærer genererer prøve + PDF, lærer åpner retteside, elev genererer øvingsprøve + PDF-valg.
 - **Begrunnelse:** Rask regressjonsdekning for Phase 3 uten å introdusere skjør avhengighet til OCR/retting i CI.
+
+## 2026-02-19 — TASK-055: Klasseoversikt + heatmap
+
+### Beslutning: Implementere dashboard på eksisterende `/laerer`-rute
+- **Valg:** Bygde heatmap og varsler i `src/app/(teacher)/laerer/page.tsx` i stedet for ny `app/(teacher)/page.tsx`.
+- **Begrunnelse:** Eksisterende navigasjon og role redirects peker allerede til `/laerer`; unngår rutebrudd og holder endringen bakoverkompatibel.
+
+### Beslutning: 5-minutters ISR for nær-realtime
+- **Valg:** `export const revalidate = 300` på dashboardsiden.
+- **Begrunnelse:** Oppfyller task-kravet om Realtime/polling med lav kompleksitet i MVP, uten ekstra klientabonnement.
+
+### Beslutning: Mestringsprosent som avledet modell (100/65/25)
+- **Valg:** Utledet cellenivå i heatmap fra `mastered_competency_goals` (100), `struggling_competency_goals` (25), ellers 65.
+- **Begrunnelse:** Databasen lagrer ikke eksplisitt prosent per mål; denne modellen gir konsistent R/G/Y-klassifisering nå og kan erstattes av ekte prosentfelt senere.
+
+### Beslutning: «Bak plan» via planlagte temaer vs unike fullførte temaer
+- **Valg:** Beregner avvik som `planlagte topic-entries til dags dato - unike topics i elevens exercise_attempt-aktivitet`.
+- **Begrunnelse:** Bruker eksisterende data uten nye migrasjoner, og leverer direkte indikator for >2 tema bak plan.
