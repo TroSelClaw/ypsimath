@@ -9,12 +9,7 @@ const teacherNoteSchema = z.object({
   content: z.string().max(5000),
 })
 
-export async function saveTeacherNote(input: unknown) {
-  const parsed = teacherNoteSchema.safeParse(input)
-  if (!parsed.success) {
-    return { ok: false as const, error: 'Ugyldig notat.' }
-  }
-
+async function ensureTeacherAccess(studentId: string) {
   const supabase = await createClient()
   const {
     data: { user },
@@ -38,7 +33,7 @@ export async function saveTeacherNote(input: unknown) {
     const { data: membership } = await supabase
       .from('class_memberships')
       .select('id, classes!inner(id)')
-      .eq('student_id', parsed.data.studentId)
+      .eq('student_id', studentId)
       .eq('classes.teacher_id', me.id)
       .limit(1)
 
@@ -47,21 +42,30 @@ export async function saveTeacherNote(input: unknown) {
     }
   }
 
+  return { ok: true as const, supabase, teacherId: me.id }
+}
+
+async function upsertTeacherNote(input: { studentId: string; content: string; noteType: 'manual' | 'ai_report' }) {
+  const access = await ensureTeacherAccess(input.studentId)
+  if (!access.ok) return access
+
+  const { supabase, teacherId } = access
+
   const { data: existing } = await supabase
     .from('teacher_notes')
     .select('id')
-    .eq('teacher_id', me.id)
-    .eq('student_id', parsed.data.studentId)
-    .eq('note_type', 'manual')
+    .eq('teacher_id', teacherId)
+    .eq('student_id', input.studentId)
+    .eq('note_type', input.noteType)
     .order('updated_at', { ascending: false })
     .limit(1)
     .maybeSingle()
 
   const payload = {
-    teacher_id: me.id,
-    student_id: parsed.data.studentId,
-    note_type: 'manual',
-    content: parsed.data.content.trim(),
+    teacher_id: teacherId,
+    student_id: input.studentId,
+    note_type: input.noteType,
+    content: input.content.trim(),
     updated_at: new Date().toISOString(),
   }
 
@@ -73,6 +77,32 @@ export async function saveTeacherNote(input: unknown) {
     return { ok: false as const, error: 'Kunne ikke lagre notatet.' }
   }
 
-  revalidatePath(`/laerer/elev/${parsed.data.studentId}`)
+  revalidatePath(`/laerer/elev/${input.studentId}`)
   return { ok: true as const }
+}
+
+export async function saveTeacherNote(input: unknown) {
+  const parsed = teacherNoteSchema.safeParse(input)
+  if (!parsed.success) {
+    return { ok: false as const, error: 'Ugyldig notat.' }
+  }
+
+  return upsertTeacherNote({
+    studentId: parsed.data.studentId,
+    content: parsed.data.content,
+    noteType: 'manual',
+  })
+}
+
+export async function saveAiAssessmentReport(input: unknown) {
+  const parsed = teacherNoteSchema.safeParse(input)
+  if (!parsed.success) {
+    return { ok: false as const, error: 'Ugyldig rapport.' }
+  }
+
+  return upsertTeacherNote({
+    studentId: parsed.data.studentId,
+    content: parsed.data.content,
+    noteType: 'ai_report',
+  })
 }

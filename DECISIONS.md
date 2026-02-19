@@ -483,3 +483,17 @@
 ### Beslutning: Tilgangskontroll verifiseres både via rolle og klassemedlemskap
 - **Valg:** På detaljsiden sjekkes `requireRole(['teacher','admin'])`, og for lærerrollen verifiseres at eleven finnes i en klasse der læreren er eier før data vises/saves.
 - **Begrunnelse:** Gir eksplisitt håndheving av «teacher can only see students in their classes» i tillegg til RLS som backend-sikkerhet.
+
+## 2026-02-19 — TASK-057: AI-generert vurderingsrapport
+
+### Beslutning: Egen rapport-modul + API + redigerbar UI
+- **Valg:** Implementerte `lib/ai/assessment-report.ts`, ny endpoint `POST /api/teacher/assessment-report`, og klientkomponenten `AssessmentReport` på elevdetaljsiden.
+- **Begrunnelse:** Holder rapportlogikk isolert, lar lærer trigge rapport når ønsket, og støtter redigering før lagring.
+
+### Beslutning: Lagring som egen notattype i `teacher_notes`
+- **Valg:** Utvidet actions med `saveAiAssessmentReport()` som upserter `note_type='ai_report'` separat fra manuelle notater.
+- **Begrunnelse:** Skiller systemgenerert vurderingsutkast fra fritekstnotater, og gjør audit/videre rapportarbeid enklere.
+
+### Sikkerhetsvalg: kun aggregert input til LLM
+- **Valg:** Sender kun aggregert statistikk (mål, progresjon, score, aktivitetsvolum), ikke rå chat-innhold/persondata.
+- **Begrunnelse:** Oppfyller krav om minst mulig dataeksponering i AI-kall og bedre personvern-by-design.

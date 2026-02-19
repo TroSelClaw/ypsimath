@@ -89,7 +89,7 @@
 |------|------|--------|---------|--------|---------|
 | TASK-055 | Klasseoversikt + heatmap | ✅ | 2026-02-19 | 2026-02-19 | /laerer dashboard med heatmap, varselkort, summary-stats og 5-min ISR polling |
 | TASK-056 | Per-elev detaljvisning | ✅ | 2026-02-19 | 2026-02-19 | Ny side `/laerer/elev/[studentId]` med aktivitetstidslinje, prøver, chat-oppsummering og auto-save lærernotater |
-| TASK-057 | AI vurderingsrapport | ⬜ | — | — | |
+| TASK-057 | AI vurderingsrapport | ✅ | 2026-02-19 | 2026-02-19 | Generering via ny /api/teacher/assessment-report + redigerbar lagring som teacher_notes(note_type='ai_report') |
 | TASK-058 | Prøveadmin panel | ⬜ | — | — | |
 | TASK-059 | Content review workflow | ⬜ | — | — | |
 | TASK-060 | Semesterplan dashboard-widget | ⬜ | — | — | |

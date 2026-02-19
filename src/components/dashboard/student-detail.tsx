@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { AssessmentReport } from '@/components/dashboard/assessment-report'
 import { TeacherNotes } from '@/components/dashboard/teacher-notes'
 
 type TimelineEntry = {
@@ -37,6 +38,7 @@ type StudentDetailProps = {
     messagesThisWeek: number
   }
   initialTeacherNote: string
+  initialAssessmentReport: string
 }
 
 function formatDate(value: string) {
@@ -60,7 +62,7 @@ function activityLabel(activityType: string) {
   return labels[activityType] ?? activityType
 }
 
-export function StudentDetail({ className, student, timeline, exams, chatSummary, initialTeacherNote }: StudentDetailProps) {
+export function StudentDetail({ className, student, timeline, exams, chatSummary, initialTeacherNote, initialAssessmentReport }: StudentDetailProps) {
   return (
     <div className="mx-auto w-full max-w-[1100px] space-y-6 px-4 py-6">
       <nav className="text-sm text-muted-foreground">
@@ -154,6 +156,7 @@ export function StudentDetail({ className, student, timeline, exams, chatSummary
         </dl>
       </section>
 
+      <AssessmentReport studentId={student.id} initialReport={initialAssessmentReport} />
       <TeacherNotes studentId={student.id} initialContent={initialTeacherNote} />
     </div>
   )

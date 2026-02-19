@@ -52,17 +52,19 @@ export default async function TeacherStudentDetailPage({ params }: PageProps) {
       .limit(120),
     supabase
       .from('teacher_notes')
-      .select('content')
+      .select('content, note_type, updated_at')
       .eq('teacher_id', profile.id)
       .eq('student_id', studentId)
-      .eq('note_type', 'manual')
-      .order('updated_at', { ascending: false })
-      .limit(1),
+      .in('note_type', ['manual', 'ai_report'])
+      .order('updated_at', { ascending: false }),
     supabase
       .from('conversations')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', studentId),
   ])
+
+  const latestManual = notes?.find((note) => note.note_type === 'manual')
+  const latestAiReport = notes?.find((note) => note.note_type === 'ai_report')
 
   const { data: submissions } = await supabase
     .from('exam_submissions')
@@ -131,7 +133,8 @@ export default async function TeacherStudentDetailPage({ params }: PageProps) {
         conversations: conversationCount ?? 0,
         messagesThisWeek,
       }}
-      initialTeacherNote={notes?.[0]?.content ?? ''}
+      initialTeacherNote={latestManual?.content ?? ''}
+      initialAssessmentReport={latestAiReport?.content ?? ''}
     />
   )
 }
