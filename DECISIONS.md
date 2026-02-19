@@ -497,3 +497,17 @@
 ### Sikkerhetsvalg: kun aggregert input til LLM
 - **Valg:** Sender kun aggregert statistikk (mål, progresjon, score, aktivitetsvolum), ikke rå chat-innhold/persondata.
 - **Begrunnelse:** Oppfyller krav om minst mulig dataeksponering i AI-kall og bedre personvern-by-design.
+
+## 2026-02-19 — TASK-058: Prøveadmin panel
+
+### Beslutning: Egen oversiktsside for prøver på `/laerer/prover`
+- **Valg:** Implementerte server-rendered oversikt med alle lærerens prøver sortert på `created_at desc`.
+- **Begrunnelse:** Oppfyller task-krav om ett sted for status, nøkkeltall og hurtighandlinger uten å spre flyten på flere sider.
+
+### Beslutning: Statusstyrte handlinger per prøverad
+- **Valg:** `draft -> Rediger`, `ready -> Last ned PDF`, `completed -> Se resultater`.
+- **Begrunnelse:** Gir tydelig og kontekstavhengig neste steg for læreren, og matcher acceptance-kriteriene direkte.
+
+### Beslutning: Aggregert vurderingsstatistikk fra `exam_submissions`
+- **Valg:** Beregner «vurdert/innleveringer» og snittscore per prøve i siden (inkluderer status `graded` og `reviewed` som vurdert).
+- **Begrunnelse:** Krever ingen ny DB-struktur og gir praktisk beslutningsstøtte i dashboardet med minimal kompleksitet.
