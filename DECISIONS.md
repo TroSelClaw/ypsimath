@@ -705,3 +705,13 @@
 ### Beslutning: E2E baseline for a11y-regresjoner
 - **Valg:** Ny `e2e/accessibility.spec.ts` som verifiserer skip-link, fokusflyt med tastatur og at sentrale sider har `main`-landmark + heading.
 - **Begrunnelse:** Rask regressjonsdekning i CI uten å blokkere på full axe-integrasjon i første iterasjon.
+
+## 2026-02-19 — TASK-072: GDPR (DPIA + personvern)
+
+### Beslutning: Levere dokumentasjon og brukerflate parallelt
+- **Valg:** Implementerte både brukerrettet `/personvern` + cookie-banner og styringsdokumenter (`dpia.md`, `gdpr-checklist.md`, `dpa-log.md`) i samme task.
+- **Begrunnelse:** GDPR-arbeid må være både teknisk og prosessuelt; dokumentasjon uten UI (eller omvendt) er utilstrekkelig.
+
+### Beslutning: Midlertidig konto-sletting som deaktivering i app-laget
+- **Valg:** La inn `deleteOwnAccount()` som deaktiverer profil + signOut som MVP-baseline.
+- **Begrunnelse:** Full hard-delete av `auth.users` krever service-role/adminflyt; implementeres strammere i sikkerhetsrunde.

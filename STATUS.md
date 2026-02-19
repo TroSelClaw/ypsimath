@@ -114,7 +114,7 @@
 |------|------|--------|---------|--------|---------|
 | TASK-070 | Lighthouse audit | ✅ | 2026-02-19 | 2026-02-19 | LHCI workflow + baseline docs + bundle analyzer |
 | TASK-071 | WCAG 2.1 AA audit | ✅ | 2026-02-19 | 2026-02-19 | Skip-link + accessibility E2E baseline (landmarks/keyboard) |
-| TASK-072 | GDPR: DPIA + personvern | ⬜ | — | — | P0 |
+| TASK-072 | GDPR: DPIA + personvern | ✅ | 2026-02-19 | 2026-02-19 | /personvern + cookie-banner + DPIA/GDPR docs + account action |
 | TASK-073 | Sikkerhetsharding | ⬜ | — | — | |
 | TASK-074 | Feilovervåking + observability | ⬜ | — | — | |
 | TASK-075 | Brukertesting | ⬜ | — | — | |

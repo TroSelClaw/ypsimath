@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { CookieBanner } from '@/components/cookie-banner'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import 'katex/dist/katex.min.css'
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <main id="main-content">{children}</main>
+            <CookieBanner />
           </TooltipProvider>
         </ThemeProvider>
       </body>
