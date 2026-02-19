@@ -115,7 +115,7 @@
 | TASK-070 | Lighthouse audit | ✅ | 2026-02-19 | 2026-02-19 | LHCI workflow + baseline docs + bundle analyzer |
 | TASK-071 | WCAG 2.1 AA audit | ✅ | 2026-02-19 | 2026-02-19 | Skip-link + accessibility E2E baseline (landmarks/keyboard) |
 | TASK-072 | GDPR: DPIA + personvern | ✅ | 2026-02-19 | 2026-02-19 | /personvern + cookie-banner + DPIA/GDPR docs + account action |
-| TASK-073 | Sikkerhetsharding | ⬜ | — | — | |
+| TASK-073 | Sikkerhetsharding | ✅ | 2026-02-19 | 2026-02-19 | API auth guard for alle routes, CSP+CORS-headere, security checklist + RLS-audit script |
 | TASK-074 | Feilovervåking + observability | ⬜ | — | — | |
 | TASK-075 | Brukertesting | ⬜ | — | — | |
 | TASK-076 | Produksjonslansering | ⬜ | — | — | P0 |

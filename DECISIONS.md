@@ -715,3 +715,19 @@
 ### Beslutning: Midlertidig konto-sletting som deaktivering i app-laget
 - **Valg:** La inn `deleteOwnAccount()` som deaktiverer profil + signOut som MVP-baseline.
 - **Begrunnelse:** Full hard-delete av `auth.users` krever service-role/adminflyt; implementeres strammere i sikkerhetsrunde.
+
+## 2026-02-19 — TASK-073: Rate limiting hardening og sikkerhetsreview
+
+### Beslutning: Standardisert API-auth guard
+- **Valg:** Introduserte `requireApiUser()` i `src/lib/auth/api-auth.ts` og brukte den i API-ruter som tidligere kunne gi redirect/500 ved manglende innlogging.
+- **Begrunnelse:** API-ruter skal returnere tydelig `401` (ikke HTML-redirect), og auth-sjekk må være konsistent på tvers av routes.
+- **Konsekvens:** `activity`, `exercise/image-check` og `video/[id]/url` returnerer nå korrekt auth-feil ved uautentisert kall.
+
+### Beslutning: Sikkerhetsheadere i Next-konfig
+- **Valg:** La inn global CSP + sikkerhetsheadere og egen CORS-policy for `/api/:path*` i `next.config.ts`.
+- **Begrunnelse:** Reduserer XSS/clickjacking-risiko og låser API-origin til produksjonsdomene.
+- **Detalj:** `NEXT_PUBLIC_APP_URL` brukes som tillatt origin (fallback `https://ypsimath.no`).
+
+### Beslutning: Lettvekts sikkerhetsaudit som kode
+- **Valg:** Opprettet `docs/security-checklist.md`, SQL-audit i `supabase/tests/security_rls_audit.sql`, og vitest-kontraktstest for auth-guard på alle API-ruter.
+- **Begrunnelse:** Gjør sikkerhetsgjennomgangen repeterbar før launch i stedet for engangssjekk.

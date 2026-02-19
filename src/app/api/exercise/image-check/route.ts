@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod/v4'
 import { recordExerciseAttempt } from '@/app/actions/exercises'
-import { getProfile } from '@/lib/auth/get-profile'
 import { analyzeExerciseImage } from '@/lib/ai/image-analyzer'
+import { requireApiUser } from '@/lib/auth/api-auth'
+import { AuthError } from '@/lib/errors'
 import { RATE_LIMITS, rateLimit } from '@/lib/rate-limit'
-import { createClient } from '@/lib/supabase/server'
 
 const MAX_SIZE_BYTES = 10 * 1024 * 1024
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
@@ -25,9 +25,9 @@ function extFromMime(mimeType: string) {
 
 export async function POST(request: Request) {
   try {
-    const profile = await getProfile()
+    const { supabase, user } = await requireApiUser()
 
-    const rate = rateLimit(`image-check:${profile.id}`, RATE_LIMITS.imageUpload)
+    const rate = rateLimit(`image-check:${user.id}`, RATE_LIMITS.imageUpload)
     if (!rate.allowed) {
       return NextResponse.json(
         { error: `For mange forespørsler. Prøv igjen om ${rate.retryAfterSeconds} sekunder.` },
@@ -65,9 +65,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Bildet er for stort. Maks størrelse er 10 MB.' }, { status: 400 })
     }
 
-    const supabase = await createClient()
     const fileExt = extFromMime(file.type)
-    const filePath = `${profile.id}/${crypto.randomUUID()}.${fileExt}`
+    const filePath = `${user.id}/${crypto.randomUUID()}.${fileExt}`
 
     const uploadBuffer = await file.arrayBuffer()
     const { error: uploadError } = await supabase.storage
@@ -108,7 +107,11 @@ export async function POST(request: Request) {
       imageUrl: filePath,
       feedback: analysis.feedback,
     })
-  } catch {
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
+    }
+
     return NextResponse.json({ error: 'Kunne ikke analysere bildet.' }, { status: 500 })
   }
 }

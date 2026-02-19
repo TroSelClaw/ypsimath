@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod/v4'
-import { getProfile } from '@/lib/auth/get-profile'
+
+import { requireApiUser } from '@/lib/auth/api-auth'
+import { AuthError } from '@/lib/errors'
 import { logActivity } from '@/lib/progress/tracker'
 
 const activityPayloadSchema = z.object({
@@ -14,7 +16,7 @@ const activityPayloadSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const profile = await getProfile()
+    const { user } = await requireApiUser()
     const body = await request.json()
     const parsed = activityPayloadSchema.safeParse(body)
 
@@ -23,7 +25,7 @@ export async function POST(request: Request) {
     }
 
     await logActivity({
-      userId: profile.id,
+      userId: user.id,
       type: parsed.data.type,
       subjectId: parsed.data.subjectId,
       topic: parsed.data.topic,
@@ -33,7 +35,11 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return NextResponse.json({ error: error.message }, { status: error.statusCode })
+    }
+
     return NextResponse.json({ error: 'Kunne ikke logge aktivitet' }, { status: 500 })
   }
 }
