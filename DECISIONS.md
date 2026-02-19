@@ -787,3 +787,13 @@
 ### Beslutning: Egen kontaktside for henvendelser
 - **Valg:** La til `/kontakt` med tydelig kontaktkanal og henvisning til intern feedback-knapp.
 - **Begrunnelse:** Dekker acceptance-kravet om kontaktflate og knytter støtteflyten sammen med in-app feedback.
+
+## 2026-02-19 — TASK-078: Final regresjonstest
+
+### Beslutning: Egen regression-spec for launch-gating
+- **Valg:** La til `e2e/regression.spec.ts` med tre baseline-flyter: personvern/GDPR-sjekk, auth-avvisning på API-endepunkter med rate-limit, og tema-toggling på nøkkelsider.
+- **Begrunnelse:** Samler launch-kritiske sjekker i én rask suite som kan kjøres separat i CI.
+
+### Beslutning: Koble regression E2E inn i CI
+- **Valg:** Oppdaterte `.github/workflows/ci.yml` med Playwright browser-installasjon og kjøring av `e2e/regression.spec.ts`.
+- **Begrunnelse:** Gjør regresjonstesten kontinuerlig i stedet for manuell før release.

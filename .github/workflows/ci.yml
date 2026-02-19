@@ -39,3 +39,9 @@ jobs:
 
       - name: Unit tests
         run: pnpm vitest run --passWithNoTests
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Regression E2E
+        run: pnpm exec playwright test e2e/regression.spec.ts

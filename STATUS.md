@@ -119,4 +119,4 @@
 | TASK-074 | Feilovervåking + observability | ✅ | 2026-02-19 | 2026-02-19 | Sentry (server/client/edge) + Vercel Analytics + /admin/helse + observability-dok || TASK-075 | Brukertesting | ✅ | 2026-02-19 | 2026-02-19 | Seed-script for testdata + testing-guide + in-app feedbackknapp (NPS + fritekst) |
 | TASK-076 | Produksjonslansering | ✅ | 2026-02-19 | 2026-02-19 | Produksjons-sjekkliste + incident response dokumentert i docs/LAUNCH.md (manuell gjennomføring ved faktisk launch) |
 | TASK-077 | Dokumentasjon | ✅ | 2026-02-19 | 2026-02-19 | Nye hjelpesider for elev/lærer + onboarding tooltip-tour + kontakt-side |
-| TASK-078 | Regresjonstest | ⬜ | — | — | P0 |
+| TASK-078 | Regresjonstest | ✅ | 2026-02-19 | 2026-02-19 | Ny e2e/regression.spec.ts (GDPR-side, auth-protected API-er, tema-toggling) + CI-step for Playwright regression |
