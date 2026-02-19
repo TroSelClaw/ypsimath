@@ -542,3 +542,21 @@
 ### Beslutning: Direkte snarvei til planredigering
 - **Valg:** Widgeten lenker til `/laerer/semesterplan/[id]` for siste plan, eller `/laerer/semesterplan/ny` hvis plan mangler.
 - **Begrunnelse:** Gir tydelig neste handling direkte fra dashboardet.
+
+## 2026-02-19 — TASK-061: Brukeradmin (admin)
+
+### Beslutning: Full adminflate på `/admin/brukere` med server actions
+- **Valg:** Implementerte en komplett brukeradmin-side med søk, paginering (50 per side), rolleskifte per bruker, deaktiver/reaktiver, hard delete med skrivebekreftelse, og CSV-bulkimport (`name,email`).
+- **Begrunnelse:** Oppfyller acceptance-kriteriene i én samlet operativ flate uten å introdusere ekstra API-ruter for enkel CRUD.
+
+### Beslutning: Service-role-klient for sensitive auth-operasjoner
+- **Valg:** La til `createAdminClient()` i `lib/supabase/admin.ts` og bruker den kun i server actions for `auth.admin.deleteUser`, `auth.admin.inviteUserByEmail`, og `auth.admin.listUsers` (sist innlogget).
+- **Begrunnelse:** Krever service role for auth-admin handlinger; isolering i serverkode reduserer risiko for feilbruk.
+
+### Beslutning: Audit-logg for adminhandlinger
+- **Valg:** La til migrasjon `0009_admin_user_audit_log.sql` + logging av role_change, deactivate/reactivate, delete og bulk_invite.
+- **Begrunnelse:** Gir sporbarhet og etterprøvbarhet på kritiske brukerendringer.
+
+### Beslutning: Deaktiverte kontoer stoppes ved innlogging
+- **Valg:** Oppdaterte `login`-action til å sjekke `profiles.deactivated_at` etter vellykket auth og signere ut direkte ved deaktivert konto.
+- **Begrunnelse:** Oppfyller kravet om at deaktiverte brukere ikke skal få aktiv sesjon.

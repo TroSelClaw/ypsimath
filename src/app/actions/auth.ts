@@ -71,6 +71,23 @@ export async function login(_prev: AuthState, formData: FormData): Promise<AuthS
     return { error: 'Ugyldig e-post eller passord.' }
   }
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('deactivated_at')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (profile?.deactivated_at) {
+      await supabase.auth.signOut()
+      return { error: 'Kontoen er deaktivert. Kontakt administrator.' }
+    }
+  }
+
   redirect('/')
 }
 

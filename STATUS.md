@@ -93,7 +93,7 @@
 | TASK-058 | Prøveadmin panel | ✅ | 2026-02-19 | 2026-02-19 | Ny side `/laerer/prover` med statusbadges, sortering, snittscore, vurdert-teller og handlinger (rediger/PDF/resultater) + tomtilstand og «Ny prøve»-CTA |
 | TASK-059 | Content review workflow | ✅ | 2026-02-19 | 2026-02-19 | Flagget-kø + hurtig review + lærer read-only/flagg-flyt |
 | TASK-060 | Semesterplan dashboard-widget | ✅ | 2026-02-19 | 2026-02-19 | Widget for neste 5 planpunkter + off-track varsel + edit-lenke |
-| TASK-061 | Brukeradmin (admin) | ⬜ | — | — | |
+| TASK-061 | Brukeradmin (admin) | ✅ | 2026-02-19 | 2026-02-19 | /admin/brukere med søk, paging, rollebytte, deaktiver/slett, CSV-invite + audit log |
 | TASK-062 | Phase 4 integrasjonstest | ⬜ | — | — | |
 
 ## Phase 5 — Flashcards + Video (3–4 uker)
