@@ -670,3 +670,13 @@
 - `VideoPlayer` komponent med native kontroller + poster + duration badge.
 - API route for signed video-URL (24t).
 - Wiki eksempel-blokk viser video når `videos.status='ready'` finnes.
+
+## 2026-02-19 — TASK-069: Phase 5 integrasjonstest
+
+### Beslutning: E2E med graceful skip ved manglende seed-data
+- **Valg:** Testene skipper eksplisitt når miljøet mangler student-credentials eller når seed ikke har forfalte kort / klare videoer.
+- **Begrunnelse:** Holder CI stabil på tvers av miljøer uten å maskere reelle regresjoner i baseline-flow.
+
+### Leveranse i tasken
+- `e2e/flashcards.spec.ts`: åpning av flashcards, reveal/rating, mobil swipe-gest.
+- `e2e/video.spec.ts`: wiki-navigasjon, videoelement synlig og avspilling starter.

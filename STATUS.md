@@ -106,7 +106,7 @@
 | TASK-066 | Manim script-generering | ✅ | 2026-02-19 | 2026-02-19 | Claude Sonnet + validering + retry |
 | TASK-067 | Manim rendering + CDN | ✅ | 2026-02-19 | 2026-02-19 | GHA nightly + Supabase Storage |
 | TASK-068 | Video i wiki | ✅ | 2026-02-19 | 2026-02-19 | VideoPlayer + signed URL API + activity log |
-| TASK-069 | Phase 5 integrasjonstest | ⬜ | — | — | P2 |
+| TASK-069 | Phase 5 integrasjonstest | ✅ | 2026-02-19 | 2026-02-19 | Playwright specs for flashcards + wiki video |
 
 ## Phase 6 — Polish + Launch (2–3 uker)
 
