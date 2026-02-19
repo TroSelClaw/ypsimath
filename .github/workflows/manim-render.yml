@@ -1,0 +1,63 @@
+name: Manim Video Rendering
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Nightly at 02:00 UTC
+  workflow_dispatch:
+    inputs:
+      quality:
+        description: 'Rendering quality (l=low, m=medium, h=high)'
+        required: false
+        default: 'l'
+      limit:
+        description: 'Max videos to render'
+        required: false
+        default: '20'
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libcairo2-dev libpango1.0-dev
+
+      - name: Install Manim CE
+        run: pip install manim
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Render videos
+        run: |
+          python scripts/render-manim.py \
+            --quality ${{ github.event.inputs.quality || 'l' }} \
+            --limit ${{ github.event.inputs.limit || '20' }}
+
+      - name: Upload render logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: render-logs-${{ github.run_id }}
+          path: render-logs/
+          retention-days: 14

@@ -630,3 +630,18 @@
 - Fargefeedback ved swipe høyre/venstre/opp (grønn/rød/gul flash).
 - Knapper med minimum 48px høyde.
 - «Kom tilbake i morgen»-skjerm viser nå neste anbefalte dato.
+
+## 2026-02-19 — TASK-066: Manim script-generering
+
+### Beslutning: Claude Sonnet for scriptgenerering
+- **Valg:** Bruker Claude Sonnet 4.6 via Anthropic API direkte for å generere Manim CE Python-scripts.
+- **Begrunnelse:** Sonnet balanserer kvalitet og kostnad for kodegenerering; Opus er overkill for template-basert scriptproduksjon.
+
+### Beslutning: Syntaktisk validering i TypeScript
+- **Valg:** Validerer genererte scripts med enkel sjekk (imports, class, construct, balanserte paranteser, manimlib-avvisning) i stedet for å kjøre Python AST.
+- **Begrunnelse:** Unngår Python-avhengighet i genereringspipeline; fanger de vanligste feilene. Full Python-validering skjer i TASK-067 renderpipeline.
+
+### Leveranse i tasken
+- `manim-script-generator.ts` med `generateManimScript()` og `validateManimScript()`.
+- CLI-script `scripts/generate-manim-scripts.ts` med `--dry-run`, `--limit`, `--element`, retry (3x).
+- 5 Vitest-tester for valideringsfunksjonen.

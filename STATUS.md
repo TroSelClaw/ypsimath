@@ -103,7 +103,7 @@
 | TASK-063 | Flashcard-generering | ✅ | 2026-02-19 | 2026-02-19 | Script for manglende flashcards + admin type-toggle i review UI |
 | TASK-064 | Flashcard UI + SM-2 | ✅ | 2026-02-19 | 2026-02-19 | /flashcards økt med forfalte+nye kort, reveal (click/space), vurderingsknapper, swipe L/R, SM-2 action + /flashcards/alle + Vitest |
 | TASK-065 | Mobil-flashcard layout | ✅ | 2026-02-19 | 2026-02-19 | Full-screen mobilkort (svh), swipe L/R/U + fargefeedback, safe-area padding, 3D flip (respekterer reduced motion), 48px touch targets |
-| TASK-066 | Manim script-generering | ⬜ | — | — | P2 |
+| TASK-066 | Manim script-generering | ✅ | 2026-02-19 | 2026-02-19 | Claude Sonnet + validering + retry |
 | TASK-067 | Manim rendering + CDN | ⬜ | — | — | P2 |
 | TASK-068 | Video i wiki | ⬜ | — | — | P2 |
 | TASK-069 | Phase 5 integrasjonstest | ⬜ | — | — | P2 |
