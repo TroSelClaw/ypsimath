@@ -511,3 +511,20 @@
 ### Beslutning: Aggregert vurderingsstatistikk fra `exam_submissions`
 - **Valg:** Beregner «vurdert/innleveringer» og snittscore per prøve i siden (inkluderer status `graded` og `reviewed` som vurdert).
 - **Begrunnelse:** Krever ingen ny DB-struktur og gir praktisk beslutningsstøtte i dashboardet med minimal kompleksitet.
+## 2026-02-19 — TASK-059: Content review workflow
+
+### Beslutning: Egen flagget-kø for admin med hurtighandlinger
+- **Valg:** La til `/admin/innhold/flagget` + `FlaggedQueue`-komponent som viser flagggrunn, type, kompetansemål, preview og hurtigvalg for godkjenn/avvis.
+- **Begrunnelse:** Oppfyller behovet for prioritert triage uten å åpne full editor for hver sak.
+
+### Beslutning: Review-audit synlig i køen
+- **Valg:** Viser `reviewed_by` + `reviewed_at` med navnoppslag fra `profiles` der mulig.
+- **Begrunnelse:** Gir tydelig sporbarhet på hvem som behandlet innhold og når.
+
+### Beslutning: Lærerflyt som read-only + flagg med kommentar
+- **Valg:** Implementerte `/laerer/innhold` som publisert read-only liste med kommentarfelt for flagging til admin.
+- **Begrunnelse:** Oppfyller kravet om at lærer kan melde kvalitetssaker uten å få direkte redigeringsansvar.
+
+### Beslutning: Dashboard-badge for flagget innhold
+- **Valg:** La til innholdsreview-kort på `/laerer` med flagget teller og rolleavhengig snarvei (`/admin/innhold/flagget` for admin, `/laerer/innhold` for lærer).
+- **Begrunnelse:** Gjør flagget innhold synlig på dashboard home slik tasken krever.

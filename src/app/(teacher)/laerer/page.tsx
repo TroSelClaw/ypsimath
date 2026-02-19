@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { AlertCards } from '@/components/dashboard/alert-cards'
 import { ClassHeatmap } from '@/components/dashboard/class-heatmap'
+import { Badge } from '@/components/ui/badge'
 import { requireRole } from '@/lib/auth/get-profile'
 import { getTeacherDashboardData } from '@/lib/dashboard/aggregates'
+import { createClient } from '@/lib/supabase/server'
 
 export const revalidate = 300
 
@@ -18,6 +20,12 @@ function SummaryCard({ label, value }: { label: string; value: string }) {
 export default async function TeacherDashboardPage() {
   const profile = await requireRole(['teacher', 'admin'])
   const dashboard = await getTeacherDashboardData(profile.id)
+  const supabase = await createClient()
+
+  const { count: flaggedCount } = await supabase
+    .from('content_elements')
+    .select('id', { count: 'exact', head: true })
+    .eq('status', 'flagged')
 
   if (!dashboard.classId) {
     return (
@@ -50,6 +58,31 @@ export default async function TeacherDashboardPage() {
       </section>
 
       <AlertCards struggling={dashboard.alerts.struggling} behindPlan={dashboard.alerts.behindPlan} />
+
+      <section className="rounded-2xl border bg-card p-4 md:p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold">Innholdsreview</h2>
+            <p className="text-sm text-muted-foreground">
+              {profile.role === 'admin'
+                ? 'Flagget innhold trenger prioritering i admin-kø.'
+                : 'Les publisert innhold og flagg elementer som bør sjekkes av admin.'}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Badge variant={flaggedCount && flaggedCount > 0 ? 'destructive' : 'secondary'}>
+              {flaggedCount ?? 0} flagget
+            </Badge>
+            <Link
+              href={profile.role === 'admin' ? '/admin/innhold/flagget' : '/laerer/innhold'}
+              className="text-sm font-medium underline underline-offset-4"
+            >
+              {profile.role === 'admin' ? 'Åpne flagget kø' : 'Åpne innhold'}
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <ClassHeatmap goals={dashboard.goals} students={dashboard.students} />
     </div>
