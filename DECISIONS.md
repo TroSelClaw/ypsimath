@@ -763,3 +763,13 @@
 ### Beslutning: Strukturert testguide med exit-kriterier
 - **Valg:** Opprettet `docs/testing-guide.md` med konkrete elev-/læreroppgaver, målepunkter, bug-severity (P0/P1/P2) og tydelige launch-kriterier.
 - **Begrunnelse:** Sikrer konsistent gjennomføring av testøkter og et objektivt grunnlag for go/no-go før lansering.
+
+## 2026-02-19 — TASK-076: Produksjonslansering (checklist-klargjøring)
+
+### Beslutning: Dokumentere launch som kjørbar sjekkliste i repo
+- **Valg:** La til `docs/LAUNCH.md` med komplett sekvens for infrastruktur, domene/TLS, env-variabler, sikkerhet/GDPR, observability, testkrav, soft launch og elevlansering.
+- **Begrunnelse:** Selve produksjonssettingen krever manuell/ekstern tilgang; sjekklisten gjør prosessen reproduserbar og reduserer risiko for glemte steg.
+
+### Beslutning: Eget incident-response hurtigkort
+- **Valg:** Inkluderte kort prosedyre (verifiser omfang → triage i Sentry/helse → mitigering/rollback → kommunikasjon → post-mortem).
+- **Begrunnelse:** Gir tydelig handlingsmønster ved feil i første driftsfase.
