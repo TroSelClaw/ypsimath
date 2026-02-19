@@ -570,3 +570,18 @@
 ### Beslutning: Miljø-gating på credentials
 - **Valg:** Testene skipper automatisk når E2E-credentials mangler (`E2E_TEACHER_*`, `E2E_ADMIN_*`, `E2E_STUDENT_EMAIL`).
 - **Begrunnelse:** Holder lokal/CI-kjøring robust uten falske røde bygg i miljøer uten seedede testkontoer.
+
+## 2026-02-19 — TASK-063: Flashcard-generering
+
+### Beslutning: Generer flashcards per tema som mangler
+- **Valg:** Nytt script `scripts/generate-flashcards.ts` som finner publiserte tema uten eksisterende flashcards, genererer 6–10 kort per tema og lagrer dem som `draft` i `content_elements`.
+- **Begrunnelse:** Treffer task-kravet om batch-generering av manglende flashcards uten å lage duplikater for tema som allerede har kort.
+- **Teknisk:** Scriptet støtter `--subject`, `--limit` og `--dry-run`.
+
+### Beslutning: Egen generator-modul for flashcards
+- **Valg:** Ny modul `src/lib/generation/flashcard-generator.ts` med LLM-kall + robust JSON-parsing + normalisering.
+- **Begrunnelse:** Holder scripts tynne og gjør flashcard-logikk gjenbrukbar for senere TASK-064/065.
+
+### Beslutning: Admin kan recategorize content-type i review
+- **Valg:** Utvidet `ContentEditor` og `saveContentEdit` med `contentType`-felt slik admin kan bytte mellom `flashcard` og andre content-typer under review.
+- **Begrunnelse:** Dekker akseptansekriteriet om at admin kan korrigere feil kategorisering uten egen migrasjon eller ny side.

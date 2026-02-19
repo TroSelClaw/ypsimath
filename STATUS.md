@@ -100,7 +100,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-063 | Flashcard-generering | ⬜ | — | — | P2 |
+| TASK-063 | Flashcard-generering | ✅ | 2026-02-19 | 2026-02-19 | Script for manglende flashcards + admin type-toggle i review UI |
 | TASK-064 | Flashcard UI + SM-2 | ⬜ | — | — | P2 |
 | TASK-065 | Mobil-flashcard layout | ⬜ | — | — | P2 |
 | TASK-066 | Manim script-generering | ⬜ | — | — | P2 |

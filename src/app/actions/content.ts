@@ -40,9 +40,12 @@ export async function saveContentEdit(formData: FormData) {
 
   const id = String(formData.get('id') ?? '')
   const content = String(formData.get('content') ?? '')
+  const contentType = String(formData.get('contentType') ?? '')
   const changeNote = String(formData.get('changeNote') ?? 'Inline edit from content review dashboard')
 
-  if (!id || !content.trim()) {
+  const allowedTypes = ['theory', 'rule', 'example', 'exercise', 'exploration', 'flashcard']
+
+  if (!id || !content.trim() || !allowedTypes.includes(contentType)) {
     throw new Error('Mangler innhold')
   }
 
@@ -67,6 +70,7 @@ export async function saveContentEdit(formData: FormData) {
     .from('content_elements')
     .update({
       content,
+      content_type: contentType,
       version: current.version + 1,
       reviewed_by: profile.id,
       reviewed_at: new Date().toISOString(),

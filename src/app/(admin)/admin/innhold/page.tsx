@@ -11,6 +11,13 @@ interface SearchParams {
 }
 
 const PAGE_SIZE = 50
+const contentTypes = ['theory', 'rule', 'example', 'exercise', 'exploration', 'flashcard'] as const
+
+type ContentType = (typeof contentTypes)[number]
+
+function normalizeContentType(value: string): ContentType {
+  return (contentTypes as readonly string[]).includes(value) ? (value as ContentType) : 'theory'
+}
 
 export default async function ContentAdmin({
   searchParams,
@@ -119,7 +126,12 @@ export default async function ContentAdmin({
         </div>
 
         {selected ? (
-          <ContentEditor id={selected.id} title={selected.title} content={selected.content} />
+          <ContentEditor
+            id={selected.id}
+            title={selected.title}
+            content={selected.content}
+            contentType={normalizeContentType(selected.content_type)}
+          />
         ) : (
           <div className="rounded-lg border p-6 text-sm text-muted-foreground">
             Velg et element i listen for å redigere.
