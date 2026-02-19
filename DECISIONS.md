@@ -773,3 +773,17 @@
 ### Beslutning: Eget incident-response hurtigkort
 - **Valg:** Inkluderte kort prosedyre (verifiser omfang → triage i Sentry/helse → mitigering/rollback → kommunikasjon → post-mortem).
 - **Begrunnelse:** Gir tydelig handlingsmønster ved feil i første driftsfase.
+
+## 2026-02-19 — TASK-077: Elev-/lærerdokumentasjon + onboarding
+
+### Beslutning: Egne offentlige hjelpesider for elev og lærer
+- **Valg:** La til `/hjelp/elev` og `/hjelp/laerer` med konkrete steg-for-steg guider og FAQ.
+- **Begrunnelse:** Gir lavterskel støtte i appen uten at bruker må lete i ekstern dokumentasjon.
+
+### Beslutning: Enkel 3-stegs onboarding-tour i app-shell
+- **Valg:** Implementerte `TooltipTour` som viser rollebaserte steg (student: wiki/chat/flashcards, lærer: semesterplan/oversikt/prøver) én gang per rolle via localStorage.
+- **Begrunnelse:** Oppfyller onboarding-kravet raskt og uten backend-kompleksitet.
+
+### Beslutning: Egen kontaktside for henvendelser
+- **Valg:** La til `/kontakt` med tydelig kontaktkanal og henvisning til intern feedback-knapp.
+- **Begrunnelse:** Dekker acceptance-kravet om kontaktflate og knytter støtteflyten sammen med in-app feedback.
