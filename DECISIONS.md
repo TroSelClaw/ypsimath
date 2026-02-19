@@ -804,3 +804,9 @@
 - **Valg:** Etter gjennomgang av `STATUS.md` + `TASKS.md` ble ingen ugjorte tasks funnet (alle TASK-001 til TASK-078 står som ✅). Ingen kodeendringer ble derfor initiert.
 - **Begrunnelse:** Instruksen sier å finne *neste ugjorte task i rekkefølge* og implementere den. Når ingen gjenstår, er korrekt handling å dokumentere tom kø og unngå unødvendige endringer.
 - **Neste steg:** Avventer nye tasks/utvidet backlog før videre implementering.
+
+## 2026-02-19 — Autonom kjøring: ingen gjenværende tasks
+
+### Beslutning: Stopp videre implementering når tasklisten er tom
+- **Valg:** Kjøringen avsluttes etter verifisering av at alle tasks i `STATUS.md` er markert ✅ og ingen nye tasks finnes i `TASKS.md`.
+- **Begrunnelse:** Unngår kunstige/no-op kodeendringer og holder prosjektets historikk ryddig når scope er fullført.
