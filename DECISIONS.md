@@ -695,3 +695,13 @@
 - `.github/workflows/lighthouse-ci.yml`
 - `lighthouserc.json`
 - `docs/performance-baseline.md`
+
+## 2026-02-19 — TASK-071: WCAG 2.1 AA audit (baseline)
+
+### Beslutning: Start med strukturell tilgjengelighet først
+- **Valg:** Innført global skip-link (`Hopp til hovedinnhold`) og tydelig `main#main-content` landmark i root layout.
+- **Begrunnelse:** Lav kost, høy effekt for tastatur-/screenreader-brukere og grunnmur for videre AA-arbeid.
+
+### Beslutning: E2E baseline for a11y-regresjoner
+- **Valg:** Ny `e2e/accessibility.spec.ts` som verifiserer skip-link, fokusflyt med tastatur og at sentrale sider har `main`-landmark + heading.
+- **Begrunnelse:** Rask regressjonsdekning i CI uten å blokkere på full axe-integrasjon i første iterasjon.
