@@ -30,12 +30,19 @@ export function FlashcardSession({ cards }: FlashcardSessionProps) {
   }, [completed, total])
 
   if (!current) {
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    const nextDate = new Intl.DateTimeFormat('nb-NO', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(tomorrow)
+
     return (
       <div className="rounded-2xl border bg-card p-6 text-center">
         <h2 className="text-xl font-semibold">Kom tilbake i morgen 👋</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Du har fullført alle kort som var forfalt i dag.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Du har fullført alle kort som var forfalt i dag.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Neste anbefalte økt: {nextDate}</p>
       </div>
     )
   }

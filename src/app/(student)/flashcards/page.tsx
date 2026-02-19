@@ -77,7 +77,7 @@ export default async function FlashcardsPage() {
   )
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-6 px-4 py-6">
+    <div className="mx-auto w-full max-w-3xl space-y-6 overflow-x-hidden px-4 py-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Flashcards</h1>
         <p className="text-sm text-muted-foreground">

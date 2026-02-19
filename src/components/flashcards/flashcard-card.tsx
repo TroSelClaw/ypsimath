@@ -20,19 +20,32 @@ export function FlashcardCard({
   disabled = false,
 }: FlashcardCardProps) {
   const [dragX, setDragX] = useState(0)
+  const [dragY, setDragY] = useState(0)
+  const [flash, setFlash] = useState<'good' | 'bad' | 'mid' | null>(null)
   const startX = useRef<number | null>(null)
+  const startY = useRef<number | null>(null)
 
   const swipeHint = useMemo(() => {
     if (dragX > 40) return 'Slipp for Husket'
     if (dragX < -40) return 'Slipp for Glemte'
-    return 'Sveip høyre: Husket · venstre: Glemte'
-  }, [dragX])
+    if (dragY < -40) return 'Slipp for Nesten'
+    return 'Sveip: høyre = Husket · venstre = Glemte · opp = Nesten'
+  }, [dragX, dragY])
+
+  const flashClass =
+    flash === 'good'
+      ? 'bg-emerald-200/40'
+      : flash === 'bad'
+        ? 'bg-red-200/40'
+        : flash === 'mid'
+          ? 'bg-amber-200/40'
+          : ''
 
   return (
     <div className="space-y-4">
       <button
         type="button"
-        className="w-full rounded-2xl border bg-card p-6 text-left shadow-sm transition hover:border-primary/40"
+        className="group relative w-full touch-manipulation overflow-hidden rounded-2xl border bg-card p-0 text-left shadow-sm transition hover:border-primary/40"
         onClick={onReveal}
         onKeyDown={(event) => {
           if (event.code === 'Space') {
@@ -42,23 +55,50 @@ export function FlashcardCard({
         }}
         onPointerDown={(event) => {
           startX.current = event.clientX
+          startY.current = event.clientY
         }}
         onPointerMove={(event) => {
-          if (startX.current == null) return
+          if (startX.current == null || startY.current == null) return
           setDragX(event.clientX - startX.current)
+          setDragY(event.clientY - startY.current)
         }}
         onPointerUp={() => {
-          if (dragX > 80 && revealed && !disabled) onRate(5)
-          if (dragX < -80 && revealed && !disabled) onRate(1)
+          if (revealed && !disabled) {
+            if (dragX > 80) {
+              setFlash('good')
+              onRate(5)
+            } else if (dragX < -80) {
+              setFlash('bad')
+              onRate(1)
+            } else if (dragY < -80) {
+              setFlash('mid')
+              onRate(3)
+            }
+          }
+
+          setTimeout(() => setFlash(null), 220)
           setDragX(0)
+          setDragY(0)
           startX.current = null
+          startY.current = null
         }}
       >
-        <p className="mb-3 text-xs uppercase tracking-wide text-muted-foreground">{revealed ? 'Bakside' : 'Forside'}</p>
-        <div
-          className="prose prose-neutral max-w-none dark:prose-invert"
-          dangerouslySetInnerHTML={{ __html: revealed ? backHtml : frontHtml }}
-        />
+        <div className={`absolute inset-0 pointer-events-none transition ${flashClass}`} />
+
+        <div className="relative min-h-[62svh] [perspective:1000px] sm:min-h-[22rem]">
+          <div
+            className={`absolute inset-0 transition-transform duration-300 motion-reduce:transition-none [transform-style:preserve-3d] ${revealed ? 'motion-safe:[transform:rotateY(180deg)]' : ''}`}
+          >
+            <div className="absolute inset-0 [backface-visibility:hidden] p-6">
+              <p className="mb-3 text-xs uppercase tracking-wide text-muted-foreground">Forside</p>
+              <div className="prose prose-neutral max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: frontHtml }} />
+            </div>
+            <div className="absolute inset-0 [backface-visibility:hidden] p-6 motion-safe:[transform:rotateY(180deg)]">
+              <p className="mb-3 text-xs uppercase tracking-wide text-muted-foreground">Bakside</p>
+              <div className="prose prose-neutral max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: backHtml }} />
+            </div>
+          </div>
+        </div>
       </button>
 
       <p className="text-center text-xs text-muted-foreground">{swipeHint}</p>
@@ -68,7 +108,7 @@ export function FlashcardCard({
           type="button"
           disabled={!revealed || disabled}
           onClick={() => onRate(1)}
-          className="rounded-md border border-red-300 px-4 py-3 text-sm font-medium text-red-700 disabled:opacity-50"
+          className="min-h-12 touch-manipulation rounded-md border border-red-300 px-4 py-3 text-sm font-medium text-red-700 disabled:opacity-50"
         >
           Glemte
         </button>
@@ -76,7 +116,7 @@ export function FlashcardCard({
           type="button"
           disabled={!revealed || disabled}
           onClick={() => onRate(3)}
-          className="rounded-md border border-amber-300 px-4 py-3 text-sm font-medium text-amber-700 disabled:opacity-50"
+          className="min-h-12 touch-manipulation rounded-md border border-amber-300 px-4 py-3 text-sm font-medium text-amber-700 disabled:opacity-50"
         >
           Nesten
         </button>
@@ -84,7 +124,7 @@ export function FlashcardCard({
           type="button"
           disabled={!revealed || disabled}
           onClick={() => onRate(5)}
-          className="rounded-md border border-emerald-300 px-4 py-3 text-sm font-medium text-emerald-700 disabled:opacity-50"
+          className="min-h-12 touch-manipulation rounded-md border border-emerald-300 px-4 py-3 text-sm font-medium text-emerald-700 disabled:opacity-50"
         >
           Husket
         </button>

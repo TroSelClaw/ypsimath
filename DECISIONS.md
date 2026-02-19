@@ -610,3 +610,23 @@
 
 ### Avgrensning
 - Swipe opp = «Nesten» og full-screen safe-area/flip-animasjon er planlagt under TASK-065 (mobile polish).
+
+## 2026-02-19 — TASK-065: Mobil-optimalisert flashcard-layout
+
+### Beslutning: Utvidet geststyring direkte med pointer-events
+- **Valg:** Rebrukte `FlashcardCard` og la inn pointer-basert swipe-detektering: høyre=Husket, venstre=Glemte, opp=Nesten.
+- **Begrunnelse:** Unngår ekstra gesture-avhengigheter, holder bundle mindre og gir god kontroll på terskler/oppførsel.
+
+### Beslutning: Mobil-først kortpresentasjon
+- **Valg:** Kortarealet er satt til `min-h-[62svh]` på mobil, med `touch-manipulation`, safe-area-bunnpadding og `overflow-x-hidden` på siden.
+- **Begrunnelse:** Gir mer «app»-følelse, bedre ergonomi, og reduserer risiko for utilsiktet zoom/scroll.
+
+### Beslutning: Flip-animasjon med tilgjengelighetsfallback
+- **Valg:** 3D flip mellom forside/bakside med `motion-safe`, og automatisk redusert animasjon for brukere med `prefers-reduced-motion`.
+- **Begrunnelse:** Visuell tydelighet uten å kompromisse tilgjengelighet.
+
+### Leveranse i tasken
+- Swipe opp for **Nesten** med gul visuell feedback.
+- Fargefeedback ved swipe høyre/venstre/opp (grønn/rød/gul flash).
+- Knapper med minimum 48px høyde.
+- «Kom tilbake i morgen»-skjerm viser nå neste anbefalte dato.
