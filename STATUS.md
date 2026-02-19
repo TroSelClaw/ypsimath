@@ -112,7 +112,7 @@
 
 | Task | Navn | Status | Startet | Ferdig | Notater |
 |------|------|--------|---------|--------|---------|
-| TASK-070 | Lighthouse audit | ⬜ | — | — | |
+| TASK-070 | Lighthouse audit | ✅ | 2026-02-19 | 2026-02-19 | LHCI workflow + baseline docs + bundle analyzer |
 | TASK-071 | WCAG 2.1 AA audit | ⬜ | — | — | |
 | TASK-072 | GDPR: DPIA + personvern | ⬜ | — | — | P0 |
 | TASK-073 | Sikkerhetsharding | ⬜ | — | — | |

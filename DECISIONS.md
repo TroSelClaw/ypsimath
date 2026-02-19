@@ -680,3 +680,18 @@
 ### Leveranse i tasken
 - `e2e/flashcards.spec.ts`: åpning av flashcards, reveal/rating, mobil swipe-gest.
 - `e2e/video.spec.ts`: wiki-navigasjon, videoelement synlig og avspilling starter.
+
+## 2026-02-19 — TASK-070: Lighthouse audit og optimalisering
+
+### Beslutning: Lighthouse CI som PR-gate (warn-terskler først)
+- **Valg:** Innført `lighthouse-ci.yml` som kjører på PR/workflow_dispatch med terskler satt til `warn`.
+- **Begrunnelse:** Gir kontinuerlig signal uten å blokkere leveranse tidlig i polish-fasen; kan strammes til `error` senere.
+
+### Beslutning: Bundle analyzer bak opt-in env
+- **Valg:** Aktivert `@next/bundle-analyzer` via `ANALYZE=true` i `next.config.ts`.
+- **Begrunnelse:** Null runtime-kost i normal drift, men rask innsikt når vi trenger chunk-analyse.
+
+### Leveranse i tasken
+- `.github/workflows/lighthouse-ci.yml`
+- `lighthouserc.json`
+- `docs/performance-baseline.md`
