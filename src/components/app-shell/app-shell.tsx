@@ -6,6 +6,7 @@ import { DesktopSidebar } from './desktop-sidebar'
 import { MobileHeader } from './mobile-header'
 import { MobileBottomNav } from './mobile-bottom-nav'
 import { SearchDialog } from '@/components/search/search-dialog'
+import { FeedbackButton } from '@/components/feedback/feedback-button'
 
 export interface AppShellProfile {
   id: string
@@ -29,6 +30,7 @@ export function AppShell({ children, profile, navItems }: AppShellProps) {
           <SearchDialog />
         </div>
         <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">{children}</main>
+        <FeedbackButton />
         <MobileBottomNav navItems={navItems} />
       </div>
     </div>

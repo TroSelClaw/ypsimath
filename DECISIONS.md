@@ -749,3 +749,17 @@
 ### Beslutning: Dokumenterte alert-regler i repo
 - **Valg:** La inn `docs/observability.md` med konkrete Sentry-alerts (nye feil, 500-spike, P95 > 3s) og release-praksis.
 - **Begrunnelse:** Alert-regler er konfig i Sentry UI, så dokumentasjon i repo gjør oppsett reproducerbart og revisjonsvennlig.
+
+## 2026-02-19 — TASK-075: Brukertest-forberedelser
+
+### Beslutning: Seed-script som klargjør hele testoppsettet
+- **Valg:** La til `scripts/seed-test-data.ts` som oppretter 10 testelever + testlærer, sikrer tre publiserte R1-tema med alle nødvendige innholdstyper, lager testklasse/semesterplan og legger inn enkel aktivitetsdata.
+- **Begrunnelse:** Gir reproduserbar og rask klargjøring før brukertest uten manuell database-jobbing.
+
+### Beslutning: In-app feedback med lav terskel
+- **Valg:** La til `FeedbackButton` i app-shell (NPS 0–10 + fritekst) med server action `submitFeedback` og ny tabell `user_feedback` (migration `0010_user_feedback.sql`).
+- **Begrunnelse:** Samler brukertest-feedback direkte i appen under faktisk bruk, i stedet for ekstern lenke med høyere friksjon.
+
+### Beslutning: Strukturert testguide med exit-kriterier
+- **Valg:** Opprettet `docs/testing-guide.md` med konkrete elev-/læreroppgaver, målepunkter, bug-severity (P0/P1/P2) og tydelige launch-kriterier.
+- **Begrunnelse:** Sikrer konsistent gjennomføring av testøkter og et objektivt grunnlag for go/no-go før lansering.
