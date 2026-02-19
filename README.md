@@ -1,36 +1,163 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YpsiMath
 
-## Getting Started
+**YpsiMath** er en AI-støttet læringsplattform for matematikk i norsk videregående skole.
 
-First, run the development server:
+Repoet er publisert som et **teknisk case** som dokumenterer helhetlig leveranseevne: produktforståelse, programvareutvikling, AI-integrasjon, sikkerhet, test og drift.
+
+## TL;DR for recruiter
+
+- Leverer en **fullstack AI-applikasjon** fra idé til driftbar løsning
+- Bygger med **sikkerhets- og kontrollprinsipper** (RBAC, RLS, validering, sporbarhet)
+- Viser **produksjonsdisiplin** med test, observability og dokumentasjon
+- Demonstrerer **praktisk KI-utvikling** i et domene med høye krav til kvalitet
+
+---
+
+## Formål
+
+YpsiMath er bygget for å adressere tre konkrete behov i matematikkundervisning:
+
+- mer **tilpasset læring** for elever med ulike nivå og tempo
+- lavere **operativ belastning** for lærer
+- bedre **sporbarhet og kvalitet** i digital læringsflyt
+
+---
+
+## Funksjonalitet (implementert)
+
+> Dette er en fungerende applikasjon, ikke et oppstarts-skjelett.
+
+### Elevfunksjoner
+- Wiki med matematikkinnhold (Markdown + KaTeX)
+- Chat med streaming og RAG-basert kontekst
+- Flashcards med SM-2 spaced repetition
+- Fremgangsvisning på kompetansemål
+- Øvingsprøver og oppgavesjekk (selvrapportering, auto-check, bildeanalyse)
+
+### Lærer-/adminfunksjoner
+- Klasseoversikt og elevdetaljer
+- Prøvegenerering og PDF-eksport
+- Opplasting av besvarelser med AI-assistert analyse
+- Innholdsreview med statusflyt (draft/flagged/reviewed/published)
+- Brukeradministrasjon med roller og audit-orientert flyt
+
+### Kvalitet og drift
+- Rollebasert tilgangskontroll
+- RLS i Supabase
+- E2E- og enhetstester (Playwright/Vitest)
+- Sentry + Vercel Analytics
+- Dokumentasjon for sikkerhet, personvern, observability og testing
+
+---
+
+## Teknologistakk
+
+- **Frontend:** Next.js (App Router), React, TypeScript, Tailwind, shadcn/ui
+- **Backend/BaaS:** Supabase (Postgres, Auth, Storage, pgvector)
+- **AI-lag:** AI SDK + modeller for chat, retrieval, analyse og innholdsflyt
+- **Math UX:** KaTeX, Mafs, GeoGebra-embed, Pyodide
+- **Testing:** Vitest + Playwright
+- **Observability:** Sentry, Vercel Analytics
+
+Se også: [`docs/architecture.md`](docs/architecture.md)
+
+---
+
+## Relevans for KI-utvikling i sikkerhetskritisk miljø
+
+Prosjektet demonstrerer arbeidsmåter som er overførbare til miljøer med høye krav til kvalitet og kontroll:
+
+- **Datadisiplin:** tydelig modellering av domeneobjekter og tilgangsnivå
+- **Tilgangsstyring:** rollebasert struktur i applikasjon + RLS i datalag
+- **Sporbarhet:** dokumenterte flyter, testoppsett og operasjonell logging
+- **Kontrollert AI-bruk:** AI som beslutningsstøtte, ikke uverifisert autonom beslutningstaker
+- **Robusthet:** validering, feilhåndtering og testbarhet som standard
+
+---
+
+## Arkitektur i én setning
+
+YpsiMath bruker en role-first Next.js-arkitektur over Supabase med hybrid RAG (vektor + fulltekst + rank-fusjon), der elev- og lærerfunksjoner er separert i tydelige domener med felles sikkerhets- og datamodell.
+
+---
+
+## Lokal kjøring
+
+### 1) Installer avhengigheter
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2) Konfigurer miljøvariabler
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.local.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fyll inn nødvendige nøkler (Supabase, AI-provider(e), observability).
 
-## Learn More
+### 3) Start applikasjonen
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Åpne: http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Tester
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Typecheck
+pnpm -s tsc --noEmit
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Unit/integration
+pnpm vitest run
+
+# End-to-end
+pnpm test:e2e
+```
+
+---
+
+## Struktur (hurtigoversikt)
+
+```text
+src/
+  app/
+    (auth)/
+    (student)/
+    (teacher)/
+    (admin)/
+    api/
+  components/
+  lib/
+    rag/
+    generation/
+    supabase/
+    schemas/
+
+docs/
+  architecture.md
+  testing-guide.md
+  observability.md
+  gdpr-checklist.md
+  security-checklist.md
+```
+
+---
+
+## Videre arbeid
+
+- Feide/SSO-integrasjon
+- Videre fagdekning (R2/1T/1P/2P)
+- Videreutviklet kost-/modellrouting i AI-laget
+- Utvidet måling av læringseffekt
+
+---
+
+## Lisens
+
+Legg inn ønsket lisens (f.eks. MIT) før ekstern gjenbruk.
