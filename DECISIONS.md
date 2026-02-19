@@ -585,3 +585,28 @@
 ### Beslutning: Admin kan recategorize content-type i review
 - **Valg:** Utvidet `ContentEditor` og `saveContentEdit` med `contentType`-felt slik admin kan bytte mellom `flashcard` og andre content-typer under review.
 - **Begrunnelse:** Dekker akseptansekriteriet om at admin kan korrigere feil kategorisering uten egen migrasjon eller ny side.
+
+## 2026-02-19 — TASK-064: Flashcard study UI + SM-2
+
+### Beslutning: Server-renderet KaTeX + klientdrevet øktflyt
+- **Valg:** Bygde `/flashcards` som server-side datainnhenting + markdown/KaTeX-rendering til HTML, med klientkomponent (`FlashcardSession`) for reveal/rating-flyt.
+- **Begrunnelse:** Oppfyller KaTeX-kravet uten å dra inn ekstra klientbibliotek for markdown-math, samtidig som interaksjonene holder seg responsive.
+
+### Beslutning: SM-2 som isolert domene-logikk med enhetstester
+- **Valg:** Implementerte algoritmen i `lib/flashcards/sm2.ts` med Vitest i `sm2.test.ts` (første/andre repetisjon, reset ved lav kvalitet, EF-gulv 1.3).
+- **Begrunnelse:** Gjør spaced repetition-logikken eksplisitt, testbar og enkel å gjenbruke videre.
+
+### Beslutning: Forfall først, deretter nye kort
+- **Valg:** Økta sorterer kort som `next_review <= today` først, deretter kort uten `flashcard_progress`.
+- **Begrunnelse:** Matcher ønsket læringsflyt i tasken og prioriterer repetisjon før nytt stoff.
+
+### Leveranse i tasken
+- Ny server action `rateFlashcard` som oppretter/oppdaterer `flashcard_progress` med SM-2-felter.
+- Reveal av kort via klikk eller Space.
+- Tre vurderingsvalg: **Husket (5)**, **Nesten (3)**, **Glemte (1)**.
+- Mobilgester: swipe høyre = Husket, swipe venstre = Glemte.
+- Progressbar `N/total` og avslutningsskjerm «Kom tilbake i morgen» når økta er tom.
+- Ny side `/flashcards/alle` for browsing av alle publiserte kort i elevens fag.
+
+### Avgrensning
+- Swipe opp = «Nesten» og full-screen safe-area/flip-animasjon er planlagt under TASK-065 (mobile polish).
